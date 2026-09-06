@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Diet Management Application</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="home-container">
+
+        <h1>🥗 Diet Management Application</h1>
+        <input type="text" id="nameInput" placeholder="Enter your name">
+
+<button class="name-btn" onclick="saveName()">
+    Continue
+</button>
+
+        <h2>Welcome, <span id="userName">User</span>!</h2>
+
+        <p class="question">
+            What is your health problem?
+        </p>
+
+        <div class="options">
+
+            <button onclick="selectOption('Health Issues')">
+                🩺 Health Issues
+            </button>
+
+            <button onclick="selectOption('Diet Plan')">
+                🍎 Diet Plan
+            </button>
+
+        </div>
+
+        <p id="result"></p>
+        <div id="details"></div>
+        <button class="get-started" onclick="getStarted()">
+            Get Started →
+        </button>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
