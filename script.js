@@ -1,36 +1,61 @@
+// Save user's name
+function saveName() {
+    const name = document.getElementById("nameInput").value.trim();
+
+    if (name === "") {
+        alert("Please enter your name!");
+        return;
+    }
+
+    document.getElementById("userName").innerText = name;
+
+    localStorage.setItem("userName", name);
+}
+
+
+// Select Health Issues / Diet Plan
 function selectOption(option) {
 
     document.getElementById("result").innerText =
         "You selected: " + option + " ✅";
 
-    let details = document.getElementById("details");
-
+    // Health Issues
     if (option === "Health Issues") {
+        window.location.href = "page2.html";
+    }
 
-        details.innerHTML = `
-            <h3>🩺 Select Your Health Problem</h3>
-
-            <button onclick="selectProblem('Weakness')">Weakness</button>
-            <button onclick="selectProblem('Obesity')">Obesity</button>
-            <button onclick="selectProblem('Skin Problems')">Skin Problems</button>
-            <button onclick="selectProblem('Hair Fall')">Hair Fall</button>
-        `;
-
-    } else {
-
-        details.innerHTML = `
-            <h3>🍎 Select Your Diet Goal</h3>
-
-            <button onclick="selectProblem('Weight Loss')">Weight Loss</button>
-            <button onclick="selectProblem('Weight Gain')">Weight Gain</button>
-            <button onclick="selectProblem('Healthy Diet')">Healthy Diet</button>
-        `;
+    // Diet Plan
+    else if (option === "Diet Plan") {
+        window.location.href = "diet.html";
     }
 }
 
 
-function selectProblem(problem) {
+// Get Started button
+function getStarted() {
+    const name = document.getElementById("nameInput").value.trim();
 
-    document.getElementById("details").innerHTML +=
-        "<p class='selected'>Selected: " + problem + " ✅</p>";
+    if (name === "") {
+        alert("Please enter your name first!");
+        return;
+    }
+
+    localStorage.setItem("userName", name);
+
+    window.location.href = "page2.html";
 }
+
+
+// Load saved name
+window.onload = function () {
+
+    const savedName = localStorage.getItem("userName");
+
+    if (savedName) {
+        const userName = document.getElementById("userName");
+
+        if (userName) {
+            userName.innerText = savedName;
+        }
+    }
+};
