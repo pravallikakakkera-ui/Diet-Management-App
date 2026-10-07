@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +42,7 @@
             border: 1px solid #159b7d;
             border-radius: 8px;
             font-size: 15px;
+            cursor: pointer;
         }
 
         .container {
@@ -91,8 +93,9 @@
         }
 
         .vitamin-card p {
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 15px;
+            text-align: left;
         }
 
         .good {
@@ -163,6 +166,7 @@
 
         <div class="intro">
             <h2 id="introTitle">Vitamins and Their Benefits</h2>
+
             <p id="introText">
                 Learn about important vitamins, their food sources,
                 benefits and things to avoid.
@@ -173,119 +177,437 @@
 
             <!-- Vitamin A -->
             <div class="vitamin-card">
-                <img src="vitamin-a.webp" alt="Vitamin A">
-                <h3>Vitamin A</h3>
-                <p><span class="good">Uses:</span> Supports eyesight, skin and immunity.</p>
-                <p><b>Food Sources:</b> Vegetables, leafy vegetables and milk.</p>
-                <p><span class="avoid">Avoid:</span> High-dose supplements without medical advice.</p>
+                <img src="images/vitamin-a.webp" alt="Vitamin A">
+
+                <h3 data-en="Vitamin A" data-te="విటమిన్ A">Vitamin A</h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports eyesight, skin and immunity."
+                        data-te=" చూపు, చర్మం మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.">
+                        Supports eyesight, skin and immunity.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Carrot, leafy vegetables, sweet potato and milk."
+                        data-te=" క్యారెట్, ఆకుకూరలు, చిలగడదుంప మరియు పాలు.">
+                        Carrot, leafy vegetables, sweet potato and milk.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Avoid high-dose supplements without medical advice."
+                        data-te=" వైద్యుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Avoid high-dose supplements without medical advice.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B1 -->
             <div class="vitamin-card">
-                <img src="vitamin-b1.png" alt="Vitamin B1">
-                <h3>Vitamin B1 - Thiamine</h3>
-                <p><span class="good">Uses:</span> Helps energy production and nerve function.</p>
-                <p><b>Food Sources:</b> Rice, dal, nuts and whole grains.</p>
-                <p><span class="avoid">Avoid:</span> Unnecessary high-dose supplements.</p>
+                <img src="images/vitamin-b1.png" alt="Vitamin B1">
+
+                <h3 data-en="Vitamin B1 - Thiamine"
+                    data-te="విటమిన్ B1 - థయామిన్">
+                    Vitamin B1 - Thiamine
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Helps energy production and nerve function."
+                        data-te=" శక్తి ఉత్పత్తి మరియు నరాల పనితీరుకు సహాయపడుతుంది.">
+                        Helps energy production and nerve function.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Rice, dal, nuts and whole grains."
+                        data-te=" అన్నం, పప్పులు, గింజలు మరియు సంపూర్ణ ధాన్యాలు.">
+                        Rice, dal, nuts and whole grains.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Unnecessary high-dose supplements."
+                        data-te=" అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Unnecessary high-dose supplements.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B2 -->
             <div class="vitamin-card">
-                <img src="vitamin-b2.webp" alt="Vitamin B2">
-                <h3>Vitamin B2 - Riboflavin</h3>
-                <p><span class="good">Uses:</span> Supports energy production and healthy skin.</p>
-                <p><b>Food Sources:</b> Milk, curd, eggs and vegetables.</p>
-                <p><span class="avoid">Avoid:</span> Taking supplements without a need.</p>
+                <img src="images/vitamin-b2.webp" alt="Vitamin B2">
+
+                <h3 data-en="Vitamin B2 - Riboflavin"
+                    data-te="విటమిన్ B2 - రిబోఫ్లేవిన్">
+                    Vitamin B2 - Riboflavin
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports energy production and healthy skin."
+                        data-te=" శక్తి ఉత్పత్తి మరియు ఆరోగ్యకరమైన చర్మానికి సహాయపడుతుంది.">
+                        Supports energy production and healthy skin.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Milk, curd, eggs and vegetables."
+                        data-te=" పాలు, పెరుగు, గుడ్లు మరియు కూరగాయలు.">
+                        Milk, curd, eggs and vegetables.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Taking supplements without a need."
+                        data-te=" అవసరం లేకుండా సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Taking supplements without a need.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B3 -->
             <div class="vitamin-card">
-                <img src="vitamin-b3.jpg" alt="Vitamin B3">
-                <h3>Vitamin B3 - Niacin</h3>
-                <p><span class="good">Uses:</span> Supports energy metabolism and normal skin.</p>
-                <p><b>Food Sources:</b> Chicken, fish, nuts and grains.</p>
-                <p><span class="avoid">Avoid:</span> High-dose supplements without advice.</p>
+                <img src="images/vitamin-b3.jpg" alt="Vitamin B3">
+
+                <h3 data-en="Vitamin B3 - Niacin"
+                    data-te="విటమిన్ B3 - నియాసిన్">
+                    Vitamin B3 - Niacin
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports energy metabolism and skin health."
+                        data-te=" శక్తి మెటబాలిజం మరియు చర్మ ఆరోగ్యానికి సహాయపడుతుంది.">
+                        Supports energy metabolism and skin health.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Chicken, fish, nuts and grains."
+                        data-te=" చికెన్, చేపలు, గింజలు మరియు ధాన్యాలు.">
+                        Chicken, fish, nuts and grains.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" High-dose supplements without advice."
+                        data-te=" సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        High-dose supplements without advice.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B5 -->
             <div class="vitamin-card">
-                <img src="vitamin-b5.webp" alt="Vitamin B5">
-                <h3>Vitamin B5 - Pantothenic Acid</h3>
-                <p><span class="good">Uses:</span> Helps use carbohydrates, fats and proteins.</p>
-                <p><b>Food Sources:</b> Vegetables, nuts, milk and eggs.</p>
-                <p><span class="avoid">Avoid:</span> Unnecessary high-dose supplements.</p>
+                <img src="images/vitamin-b5.webp" alt="Vitamin B5">
+
+                <h3 data-en="Vitamin B5 - Pantothenic Acid"
+                    data-te="విటమిన్ B5 - పాంటోథెనిక్ యాసిడ్">
+                    Vitamin B5 - Pantothenic Acid
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Helps the body use carbohydrates, fats and proteins."
+                        data-te=" కార్బోహైడ్రేట్లు, కొవ్వులు మరియు ప్రోటీన్లను శరీరం ఉపయోగించుకోవడానికి సహాయపడుతుంది.">
+                        Helps the body use carbohydrates, fats and proteins.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Vegetables, nuts, milk and eggs."
+                        data-te=" కూరగాయలు, గింజలు, పాలు మరియు గుడ్లు.">
+                        Vegetables, nuts, milk and eggs.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Unnecessary high-dose supplements."
+                        data-te=" అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Unnecessary high-dose supplements.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B6 -->
             <div class="vitamin-card">
-                <img src="vitamin-b6.jpg" alt="Vitamin B6">
-                <h3>Vitamin B6 - Pyridoxine</h3>
-                <p><span class="good">Uses:</span> Supports metabolism and nerve function.</p>
-                <p><b>Food Sources:</b> Banana, nuts, vegetables and chicken.</p>
-                <p><span class="avoid">Avoid:</span> Long-term high-dose supplements.</p>
+                <img src="images/vitamin-b6.jpg" alt="Vitamin B6">
+
+                <h3 data-en="Vitamin B6 - Pyridoxine"
+                    data-te="విటమిన్ B6 - పైరిడాక్సిన్">
+                    Vitamin B6 - Pyridoxine
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports metabolism, brain and nerve function."
+                        data-te=" మెటబాలిజం, మెదడు మరియు నరాల పనితీరుకు సహాయపడుతుంది.">
+                        Supports metabolism, brain and nerve function.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Banana, nuts, vegetables and chicken."
+                        data-te=" అరటిపండు, గింజలు, కూరగాయలు మరియు చికెన్.">
+                        Banana, nuts, vegetables and chicken.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Long-term high-dose supplements."
+                        data-te=" ఎక్కువ కాలం అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Long-term high-dose supplements.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B7 -->
             <div class="vitamin-card">
-                <img src="Vitamin-b7.jpg" alt="Vitamin B7">
-                <h3>Vitamin B7 - Biotin</h3>
-                <p><span class="good">Uses:</span> Supports metabolism, skin and hair.</p>
-                <p><b>Food Sources:</b> Eggs, nuts, vegetables and legumes.</p>
-                <p><span class="avoid">Avoid:</span> High-dose biotin supplements.</p>
+                <img src="images/Vitamin-b7.jpg" alt="Vitamin B7">
+
+                <h3 data-en="Vitamin B7 - Biotin"
+                    data-te="విటమిన్ B7 - బయోటిన్">
+                    Vitamin B7 - Biotin
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports metabolism, skin and hair health."
+                        data-te=" మెటబాలిజం, చర్మం మరియు జుట్టు ఆరోగ్యానికి సహాయపడుతుంది.">
+                        Supports metabolism, skin and hair health.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Eggs, nuts, vegetables and legumes."
+                        data-te=" గుడ్లు, గింజలు, కూరగాయలు మరియు పప్పుధాన్యాలు.">
+                        Eggs, nuts, vegetables and legumes.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" High-dose biotin supplements."
+                        data-te=" అధిక మోతాదులో బయోటిన్ సప్లిమెంట్లు తీసుకోవద్దు.">
+                        High-dose biotin supplements.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B9 -->
             <div class="vitamin-card">
-                <img src="vitamin-b9.jpg" alt="Vitamin B9">
-                <h3>Vitamin B9 - Folate</h3>
-                <p><span class="good">Uses:</span> Important for cell growth and red blood cells.</p>
-                <p><b>Food Sources:</b> Leafy vegetables and dal.</p>
-                <p><span class="avoid">Avoid:</span> High-dose supplements without advice.</p>
+                <img src="images/vitamin-b9.jpg" alt="Vitamin B9">
+
+                <h3 data-en="Vitamin B9 - Folate"
+                    data-te="విటమిన్ B9 - ఫోలేట్">
+                    Vitamin B9 - Folate
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Important for cell growth and red blood cell formation."
+                        data-te=" కణాల పెరుగుదల మరియు ఎర్ర రక్త కణాల ఏర్పాటుకు ముఖ్యమైనది.">
+                        Important for cell growth and red blood cell formation.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Leafy vegetables, beans and dal."
+                        data-te=" ఆకుకూరలు, బీన్స్ మరియు పప్పులు.">
+                        Leafy vegetables, beans and dal.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" High-dose supplements without advice."
+                        data-te=" సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        High-dose supplements without advice.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin B12 -->
             <div class="vitamin-card">
-                <img src="vitamin-b12.jpg" alt="Vitamin B12">
-                <h3>Vitamin B12 - Cobalamin</h3>
-                <p><span class="good">Uses:</span> Supports nerves and red blood cell formation.</p>
-                <p><b>Food Sources:</b> Milk, curd, eggs, fish and chicken.</p>
-                <p><span class="avoid">Avoid:</span> Injections or high-dose supplements without advice.</p>
+                <img src="images/vitamin-b12.jpg" alt="Vitamin B12">
+
+                <h3 data-en="Vitamin B12 - Cobalamin"
+                    data-te="విటమిన్ B12 - కోబాలమిన్">
+                    Vitamin B12 - Cobalamin
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports nerves and red blood cell formation."
+                        data-te=" నరాలు మరియు ఎర్ర రక్త కణాల ఏర్పాటుకు సహాయపడుతుంది.">
+                        Supports nerves and red blood cell formation.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Milk, curd, eggs, fish and chicken."
+                        data-te=" పాలు, పెరుగు, గుడ్లు, చేపలు మరియు చికెన్.">
+                        Milk, curd, eggs, fish and chicken.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Injections or high-dose supplements without medical advice."
+                        data-te=" వైద్యుల సలహా లేకుండా ఇంజెక్షన్లు లేదా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Injections or high-dose supplements without medical advice.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin C -->
             <div class="vitamin-card">
-                <img src="Vitamin-C.jpg" alt="Vitamin C">
-                <h3>Vitamin C</h3>
-                <p><span class="good">Uses:</span> Supports immunity, skin health and iron absorption.</p>
-                <p><b>Food Sources:</b> Fruits and vegetables.</p>
-                <p><span class="avoid">Avoid:</span> Very high-dose supplements.</p>
+                <img src="images/Vitamin-C.jpg" alt="Vitamin C">
+
+                <h3 data-en="Vitamin C" data-te="విటమిన్ C">
+                    Vitamin C
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports immunity, skin health and iron absorption."
+                        data-te=" రోగనిరోధక శక్తి, చర్మ ఆరోగ్యం మరియు ఐరన్ శోషణకు సహాయపడుతుంది.">
+                        Supports immunity, skin health and iron absorption.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Orange, lemon, guava, amla and vegetables."
+                        data-te=" నారింజ, నిమ్మ, జామ, ఉసిరి మరియు కూరగాయలు.">
+                        Orange, lemon, guava, amla and vegetables.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Very high-dose supplements."
+                        data-te=" చాలా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        Very high-dose supplements.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin D -->
             <div class="vitamin-card">
-                <img src="vitamin-d.jpeg" alt="Vitamin D">
-                <h3>Vitamin D</h3>
-                <p><span class="good">Uses:</span> Supports bones, muscles and calcium absorption.</p>
-                <p><b>Food Sources:</b> Milk, eggs and fortified foods.</p>
-                <p><span class="avoid">Avoid:</span> High-dose supplements without advice.</p>
+                <img src="images/vitamin-d.jpeg" alt="Vitamin D">
+
+                <h3 data-en="Vitamin D" data-te="విటమిన్ D">
+                    Vitamin D
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports bones, muscles and calcium absorption."
+                        data-te=" ఎముకలు, కండరాలు మరియు కాల్షియం శోషణకు సహాయపడుతుంది.">
+                        Supports bones, muscles and calcium absorption.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Milk, eggs and fortified foods."
+                        data-te=" పాలు, గుడ్లు మరియు పోషకాలు కలిపిన ఆహారాలు.">
+                        Milk, eggs and fortified foods.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" High-dose supplements without medical advice."
+                        data-te=" వైద్యుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        High-dose supplements without medical advice.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin E -->
             <div class="vitamin-card">
-                <img src="vitamin-E.webp" alt="Vitamin E">
-                <h3>Vitamin E</h3>
-                <p><span class="good">Uses:</span> Supports cells and normal skin health.</p>
-                <p><b>Food Sources:</b> Nuts, seeds and vegetables.</p>
-                <p><span class="avoid">Avoid:</span> High-dose supplements.</p>
+                <img src="images/vitamin-E.webp" alt="Vitamin E">
+
+                <h3 data-en="Vitamin E" data-te="విటమిన్ E">
+                    Vitamin E
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports cells, skin and antioxidant protection."
+                        data-te=" కణాలు, చర్మం మరియు యాంటీఆక్సిడెంట్ రక్షణకు సహాయపడుతుంది.">
+                        Supports cells, skin and antioxidant protection.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Almonds, sunflower seeds, nuts and vegetables."
+                        data-te=" బాదం, పొద్దుతిరుగుడు విత్తనాలు, గింజలు మరియు కూరగాయలు.">
+                        Almonds, sunflower seeds, nuts and vegetables.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" High-dose supplements."
+                        data-te=" అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.">
+                        High-dose supplements.
+                    </span>
+                </p>
             </div>
 
             <!-- Vitamin K -->
             <div class="vitamin-card">
-                <img src="vitamin-K.webp" alt="Vitamin K">
-                <h3>Vitamin K</h3>
-                <p><span class="good">Uses:</span> Supports blood clotting and bone health.</p>
-                <p><b>Food Sources:</b> Leafy vegetables and vegetables.</p>
-                <p><span class="avoid">Avoid:</span> Sudden changes if taking blood-thinning medicine.</p>
+                <img src="images/vitamin-K.webp" alt="Vitamin K">
+
+                <h3 data-en="Vitamin K" data-te="విటమిన్ K">
+                    Vitamin K
+                </h3>
+
+                <p>
+                    <span class="good" data-en="Uses:" data-te="ప్రయోజనాలు:">Uses:</span>
+                    <span data-en=" Supports normal blood clotting and bone health."
+                        data-te=" సాధారణ రక్తం గడ్డకట్టే ప్రక్రియ మరియు ఎముకల ఆరోగ్యానికి సహాయపడుతుంది.">
+                        Supports normal blood clotting and bone health.
+                    </span>
+                </p>
+
+                <p>
+                    <b data-en="Food Sources:" data-te="ఆహార వనరులు:">Food Sources:</b>
+                    <span data-en=" Spinach, leafy vegetables, broccoli and cabbage."
+                        data-te=" పాలకూర, ఆకుకూరలు, బ్రోకలీ మరియు క్యాబేజీ.">
+                        Spinach, leafy vegetables, broccoli and cabbage.
+                    </span>
+                </p>
+
+                <p>
+                    <span class="avoid" data-en="Avoid:" data-te="నివారించండి:">Avoid:</span>
+                    <span data-en=" Sudden changes in vitamin K intake if taking blood-thinning medicine."
+                        data-te=" రక్తం పలుచబడే మందులు వాడుతున్నప్పుడు విటమిన్ K ఆహారాన్ని అకస్మాత్తుగా మార్చవద్దు.">
+                        Sudden changes in vitamin K intake if taking blood-thinning medicine.
+                    </span>
+                </p>
             </div>
 
         </div>
@@ -307,7 +629,7 @@
     <script>
 
         function goBack() {
-            window.location.href = "diet.html";
+            window.location.href = "daysplan.html";
         }
 
         function finishApp() {
@@ -316,8 +638,23 @@
 
         function changeLanguage() {
 
-            let language =
+            const language =
                 document.getElementById("language").value;
+
+            const elements =
+                document.querySelectorAll("[data-en]");
+
+            elements.forEach(function (element) {
+
+                if (language === "te") {
+                    element.textContent =
+                        element.getAttribute("data-te");
+                } else {
+                    element.textContent =
+                        element.getAttribute("data-en");
+                }
+
+            });
 
             if (language === "te") {
 
@@ -328,7 +665,7 @@
                     "విటమిన్లు మరియు వాటి ప్రయోజనాలు";
 
                 document.getElementById("introText").innerText =
-                    "ముఖ్యమైన విటమిన్లు, వాటి ఆహార వనరులు మరియు ప్రయోజనాల గురించి తెలుసుకోండి.";
+                    "ముఖ్యమైన విటమిన్లు, వాటి ఆహార వనరులు, ప్రయోజనాలు మరియు నివారించాల్సిన విషయాల గురించి తెలుసుకోండి.";
 
                 document.getElementById("backBtn").innerText =
                     "← వెనక్కి";
@@ -358,5 +695,5 @@
     </script>
 
 </body>
-
 </html>
+```
