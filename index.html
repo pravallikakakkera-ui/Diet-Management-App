@@ -1,5 +1,7 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +9,26 @@
     <title>Diet Management Application</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        .language-box {
+            margin: 20px 0;
+        }
+
+        .language-box label {
+            font-weight: bold;
+            color: #444;
+            margin-right: 10px;
+        }
+
+        .language-box select {
+            padding: 10px 18px;
+            border: 2px solid #159b7d;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,39 +36,371 @@
     <div class="home-container">
 
         <h1>🥗 Diet Management Application</h1>
-        <input type="text" id="nameInput" placeholder="Enter your name">
 
-<button class="name-btn" onclick="saveName()">
-    Continue
-</button>
+        <!-- LANGUAGE -->
+        <div class="language-box">
 
-        <h2>Welcome, <span id="userName">User</span>!</h2>
+            <label for="language">
+                🌐 Language:
+            </label>
 
-        <p class="question">
-            What is your health problem?
+            <select id="language" onchange="changeLanguage()">
+
+                <option value="en">🇬🇧 English</option>
+
+                <option value="te">🇮🇳 తెలుగు</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- NAME -->
+        <input
+            type="text"
+            id="nameInput"
+            placeholder="Enter your name"
+        >
+
+        <button
+            class="name-btn"
+            id="continueBtn"
+            onclick="saveName()"
+        >
+            Continue
+        </button>
+
+
+        <!-- WELCOME -->
+        <h2>
+
+            <span id="welcomeText">
+                Welcome
+            </span>,
+
+            <span id="userName">
+                User
+            </span>!
+
+        </h2>
+
+
+        <!-- QUESTION -->
+        <p
+            class="question"
+            id="questionText"
+        >
+            What do you want to check?
         </p>
 
+
+        <!-- OPTIONS -->
         <div class="options">
 
-            <button onclick="selectOption('Health Issues')">
+            <button
+                id="healthBtn"
+                onclick="selectOption('Health Issues')"
+            >
                 🩺 Health Issues
             </button>
 
-            <button onclick="selectOption('Diet Plan')">
+
+            <button
+                id="dietBtn"
+                onclick="selectOption('Diet Plan')"
+            >
                 🍎 Diet Plan
             </button>
 
         </div>
 
+
+        <!-- RESULT -->
         <p id="result"></p>
-        <div id="details"></div>
-        <button class="get-started" onclick="getStarted()">
+
+
+        <!-- GET STARTED -->
+        <button
+            class="get-started"
+            id="startBtn"
+            onclick="goToNextPage()"
+        >
             Get Started →
         </button>
 
     </div>
 
-    <script src="script.js"></script>
+
+    <script>
+
+        // SAVE NAME
+        function saveName() {
+
+            let name =
+                document
+                .getElementById("nameInput")
+                .value
+                .trim();
+
+            let language =
+                document
+                .getElementById("language")
+                .value;
+
+            if (name === "") {
+
+                if (language === "te") {
+
+                    alert("దయచేసి మీ పేరు నమోదు చేయండి!");
+
+                } else {
+
+                    alert("Please enter your name!");
+
+                }
+
+                return;
+            }
+
+            // Show name
+            document
+            .getElementById("userName")
+            .innerText = name;
+
+            // Save name
+            localStorage.setItem("userName", name);
+        }
+
+
+        // SELECT HEALTH / DIET
+        function selectOption(option) {
+
+            let result =
+                document
+                .getElementById("result");
+
+            let language =
+                document
+                .getElementById("language")
+                .value;
+
+
+            if (language === "te") {
+
+                if (option === "Health Issues") {
+
+                    result.innerText =
+                        "మీరు ఎంచుకున్నది: ఆరోగ్య సమస్యలు ✅";
+
+                    // Go to Health Issues page
+                    setTimeout(function () {
+                        window.location.href = "page2.html";
+                    }, 300);
+
+                } else {
+
+                    result.innerText =
+                        "మీరు ఎంచుకున్నది: డైట్ ప్లాన్ ✅";
+
+                    // Go to Diet Plan page
+                    setTimeout(function () {
+                        window.location.href = "diet.html";
+                    }, 300);
+                }
+
+            } else {
+
+                result.innerText =
+                    "You selected: "
+                    + option
+                    + " ✅";
+
+
+                if (option === "Health Issues") {
+
+                    // Go to Health Issues page
+                    setTimeout(function () {
+                        window.location.href = "page2.html";
+                    }, 300);
+
+                } else {
+
+                    // Go to Diet Plan page
+                    setTimeout(function () {
+                        window.location.href = "diet.html";
+                    }, 300);
+
+                }
+
+            }
+        }
+
+
+        // GET STARTED
+        function goToNextPage() {
+
+            let name =
+                document
+                .getElementById("nameInput")
+                .value
+                .trim();
+
+
+            if (name === "") {
+
+                let language =
+                    document
+                    .getElementById("language")
+                    .value;
+
+
+                if (language === "te") {
+
+                    alert("ముందుగా మీ పేరు నమోదు చేయండి!");
+
+                } else {
+
+                    alert("Please enter your name first!");
+
+                }
+
+                return;
+            }
+
+
+            // Save name
+            localStorage.setItem("userName", name);
+
+
+            // Open Health Issues page
+            window.location.href = "page2.html";
+
+        }
+
+
+        // CHANGE LANGUAGE
+        function changeLanguage() {
+
+            let language =
+                document
+                .getElementById("language")
+                .value;
+
+
+            if (language === "te") {
+
+                document
+                .getElementById("continueBtn")
+                .innerText =
+                    "కొనసాగించండి";
+
+
+                document
+                .getElementById("welcomeText")
+                .innerText =
+                    "స్వాగతం";
+
+
+                document
+                .getElementById("questionText")
+                .innerText =
+                    "మీరు ఏమి చెక్ చేయాలనుకుంటున్నారు?";
+
+
+                document
+                .getElementById("healthBtn")
+                .innerText =
+                    "🩺 ఆరోగ్య సమస్యలు";
+
+
+                document
+                .getElementById("dietBtn")
+                .innerText =
+                    "🍎 డైట్ ప్లాన్";
+
+
+                document
+                .getElementById("startBtn")
+                .innerText =
+                    "ప్రారంభించండి →";
+
+
+                document
+                .getElementById("nameInput")
+                .placeholder =
+                    "మీ పేరు నమోదు చేయండి";
+
+            }
+
+
+            else {
+
+                document
+                .getElementById("continueBtn")
+                .innerText =
+                    "Continue";
+
+
+                document
+                .getElementById("welcomeText")
+                .innerText =
+                    "Welcome";
+
+
+                document
+                .getElementById("questionText")
+                .innerText =
+                    "What do you want to check?";
+
+
+                document
+                .getElementById("healthBtn")
+                .innerText =
+                    "🩺 Health Issues";
+
+
+                document
+                .getElementById("dietBtn")
+                .innerText =
+                    "🍎 Diet Plan";
+
+
+                document
+                .getElementById("startBtn")
+                .innerText =
+                    "Get Started →";
+
+
+                document
+                .getElementById("nameInput")
+                .placeholder =
+                    "Enter your name";
+
+            }
+
+        }
+
+
+        // LOAD SAVED NAME
+        window.onload = function () {
+
+            let savedName =
+                localStorage.getItem("userName");
+
+
+            if (savedName) {
+
+                document
+                .getElementById("userName")
+                .innerText = savedName;
+
+            }
+
+        };
+
+    </script>
 
 </body>
+
 </html>
+```
