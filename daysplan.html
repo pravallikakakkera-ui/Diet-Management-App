@@ -1,1126 +1,864 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Diet Plan - Diet Management App</title>
+<title>Days Diet Plan</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #dffaf1, #ffffff);
-            color: #333;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 30px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#dffaf1,#ffffff);
+    color:#222;
+}
 
-        h1 {
-            text-align: center;
-            color: #159b7d;
-            margin-bottom: 25px;
-        }
+.container{
+    width:94%;
+    max-width:1100px;
+    margin:25px auto;
+    background:white;
+    padding:25px;
+    border-radius:22px;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
+}
 
-        .language-box {
-            text-align: right;
-            margin-bottom: 20px;
-        }
+.language{
+    text-align:right;
+    margin-bottom:15px;
+}
 
-        select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-        }
+select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:15px;
+}
 
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-        }
+h1{
+    text-align:center;
+    color:#159b7d;
+    margin-bottom:30px;
+}
 
-        .section {
-            margin: 20px 0;
-        }
+h2{
+    color:#159b7d;
+    margin-top:25px;
+}
 
-        .options {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+.section{
+    background:#f3fffb;
+    padding:20px;
+    border-radius:18px;
+    margin-top:20px;
+}
 
-        .option-btn {
-            padding: 12px 22px;
-            border: 2px solid #159b7d;
-            background: white;
-            color: #159b7d;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 15px;
-        }
+.option-buttons{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:15px;
+}
 
-        .option-btn:hover,
-        .option-btn.active {
-            background: #159b7d;
-            color: white;
-        }
+.option-btn{
+    padding:13px 25px;
+    border:none;
+    border-radius:28px;
+    background:#159b7d;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        .generate-btn {
-            display: block;
-            margin: 30px auto;
-            padding: 15px 35px;
-            border: none;
-            border-radius: 30px;
-            background: #159b7d;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.option-btn.selected{
+    background:#075c49;
+    box-shadow:0 0 0 3px #b6eee0;
+}
 
-        .generate-btn:hover {
-            background: #10745f;
-        }
+.generate-btn{
+    display:block;
+    margin:30px auto;
+    padding:15px 32px;
+    border:none;
+    border-radius:30px;
+    background:#10745f;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        .result {
-            margin-top: 25px;
-        }
+#planResult{
+    margin-top:25px;
+}
 
-        .result h2 {
-            color: #159b7d;
-            text-align: center;
-        }
+.day-card{
+    background:#f8fffc;
+    border:1px solid #d5eee6;
+    border-radius:18px;
+    padding:20px;
+    margin-top:20px;
+}
 
-        .day-card {
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            padding: 18px;
-            margin: 15px 0;
-            background: #f9fffc;
-        }
+.day-title{
+    color:#159b7d;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
 
-        .day-card h3 {
-            color: #159b7d;
-            margin-top: 0;
-        }
+.meal-card{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    margin:10px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
 
-        .meal {
-            margin: 10px 0;
-            padding: 10px;
-            background: white;
-            border-radius: 10px;
-        }
+.meal-name{
+    font-weight:bold;
+    color:#10745f;
+    font-size:17px;
+}
 
-        .calories {
-            font-weight: bold;
-            color: #159b7d;
-        }
+.navigation{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-top:35px;
+}
 
-        .summary {
-            margin-top: 25px;
-            padding: 20px;
-            background: #e8faf4;
-            border-radius: 15px;
-            text-align: center;
-        }
+.back-btn,
+.next-btn{
+    padding:15px 40px;
+    border:none;
+    border-radius:30px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        .navigation {
-            margin-top: 35px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
+.back-btn{
+    background:#777;
+    color:white;
+}
 
-        .nav-btn {
-            text-decoration: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            background: #159b7d;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            display: inline-block;
-        }
+.next-btn{
+    background:#159b7d;
+    color:white;
+}
 
-        .nav-btn:hover {
-            background: #10745f;
-        }
+@media(max-width:600px){
 
-        @media (max-width: 600px) {
+    .navigation{
+        flex-direction:column;
+    }
 
-            .container {
-                padding: 20px;
-            }
+    .back-btn,
+    .next-btn{
+        width:100%;
+    }
 
-            .navigation {
-                flex-direction: column;
-                align-items: center;
-            }
+}
 
-            .nav-btn {
-                width: 90%;
-                text-align: center;
-            }
-        }
-    </style>
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- Language -->
-        <div class="language-box">
+<div class="language">
 
-            <label for="language" id="languageLabel">
-                🌐 Language
-            </label>
+🌐
 
-            <select id="language" onchange="changeLanguage()">
+<select id="language" onchange="changeLanguage()">
 
-                <option value="en">English</option>
-                <option value="te">తెలుగు</option>
+<option value="en">English</option>
 
-            </select>
+<option value="te">తెలుగు</option>
 
-        </div>
+</select>
 
+</div>
 
-        <!-- Page Title -->
-        <h1 id="pageTitle">
-            🥗 Personalized Diet Plan
-        </h1>
 
+<h1 id="title">
+📅 Days Diet Plan
+</h1>
 
-        <!-- Goal -->
-        <div class="section">
 
-            <label id="goalLabel">
-                Choose Your Goal
-            </label>
+<!-- GOAL -->
 
-            <div class="options">
+<div class="section">
 
-                <button
-                    class="option-btn"
-                    onclick="selectGoal(this, 'Weight Loss')"
-                    id="lossBtn">
-                    Weight Loss
-                </button>
+<h2 id="goalTitle">
+🎯 Select Your Goal
+</h2>
 
-                <button
-                    class="option-btn"
-                    onclick="selectGoal(this, 'Weight Gain')"
-                    id="gainBtn">
-                    Weight Gain
-                </button>
+<div class="option-buttons">
 
-                <button
-                    class="option-btn"
-                    onclick="selectGoal(this, 'Healthy Diet')"
-                    id="healthyBtn">
-                    Healthy Diet
-                </button>
+<button class="option-btn"
+onclick="selectGoal('loss',this)"
+id="lossBtn">
 
-            </div>
+⚖️ Weight Loss
 
-        </div>
+</button>
 
 
-        <!-- Number of Days -->
-        <div class="section">
+<button class="option-btn"
+onclick="selectGoal('gain',this)"
+id="gainBtn">
 
-            <label id="daysLabel">
-                Number of Days
-            </label>
+💪 Weight Gain
 
-            <select id="days">
+</button>
 
-                <option value="1" id="day1">1 Day</option>
 
-                <option value="7" id="day7">7 Days</option>
+<button class="option-btn"
+onclick="selectGoal('healthy',this)"
+id="healthyBtn">
 
-                <option value="15" id="day15">15 Days</option>
+🥗 Healthy Diet
 
-                <option value="30" selected id="day30">30 Days</option>
+</button>
 
-            </select>
+</div>
 
-        </div>
+</div>
 
 
-        <!-- Food Type -->
-        <div class="section">
+<!-- DAYS -->
 
-            <label id="foodTypeLabel">
-                Food Type
-            </label>
+<div class="section">
 
-            <div class="options">
+<h2 id="daysTitle">
+📆 Select Number of Days
+</h2>
 
-                <button
-                    class="option-btn"
-                    onclick="selectFood(this, 'Veg')"
-                    id="vegBtn">
-                    🥦 Veg
-                </button>
+<div class="option-buttons">
 
-                <button
-                    class="option-btn"
-                    onclick="selectFood(this, 'Non-Veg')"
-                    id="nonVegBtn">
-                    🍗 Non-Veg
-                </button>
+<button class="option-btn"
+onclick="selectDays(1,this)">
 
-            </div>
+1 Day
 
-        </div>
+</button>
 
 
-        <!-- Calories -->
-        <div class="section">
+<button class="option-btn"
+onclick="selectDays(7,this)">
 
-            <label id="calorieLabel">
-                Daily Calorie Target
-            </label>
+7 Days
 
-            <select id="calories">
+</button>
 
-                <option value="1500" id="cal1500">
-                    1500 Calories
-                </option>
 
-                <option value="1800" id="cal1800">
-                    1800 Calories
-                </option>
+<button class="option-btn"
+onclick="selectDays(15,this)">
 
-                <option value="2000" selected id="cal2000">
-                    2000 Calories
-                </option>
+15 Days
 
-                <option value="2200" id="cal2200">
-                    2200 Calories
-                </option>
+</button>
 
-                <option value="2500" id="cal2500">
-                    2500 Calories
-                </option>
 
-            </select>
+<button class="option-btn"
+onclick="selectDays(30,this)">
 
-        </div>
+30 Days
 
+</button>
 
-        <!-- Generate Button -->
-        <button
-            class="generate-btn"
-            onclick="generatePlan()"
-            id="generateBtn">
+</div>
 
-            Generate Diet Plan
+</div>
 
-        </button>
 
+<!-- FOOD TYPE -->
 
-        <!-- Result -->
-        <div
-            class="result"
-            id="result">
-        </div>
+<div class="section">
 
+<h2 id="foodTitle">
+🍽️ Select Food Type
+</h2>
 
-        <!-- Navigation -->
-        <div class="navigation">
+<div class="option-buttons">
 
-            <a
-                href="diet.html"
-                class="nav-btn"
-                id="backButton">
+<button class="option-btn"
+onclick="selectFood('veg',this)"
+id="vegBtn">
 
-                ← Back
+🥦 Veg
 
-            </a>
+</button>
 
-            <a
-                href="vitamins-page.html"
-                class="nav-btn"
-                id="nextButton">
 
-                Next →
+<button class="option-btn"
+onclick="selectFood('nonveg',this)"
+id="nonVegBtn">
 
-            </a>
+🍗 Non-Veg
 
-        </div>
+</button>
 
-    </div>
+</div>
 
+</div>
 
-    <script>
 
-        let selectedGoal = "";
-        let selectedFoodType = "";
-        let currentLanguage = "en";
+<!-- CALORIES -->
 
+<div class="section">
 
-        // =========================
-        // Select Goal
-        // =========================
+<h2 id="calorieTitle">
+🔥 Select Daily Calories
+</h2>
 
-        function selectGoal(button, goal) {
+<div class="option-buttons">
 
-            document
-                .querySelectorAll("#lossBtn, #gainBtn, #healthyBtn")
-                .forEach(function(btn) {
-                    btn.classList.remove("active");
-                });
+<button class="option-btn"
+onclick="selectCalories(1500,this)">
 
-            button.classList.add("active");
+1500 kcal
 
-            selectedGoal = goal;
-        }
+</button>
 
 
-        // =========================
-        // Select Food
-        // =========================
+<button class="option-btn"
+onclick="selectCalories(1800,this)">
 
-        function selectFood(button, type) {
+1800 kcal
 
-            document
-                .querySelectorAll("#vegBtn, #nonVegBtn")
-                .forEach(function(btn) {
-                    btn.classList.remove("active");
-                });
+</button>
 
-            button.classList.add("active");
 
-            selectedFoodType = type;
-        }
+<button class="option-btn"
+onclick="selectCalories(2000,this)">
 
+2000 kcal
 
-        // =========================
-        // Generate Diet Plan
-        // =========================
+</button>
 
-        function generatePlan() {
 
-            const days =
-                parseInt(document.getElementById("days").value);
+<button class="option-btn"
+onclick="selectCalories(2200,this)">
 
-            const calories =
-                document.getElementById("calories").value;
+2200 kcal
 
+</button>
 
-            if (selectedGoal === "") {
 
-                if (currentLanguage === "te") {
-                    alert("దయచేసి మీ లక్ష్యాన్ని ఎంచుకోండి.");
-                } else {
-                    alert("Please select your goal.");
-                }
+<button class="option-btn"
+onclick="selectCalories(2500,this)">
 
-                return;
-            }
+2500 kcal
 
+</button>
 
-            if (selectedFoodType === "") {
+</div>
 
-                if (currentLanguage === "te") {
-                    alert("దయచేసి వెజ్ లేదా నాన్-వెజ్ ఎంచుకోండి.");
-                } else {
-                    alert("Please select Veg or Non-Veg.");
-                }
+</div>
 
-                return;
-            }
 
+<button class="generate-btn"
+onclick="generatePlan()"
+id="generateButton">
 
-            // =========================
-            // Language Text
-            // =========================
+🍽️ Generate Diet Plan
 
-            let title;
-            let goalText;
-            let foodText;
-            let calorieText;
-            let durationText;
-            let morningText;
-            let afternoonText;
-            let snacksText;
-            let nightText;
-            let successTitle;
-            let successText;
-            let nextText;
+</button>
 
 
-            if (currentLanguage === "te") {
+<div id="planResult"></div>
 
-                title = "🥗 మీ వ్యక్తిగత డైట్ ప్లాన్";
 
-                goalText = "లక్ష్యం";
+<!-- NAVIGATION -->
 
-                foodText = "ఆహారం రకం";
+<div class="navigation">
 
-                calorieText = "రోజువారీ లక్ష్యం";
+<button class="back-btn"
+onclick="goBack()"
+id="backButton">
 
-                durationText = "ప్లాన్ వ్యవధి";
+← Back
 
-                morningText = "ఉదయం / అల్పాహారం";
+</button>
 
-                afternoonText = "మధ్యాహ్నం / భోజనం";
 
-                snacksText = "స్నాక్స్";
+<button class="next-btn"
+onclick="goNext()"
+id="nextButton">
 
-                nightText = "రాత్రి / విందు";
+Next → 
 
-                successTitle =
-                    "✅ డైట్ ప్లాన్ విజయవంతంగా రూపొందించబడింది";
+</button>
 
-                successText =
-                    "మీరు ఎంచుకున్న డైట్ ప్లాన్‌ను క్రమం తప్పకుండా పాటించండి మరియు తగినంత నీరు తాగండి.";
+</div>
 
-                nextText =
-                    "మీరు సిద్ధంగా ఉన్నప్పుడు, అన్ని విటమిన్లను చూడటానికి తర్వాత బటన్‌ను క్లిక్ చేయండి.";
+</div>
 
-            } else {
 
-                title = "🥗 Your Personalized Diet Plan";
+<script>
 
-                goalText = "Goal";
+let selectedGoal="";
+let selectedDays=0;
+let selectedFood="";
+let selectedCalories=0;
 
-                foodText = "Food Type";
 
-                calorieText = "Daily Target";
+/* GOAL */
 
-                durationText = "Plan Duration";
+function selectGoal(goal,button){
 
-                morningText = "Morning / Breakfast";
+selectedGoal=goal;
 
-                afternoonText = "Afternoon / Lunch";
+document.querySelectorAll(".section:nth-of-type(1) .option-btn")
+.forEach(btn=>{
+btn.classList.remove("selected");
+});
 
-                snacksText = "Snacks";
+button.classList.add("selected");
 
-                nightText = "Night / Dinner";
+}
 
-                successTitle =
-                    "✅ Diet Plan Created Successfully";
 
-                successText =
-                    "Follow your selected diet plan regularly and stay hydrated.";
+/* DAYS */
 
-                nextText =
-                    "When you are ready, click Next → to view all vitamins.";
-            }
+function selectDays(days,button){
 
+selectedDays=days;
 
-            // =========================
-            // Food Lists
-            // =========================
+const buttons=button.parentElement.querySelectorAll(".option-btn");
 
-            const vegFoods = [
+buttons.forEach(btn=>{
+btn.classList.remove("selected");
+});
 
-                {
-                    en: "Idli",
-                    te: "ఇడ్లీ"
-                },
+button.classList.add("selected");
 
-                {
-                    en: "Dosa",
-                    te: "దోస"
-                },
+}
 
-                {
-                    en: "Vegetable Upma",
-                    te: "కూరగాయల ఉప్మా"
-                },
 
-                {
-                    en: "Rice & Dal",
-                    te: "అన్నం & పప్పు"
-                },
+/* FOOD */
 
-                {
-                    en: "Leafy Vegetables",
-                    te: "ఆకుకూరలు"
-                },
+function selectFood(food,button){
 
-                {
-                    en: "Vegetables",
-                    te: "కూరగాయలు"
-                },
+selectedFood=food;
 
-                {
-                    en: "Curd",
-                    te: "పెరుగు"
-                },
+document.querySelectorAll("#vegBtn,#nonVegBtn")
+.forEach(btn=>{
+btn.classList.remove("selected");
+});
 
-                {
-                    en: "Nuts",
-                    te: "డ్రై ఫ్రూట్స్"
-                },
+button.classList.add("selected");
 
-                {
-                    en: "Banana",
-                    te: "అరటిపండు"
-                },
+}
 
-                {
-                    en: "Milk",
-                    te: "పాలు"
-                },
 
-                {
-                    en: "Roti",
-                    te: "రోటీ"
-                }
+/* CALORIES */
 
-            ];
+function selectCalories(calories,button){
 
+selectedCalories=calories;
 
-            const nonVegFoods = [
+const buttons=button.parentElement.querySelectorAll(".option-btn");
 
-                {
-                    en: "Idli",
-                    te: "ఇడ్లీ"
-                },
+buttons.forEach(btn=>{
+btn.classList.remove("selected");
+});
 
-                {
-                    en: "Egg",
-                    te: "గుడ్డు"
-                },
+button.classList.add("selected");
 
-                {
-                    en: "Rice & Dal",
-                    te: "అన్నం & పప్పు"
-                },
+}
 
-                {
-                    en: "Chicken",
-                    te: "చికెన్"
-                },
 
-                {
-                    en: "Fish",
-                    te: "చేప"
-                },
+/* GENERATE PLAN */
 
-                {
-                    en: "Vegetables",
-                    te: "కూరగాయలు"
-                },
+function generatePlan(){
 
-                {
-                    en: "Curd",
-                    te: "పెరుగు"
-                },
+if(!selectedGoal){
 
-                {
-                    en: "Nuts",
-                    te: "డ్రై ఫ్రూట్స్"
-                },
+alert("Please select your goal.");
 
-                {
-                    en: "Banana",
-                    te: "అరటిపండు"
-                },
+return;
 
-                {
-                    en: "Milk",
-                    te: "పాలు"
-                },
+}
 
-                {
-                    en: "Roti",
-                    te: "రోటీ"
-                }
+if(!selectedDays){
 
-            ];
+alert("Please select number of days.");
 
+return;
 
-            const foods =
-                selectedFoodType === "Veg"
-                    ? vegFoods
-                    : nonVegFoods;
+}
 
+if(!selectedFood){
 
-            // =========================
-            // Goal Translation
-            // =========================
+alert("Please select Veg or Non-Veg.");
 
-            let displayGoal;
+return;
 
-            if (currentLanguage === "te") {
+}
 
-                if (selectedGoal === "Weight Loss") {
-                    displayGoal = "బరువు తగ్గడం";
-                }
+if(!selectedCalories){
 
-                else if (selectedGoal === "Weight Gain") {
-                    displayGoal = "బరువు పెరగడం";
-                }
+alert("Please select daily calories.");
 
-                else {
-                    displayGoal = "ఆరోగ్యకరమైన ఆహారం";
-                }
+return;
 
-            } else {
+}
 
-                displayGoal = selectedGoal;
-            }
 
+const result=document.getElementById("planResult");
 
-            // =========================
-            // Food Translation
-            // =========================
+result.innerHTML="";
 
-            let displayFood;
 
-            if (currentLanguage === "te") {
+let goalText="";
 
-                if (selectedFoodType === "Veg") {
-                    displayFood = "🥦 వెజ్";
-                } else {
-                    displayFood = "🍗 నాన్-వెజ్";
-                }
+if(selectedGoal==="loss"){
 
-            } else {
+goalText="Weight Loss";
 
-                displayFood = selectedFoodType;
-            }
+}
 
+else if(selectedGoal==="gain"){
 
-            // =========================
-            // Starting Result
-            // =========================
+goalText="Weight Gain";
 
-            let result = `
+}
 
-                <h2>
-                    ${title}
-                </h2>
+else{
 
-                <div class="summary">
+goalText="Healthy Diet";
 
-                    <p>
-                        <strong>${goalText}:</strong>
-                        ${displayGoal}
-                    </p>
+}
 
-                    <p>
-                        <strong>${foodText}:</strong>
-                        ${displayFood}
-                    </p>
 
-                    <p>
-                        <strong>${calorieText}:</strong>
-                        ${calories}
-                        ${currentLanguage === "te" ? "క్యాలరీలు" : "Calories"}
-                    </p>
+let foodText=
+selectedFood==="veg" ? "Vegetarian" : "Non-Vegetarian";
 
-                    <p>
-                        <strong>${durationText}:</strong>
-                        ${days}
-                        ${currentLanguage === "te" ? "రోజులు" : "Days"}
-                    </p>
 
-                </div>
+const summary=document.createElement("div");
 
-            `;
+summary.className="section";
 
+summary.innerHTML=`
 
-            // =========================
-            // Create Daily Plan
-            // =========================
+<h2>✅ Your Selected Plan</h2>
 
-            for (
-                let day = 1;
-                day <= days;
-                day++
-            ) {
+<p><strong>Goal:</strong> ${goalText}</p>
 
-                const breakfast =
-                    foods[(day - 1) % foods.length];
+<p><strong>Food Type:</strong> ${foodText}</p>
 
-                const lunch =
-                    foods[(day + 2) % foods.length];
+<p><strong>Duration:</strong> ${selectedDays} Day(s)</p>
 
-                const snack =
-                    foods[(day + 5) % foods.length];
+<p><strong>Daily Calories:</strong> ${selectedCalories} kcal</p>
 
-                const dinner =
-                    foods[(day + 7) % foods.length];
+`;
 
+result.appendChild(summary);
 
-                const breakfastName =
-                    currentLanguage === "te"
-                        ? breakfast.te
-                        : breakfast.en;
 
-                const lunchName =
-                    currentLanguage === "te"
-                        ? lunch.te
-                        : lunch.en;
+/* FOOD LIST */
 
-                const snackName =
-                    currentLanguage === "te"
-                        ? snack.te
-                        : snack.en;
+let breakfastVeg=[
+"Idli with Sambar",
+"Vegetable Upma",
+"Poha with Vegetables",
+"Dosa with Chutney"
+];
 
-                const dinnerName =
-                    currentLanguage === "te"
-                        ? dinner.te
-                        : dinner.en;
+let lunchVeg=[
+"Rice with Dal and Vegetables",
+"Roti with Dal",
+"Rice with Leafy Vegetables",
+"Vegetable Curry with Roti"
+];
 
+let snackVeg=[
+"Fruit",
+"Nuts",
+"Milk",
+"Curd with Fruit"
+];
 
-                const dayText =
-                    currentLanguage === "te"
-                        ? "రోజు"
-                        : "Day";
+let dinnerVeg=[
+"Roti with Vegetables",
+"Vegetable Soup",
+"Rice with Dal",
+"Curd Rice with Vegetables"
+];
 
 
-                result += `
+let breakfastNonVeg=[
+"Boiled Eggs with Idli",
+"Egg Omelette with Dosa",
+"Vegetable Upma with Egg",
+"Eggs with Toast"
+];
 
-                    <div class="day-card">
+let lunchNonVeg=[
+"Rice with Chicken",
+"Rice with Fish and Vegetables",
+"Roti with Chicken",
+"Rice with Egg Curry"
+];
 
-                        <h3>
-                            ${dayText} ${day}
-                        </h3>
+let snackNonVeg=[
+"Fruit",
+"Nuts",
+"Milk",
+"Boiled Egg"
+];
 
+let dinnerNonVeg=[
+"Roti with Chicken",
+"Rice with Fish",
+"Egg Curry with Roti",
+"Chicken Soup"
+];
 
-                        <div class="meal">
 
-                            🌅
-                            <strong>
-                                ${morningText}:
-                            </strong>
+for(let day=1;day<=selectedDays;day++){
 
-                            ${breakfastName}
+let breakfast;
+let lunch;
+let snack;
+let dinner;
 
-                        </div>
 
+if(selectedFood==="veg"){
 
-                        <div class="meal">
+breakfast=
+breakfastVeg[(day-1)%breakfastVeg.length];
 
-                            ☀️
-                            <strong>
-                                ${afternoonText}:
-                            </strong>
+lunch=
+lunchVeg[(day-1)%lunchVeg.length];
 
-                            ${lunchName}
+snack=
+snackVeg[(day-1)%snackVeg.length];
 
-                        </div>
+dinner=
+dinnerVeg[(day-1)%dinnerVeg.length];
 
+}
 
-                        <div class="meal">
+else{
 
-                            🍎
-                            <strong>
-                                ${snacksText}:
-                            </strong>
+breakfast=
+breakfastNonVeg[(day-1)%breakfastNonVeg.length];
 
-                            ${snackName}
+lunch=
+lunchNonVeg[(day-1)%lunchNonVeg.length];
 
-                        </div>
+snack=
+snackNonVeg[(day-1)%snackNonVeg.length];
 
+dinner=
+dinnerNonVeg[(day-1)%dinnerNonVeg.length];
 
-                        <div class="meal">
+}
 
-                            🌙
-                            <strong>
-                                ${nightText}:
-                            </strong>
 
-                            ${dinnerName}
+const dayCard=document.createElement("div");
 
-                        </div>
+dayCard.className="day-card";
 
 
-                        <div class="meal calories">
+dayCard.innerHTML=`
 
-                            🔥
-                            ${calorieText}:
-                            ${calories}
-                            ${currentLanguage === "te" ? "క్యాలరీలు" : "Calories"}
+<div class="day-title">
+📅 Day ${day}
+</div>
 
-                        </div>
 
-                    </div>
+<div class="meal-card">
 
-                `;
-            }
+<div class="meal-name">
+🌅 Breakfast
+</div>
 
+<p>${breakfast}</p>
 
-            // =========================
-            // Final Message
-            // =========================
+</div>
 
-            result += `
 
-                <div class="summary">
+<div class="meal-card">
 
-                    <h3>
-                        ${successTitle}
-                    </h3>
+<div class="meal-name">
+☀️ Lunch
+</div>
 
-                    <p>
-                        ${successText}
-                    </p>
+<p>${lunch}</p>
 
-                    <p>
-                        ${nextText}
-                    </p>
+</div>
 
-                </div>
 
-            `;
+<div class="meal-card">
 
+<div class="meal-name">
+🍎 Evening Snack
+</div>
 
-            document.getElementById("result").innerHTML =
-                result;
+<p>${snack}</p>
 
+</div>
 
-            window.scrollTo({
 
-                top: document.body.scrollHeight,
+<div class="meal-card">
 
-                behavior: "smooth"
+<div class="meal-name">
+🌙 Dinner
+</div>
 
-            });
+<p>${dinner}</p>
 
-        }
+</div>
 
+`;
 
-        // =========================
-        // Language Change
-        // =========================
+result.appendChild(dayCard);
 
-        function changeLanguage() {
+}
 
-            currentLanguage =
-                document.getElementById("language").value;
 
+/* SCROLL */
 
-            if (currentLanguage === "te") {
+result.scrollIntoView({
+behavior:"smooth"
+});
 
-                document.getElementById("pageTitle").innerText =
-                    "🥗 వ్యక్తిగత డైట్ ప్లాన్";
+}
 
 
-                document.getElementById("languageLabel").innerText =
-                    "🌐 భాష";
+/* LANGUAGE */
 
+function changeLanguage(){
 
-                document.getElementById("goalLabel").innerText =
-                    "మీ లక్ష్యాన్ని ఎంచుకోండి";
+const lang=
+document.getElementById("language").value;
 
 
-                document.getElementById("lossBtn").innerText =
-                    "బరువు తగ్గడం";
+if(lang==="te"){
 
+document.getElementById("title").innerText=
+"📅 రోజుల ఆహార ప్రణాళిక";
 
-                document.getElementById("gainBtn").innerText =
-                    "బరువు పెరగడం";
+document.getElementById("goalTitle").innerText=
+"🎯 మీ లక్ష్యాన్ని ఎంచుకోండి";
 
+document.getElementById("lossBtn").innerText=
+"⚖️ బరువు తగ్గడం";
 
-                document.getElementById("healthyBtn").innerText =
-                    "ఆరోగ్యకరమైన ఆహారం";
+document.getElementById("gainBtn").innerText=
+"💪 బరువు పెరగడం";
 
+document.getElementById("healthyBtn").innerText=
+"🥗 ఆరోగ్యకరమైన ఆహారం";
 
-                document.getElementById("daysLabel").innerText =
-                    "ఎన్ని రోజులు";
+document.getElementById("daysTitle").innerText=
+"📆 ఎన్ని రోజులు కావాలో ఎంచుకోండి";
 
+document.getElementById("foodTitle").innerText=
+"🍽️ ఆహార రకాన్ని ఎంచుకోండి";
 
-                document.getElementById("day1").innerText =
-                    "1 రోజు";
+document.getElementById("vegBtn").innerText=
+"🥦 వెజ్";
 
+document.getElementById("nonVegBtn").innerText=
+"🍗 నాన్-వెజ్";
 
-                document.getElementById("day7").innerText =
-                    "7 రోజులు";
+document.getElementById("calorieTitle").innerText=
+"🔥 రోజువారీ క్యాలరీలను ఎంచుకోండి";
 
+document.getElementById("generateButton").innerText=
+"🍽️ డైట్ ప్లాన్ తయారు చేయండి";
 
-                document.getElementById("day15").innerText =
-                    "15 రోజులు";
+document.getElementById("backButton").innerText=
+"← వెనక్కి";
 
+document.getElementById("nextButton").innerText=
+"తర్వాత →";
 
-                document.getElementById("day30").innerText =
-                    "30 రోజులు";
+}
 
+else{
 
-                document.getElementById("foodTypeLabel").innerText =
-                    "ఆహారం రకం";
+document.getElementById("title").innerText=
+"📅 Days Diet Plan";
 
+document.getElementById("goalTitle").innerText=
+"🎯 Select Your Goal";
 
-                document.getElementById("vegBtn").innerText =
-                    "🥦 వెజ్";
+document.getElementById("lossBtn").innerText=
+"⚖️ Weight Loss";
 
+document.getElementById("gainBtn").innerText=
+"💪 Weight Gain";
 
-                document.getElementById("nonVegBtn").innerText =
-                    "🍗 నాన్-వెజ్";
+document.getElementById("healthyBtn").innerText=
+"🥗 Healthy Diet";
 
+document.getElementById("daysTitle").innerText=
+"📆 Select Number of Days";
 
-                document.getElementById("calorieLabel").innerText =
-                    "రోజువారీ క్యాలరీ లక్ష్యం";
+document.getElementById("foodTitle").innerText=
+"🍽️ Select Food Type";
 
+document.getElementById("vegBtn").innerText=
+"🥦 Veg";
 
-                document.getElementById("cal1500").innerText =
-                    "1500 క్యాలరీలు";
+document.getElementById("nonVegBtn").innerText=
+"🍗 Non-Veg";
 
+document.getElementById("calorieTitle").innerText=
+"🔥 Select Daily Calories";
 
-                document.getElementById("cal1800").innerText =
-                    "1800 క్యాలరీలు";
+document.getElementById("generateButton").innerText=
+"🍽️ Generate Diet Plan";
 
+document.getElementById("backButton").innerText=
+"← Back";
 
-                document.getElementById("cal2000").innerText =
-                    "2000 క్యాలరీలు";
+document.getElementById("nextButton").innerText=
+"Next →";
 
+}
 
-                document.getElementById("cal2200").innerText =
-                    "2200 క్యాలరీలు";
+}
 
 
-                document.getElementById("cal2500").innerText =
-                    "2500 క్యాలరీలు";
+/* BACK */
 
+function goBack(){
 
-                document.getElementById("generateBtn").innerText =
-                    "డైట్ ప్లాన్ రూపొందించండి";
+window.location.href="diet.html";
 
+}
 
-                document.getElementById("backButton").innerText =
-                    "← వెనుకకు";
 
+/* NEXT */
 
-                document.getElementById("nextButton").innerText =
-                    "తర్వాత →";
+function goNext(){
 
-            }
+window.location.href="vitamins-page.html";
 
+}
 
-            else {
-
-                document.getElementById("pageTitle").innerText =
-                    "🥗 Personalized Diet Plan";
-
-
-                document.getElementById("languageLabel").innerText =
-                    "🌐 Language";
-
-
-                document.getElementById("goalLabel").innerText =
-                    "Choose Your Goal";
-
-
-                document.getElementById("lossBtn").innerText =
-                    "Weight Loss";
-
-
-                document.getElementById("gainBtn").innerText =
-                    "Weight Gain";
-
-
-                document.getElementById("healthyBtn").innerText =
-                    "Healthy Diet";
-
-
-                document.getElementById("daysLabel").innerText =
-                    "Number of Days";
-
-
-                document.getElementById("day1").innerText =
-                    "1 Day";
-
-
-                document.getElementById("day7").innerText =
-                    "7 Days";
-
-
-                document.getElementById("day15").innerText =
-                    "15 Days";
-
-
-                document.getElementById("day30").innerText =
-                    "30 Days";
-
-
-                document.getElementById("foodTypeLabel").innerText =
-                    "Food Type";
-
-
-                document.getElementById("vegBtn").innerText =
-                    "🥦 Veg";
-
-
-                document.getElementById("nonVegBtn").innerText =
-                    "🍗 Non-Veg";
-
-
-                document.getElementById("calorieLabel").innerText =
-                    "Daily Calorie Target";
-
-
-                document.getElementById("cal1500").innerText =
-                    "1500 Calories";
-
-
-                document.getElementById("cal1800").innerText =
-                    "1800 Calories";
-
-
-                document.getElementById("cal2000").innerText =
-                    "2000 Calories";
-
-
-                document.getElementById("cal2200").innerText =
-                    "2200 Calories";
-
-
-                document.getElementById("cal2500").innerText =
-                    "2500 Calories";
-
-
-                document.getElementById("generateBtn").innerText =
-                    "Generate Diet Plan";
-
-
-                document.getElementById("backButton").innerText =
-                    "← Back";
-
-
-                document.getElementById("nextButton").innerText =
-                    "Next →";
-
-            }
-
-
-            // If a plan is already generated,
-            // generate it again in selected language.
-
-            if (selectedGoal !== "" && selectedFoodType !== "") {
-
-                generatePlan();
-
-            }
-
-        }
-
-    </script>
+</script>
 
 </body>
-
 </html>
+```
