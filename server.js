@@ -1,15 +1,21 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
+// Frontend files
+app.use(express.static(__dirname));
+
+// Home page
 app.get("/", (req, res) => {
-    res.send("Diet Management Backend is running!");
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// Backend API
 app.post("/api/diet", (req, res) => {
     const data = req.body;
 
@@ -22,10 +28,10 @@ app.post("/api/diet", (req, res) => {
     });
 });
 
-// Vercel kosam
+// Vercel
 module.exports = app;
 
-// Local computer lo run cheyyadaniki
+// Local computer
 if (require.main === module) {
     const PORT = 5000;
 
