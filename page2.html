@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,80 +6,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Choose Your Need</title>
+    <title>Health Issues - Diet Management</title>
 
     <link rel="stylesheet" href="style.css">
 
     <style>
-        .language-box {
-            margin: 20px 0;
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
         }
 
-        .language-box select {
-            padding: 10px 18px;
-            border: 2px solid #159b7d;
-            border-radius: 10px;
+        .health-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 30px;
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .health-container h1 {
+            color: #159b7d;
+            margin-bottom: 25px;
+        }
+
+        .health-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .health-buttons button {
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #159b7d;
+            color: white;
             font-size: 16px;
+            cursor: pointer;
+        }
+
+        .health-buttons button:hover {
+            opacity: 0.85;
+        }
+
+        #healthResult {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #eefaf6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .navigation {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .navigation button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .back-btn {
+            background: #777;
+            color: white;
+        }
+
+        .done-btn {
+            background: #159b7d;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .health-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .health-container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="home-container">
+    <div class="health-container">
 
-        <h1>🥗 Diet Management Application</h1>
+        <h1>🩺 Health Issues</h1>
 
-        <!-- Language -->
-
-        <div class="language-box">
-
-            <label>🌐 Language: </label>
-
-            <select id="language" onchange="changeLanguage()">
-
-                <option value="en">🇬🇧 English</option>
-
-                <option value="te">🇮🇳 తెలుగు</option>
-
-            </select>
-
-        </div>
-
-
-        <h2 id="titleText">
-            What do you need?
-        </h2>
-
-
-        <p class="question" id="questionText">
-            Choose an option to continue
+        <p>
+            Select your health problem to see the recommended vitamins.
         </p>
 
+        <div class="health-buttons">
 
-        <div class="options">
-
-            <button type="button" onclick="goToHealth()" id="healthBtn">
-                🩺 Health Issues
+            <button onclick="showHealth('Weakness')">
+                💪 Weakness
             </button>
 
-            <button type="button" onclick="goToDiet()" id="dietBtn">
-                🍎 Diet Plan
+            <button onclick="showHealth('Hair Fall')">
+                💇 Hair Fall
+            </button>
+
+            <button onclick="showHealth('Skin Problems')">
+                🌸 Skin Problems
+            </button>
+
+            <button onclick="showHealth('Poor Immunity')">
+                🛡️ Poor Immunity
+            </button>
+
+            <button onclick="showHealth('Eye Health')">
+                👁️ Eye Health
+            </button>
+
+            <button onclick="showHealth('Bone Health')">
+                🦴 Bone Health
             </button>
 
         </div>
 
 
-        <!-- Navigation -->
+        <div id="healthResult">
+            Select a health issue above.
+        </div>
 
-        <div class="navigation-buttons">
 
-            <button type="button" onclick="history.back()" id="backBtn">
+        <div class="navigation">
+
+            <button
+                class="back-btn"
+                onclick="goBack()"
+            >
                 ← Back
             </button>
 
-            <button type="button" onclick="goToNext()" id="nextBtn">
-                Next →
+            <button
+                class="done-btn"
+                onclick="doneHealth()"
+            >
+                Done ✓
             </button>
 
         </div>
@@ -88,70 +166,120 @@
 
     <script>
 
-        function goToHealth() {
-            window.location.href = "health.html";
+        function showHealth(problem) {
+
+            let result =
+                document.getElementById("healthResult");
+
+
+            if (problem === "Weakness") {
+
+                result.innerHTML = `
+                    <h3>💪 Weakness</h3>
+                    <p>
+                        Recommended Vitamins: Vitamin B1, B6, B12 and Vitamin C.
+                    </p>
+                    <p>
+                        These vitamins can support energy production
+                        and overall body health.
+                    </p>
+                `;
+
+            }
+
+            else if (problem === "Hair Fall") {
+
+                result.innerHTML = `
+                    <h3>💇 Hair Fall</h3>
+                    <p>
+                        Recommended Vitamins: Biotin (B7),
+                        Vitamin B12, Vitamin D and Vitamin E.
+                    </p>
+                    <p>
+                        A balanced diet containing these nutrients
+                        supports healthy hair.
+                    </p>
+                `;
+
+            }
+
+            else if (problem === "Skin Problems") {
+
+                result.innerHTML = `
+                    <h3>🌸 Skin Problems</h3>
+                    <p>
+                        Recommended Vitamins: Vitamin A,
+                        Vitamin C and Vitamin E.
+                    </p>
+                    <p>
+                        Fruits, vegetables and nuts can help provide
+                        important nutrients for skin health.
+                    </p>
+                `;
+
+            }
+
+            else if (problem === "Poor Immunity") {
+
+                result.innerHTML = `
+                    <h3>🛡️ Poor Immunity</h3>
+                    <p>
+                        Recommended Vitamins: Vitamin C,
+                        Vitamin D and Vitamin A.
+                    </p>
+                    <p>
+                        Include fruits, vegetables and other
+                        nutrient-rich foods in your diet.
+                    </p>
+                `;
+
+            }
+
+            else if (problem === "Eye Health") {
+
+                result.innerHTML = `
+                    <h3>👁️ Eye Health</h3>
+                    <p>
+                        Recommended Vitamins: Vitamin A,
+                        Vitamin C and Vitamin E.
+                    </p>
+                    <p>
+                        Carrots, leafy vegetables and fruits
+                        are useful sources of nutrients.
+                    </p>
+                `;
+
+            }
+
+            else if (problem === "Bone Health") {
+
+                result.innerHTML = `
+                    <h3>🦴 Bone Health</h3>
+                    <p>
+                        Recommended Vitamins: Vitamin D
+                        and Vitamin K.
+                    </p>
+                    <p>
+                        Calcium-rich foods and adequate Vitamin D
+                        are important for maintaining healthy bones.
+                    </p>
+                `;
+
+            }
+
         }
 
 
-        function goToDiet() {
+        function goBack() {
+
+            window.location.href = "index.html";
+
+        }
+
+
+        function doneHealth() {
+
             window.location.href = "diet.html";
-        }
-
-
-        function goToNext() {
-            window.location.href = "health.html";
-        }
-
-
-        function changeLanguage() {
-
-            let language =
-                document.getElementById("language").value;
-
-
-            if (language === "te") {
-
-                document.getElementById("titleText").innerText =
-                    "మీకు ఏమి కావాలి?";
-
-                document.getElementById("questionText").innerText =
-                    "కొనసాగించడానికి ఒక ఎంపికను ఎంచుకోండి";
-
-                document.getElementById("healthBtn").innerText =
-                    "🩺 ఆరోగ్య సమస్యలు";
-
-                document.getElementById("dietBtn").innerText =
-                    "🍎 డైట్ ప్లాన్";
-
-                document.getElementById("backBtn").innerText =
-                    "← వెనుకకు";
-
-                document.getElementById("nextBtn").innerText =
-                    "తదుపరి →";
-
-            }
-
-            else {
-
-                document.getElementById("titleText").innerText =
-                    "What do you need?";
-
-                document.getElementById("questionText").innerText =
-                    "Choose an option to continue";
-
-                document.getElementById("healthBtn").innerText =
-                    "🩺 Health Issues";
-
-                document.getElementById("dietBtn").innerText =
-                    "🍎 Diet Plan";
-
-                document.getElementById("backBtn").innerText =
-                    "← Back";
-
-                document.getElementById("nextBtn").innerText =
-                    "Next →";
-
-            }
 
         }
 
@@ -160,3 +288,4 @@
 </body>
 
 </html>
+```
