@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Choose Your Need</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .language-box {
+            margin: 20px 0;
+        }
+
+        .language-box select {
+            padding: 10px 18px;
+            border: 2px solid #159b7d;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="home-container">
+
+        <h1>🥗 Diet Management Application</h1>
+
+        <!-- Language -->
+
+        <div class="language-box">
+
+            <label>🌐 Language: </label>
+
+            <select id="language" onchange="changeLanguage()">
+
+                <option value="en">🇬🇧 English</option>
+
+                <option value="te">🇮🇳 తెలుగు</option>
+
+            </select>
+
+        </div>
+
+
+        <h2 id="titleText">
+            What do you need?
+        </h2>
+
+
+        <p class="question" id="questionText">
+            Choose an option to continue
+        </p>
+
+
+        <div class="options">
+
+            <button type="button" onclick="goToHealth()" id="healthBtn">
+                🩺 Health Issues
+            </button>
+
+            <button type="button" onclick="goToDiet()" id="dietBtn">
+                🍎 Diet Plan
+            </button>
+
+        </div>
+
+
+        <!-- Navigation -->
+
+        <div class="navigation-buttons">
+
+            <button type="button" onclick="history.back()" id="backBtn">
+                ← Back
+            </button>
+
+            <button type="button" onclick="goToNext()" id="nextBtn">
+                Next →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function goToHealth() {
+            window.location.href = "health.html";
+        }
+
+
+        function goToDiet() {
+            window.location.href = "diet.html";
+        }
+
+
+        function goToNext() {
+            window.location.href = "health.html";
+        }
+
+
+        function changeLanguage() {
+
+            let language =
+                document.getElementById("language").value;
+
+
+            if (language === "te") {
+
+                document.getElementById("titleText").innerText =
+                    "మీకు ఏమి కావాలి?";
+
+                document.getElementById("questionText").innerText =
+                    "కొనసాగించడానికి ఒక ఎంపికను ఎంచుకోండి";
+
+                document.getElementById("healthBtn").innerText =
+                    "🩺 ఆరోగ్య సమస్యలు";
+
+                document.getElementById("dietBtn").innerText =
+                    "🍎 డైట్ ప్లాన్";
+
+                document.getElementById("backBtn").innerText =
+                    "← వెనుకకు";
+
+                document.getElementById("nextBtn").innerText =
+                    "తదుపరి →";
+
+            }
+
+            else {
+
+                document.getElementById("titleText").innerText =
+                    "What do you need?";
+
+                document.getElementById("questionText").innerText =
+                    "Choose an option to continue";
+
+                document.getElementById("healthBtn").innerText =
+                    "🩺 Health Issues";
+
+                document.getElementById("dietBtn").innerText =
+                    "🍎 Diet Plan";
+
+                document.getElementById("backBtn").innerText =
+                    "← Back";
+
+                document.getElementById("nextBtn").innerText =
+                    "Next →";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
