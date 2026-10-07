@@ -10,8 +10,7 @@ app.get("/", (req, res) => {
     res.send("Diet Management Backend is running!");
 });
 
-app.post("/diet", (req, res) => {
-
+app.post("/api/diet", (req, res) => {
     const data = req.body;
 
     console.log("User Diet Data:", data);
@@ -23,8 +22,14 @@ app.post("/diet", (req, res) => {
     });
 });
 
-const PORT = 5000;
+// Vercel kosam
+module.exports = app;
 
-app.listen(PORT, () => {
-    console.log(`Backend running on http://localhost:${PORT}`);
-});
+// Local computer lo run cheyyadaniki
+if (require.main === module) {
+    const PORT = 5000;
+
+    app.listen(PORT, () => {
+        console.log(`Backend running on http://localhost:${PORT}`);
+    });
+}
