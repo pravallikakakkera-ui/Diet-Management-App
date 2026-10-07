@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -195,13 +194,8 @@
 
             <select id="language" onchange="changeLanguage()">
 
-                <option value="en">
-                    English
-                </option>
-
-                <option value="te">
-                    తెలుగు
-                </option>
+                <option value="en">English</option>
+                <option value="te">తెలుగు</option>
 
             </select>
 
@@ -258,21 +252,13 @@
 
             <select id="days">
 
-                <option value="1">
-                    1 Day
-                </option>
+                <option value="1" id="day1">1 Day</option>
 
-                <option value="7">
-                    7 Days
-                </option>
+                <option value="7" id="day7">7 Days</option>
 
-                <option value="15">
-                    15 Days
-                </option>
+                <option value="15" id="day15">15 Days</option>
 
-                <option value="30" selected>
-                    30 Days
-                </option>
+                <option value="30" selected id="day30">30 Days</option>
 
             </select>
 
@@ -316,23 +302,23 @@
 
             <select id="calories">
 
-                <option value="1500">
+                <option value="1500" id="cal1500">
                     1500 Calories
                 </option>
 
-                <option value="1800">
+                <option value="1800" id="cal1800">
                     1800 Calories
                 </option>
 
-                <option value="2000" selected>
+                <option value="2000" selected id="cal2000">
                     2000 Calories
                 </option>
 
-                <option value="2200">
+                <option value="2200" id="cal2200">
                     2200 Calories
                 </option>
 
-                <option value="2500">
+                <option value="2500" id="cal2500">
                     2500 Calories
                 </option>
 
@@ -389,17 +375,19 @@
 
         let selectedGoal = "";
         let selectedFoodType = "";
+        let currentLanguage = "en";
 
 
+        // =========================
         // Select Goal
+        // =========================
+
         function selectGoal(button, goal) {
 
             document
-                .querySelectorAll(".section:nth-of-type(1) .option-btn")
+                .querySelectorAll("#lossBtn, #gainBtn, #healthyBtn")
                 .forEach(function(btn) {
-
                     btn.classList.remove("active");
-
                 });
 
             button.classList.add("active");
@@ -408,15 +396,16 @@
         }
 
 
-        // Select Food Type
+        // =========================
+        // Select Food
+        // =========================
+
         function selectFood(button, type) {
 
             document
-                .querySelectorAll(".section:nth-of-type(3) .option-btn")
+                .querySelectorAll("#vegBtn, #nonVegBtn")
                 .forEach(function(btn) {
-
                     btn.classList.remove("active");
-
                 });
 
             button.classList.add("active");
@@ -425,13 +414,14 @@
         }
 
 
+        // =========================
         // Generate Diet Plan
+        // =========================
+
         function generatePlan() {
 
             const days =
-                parseInt(
-                    document.getElementById("days").value
-                );
+                parseInt(document.getElementById("days").value);
 
             const calories =
                 document.getElementById("calories").value;
@@ -439,7 +429,11 @@
 
             if (selectedGoal === "") {
 
-                alert("Please select your goal.");
+                if (currentLanguage === "te") {
+                    alert("దయచేసి మీ లక్ష్యాన్ని ఎంచుకోండి.");
+                } else {
+                    alert("Please select your goal.");
+                }
 
                 return;
             }
@@ -447,75 +441,214 @@
 
             if (selectedFoodType === "") {
 
-                alert("Please select Veg or Non-Veg.");
+                if (currentLanguage === "te") {
+                    alert("దయచేసి వెజ్ లేదా నాన్-వెజ్ ఎంచుకోండి.");
+                } else {
+                    alert("Please select Veg or Non-Veg.");
+                }
 
                 return;
             }
 
 
-            let result = `
+            // =========================
+            // Language Text
+            // =========================
 
-                <h2>
-                    🥗 Your Personalized Diet Plan
-                </h2>
+            let title;
+            let goalText;
+            let foodText;
+            let calorieText;
+            let durationText;
+            let morningText;
+            let afternoonText;
+            let snacksText;
+            let nightText;
+            let successTitle;
+            let successText;
+            let nextText;
 
-                <div class="summary">
 
-                    <p>
-                        <strong>Goal:</strong>
-                        ${selectedGoal}
-                    </p>
+            if (currentLanguage === "te") {
 
-                    <p>
-                        <strong>Food Type:</strong>
-                        ${selectedFoodType}
-                    </p>
+                title = "🥗 మీ వ్యక్తిగత డైట్ ప్లాన్";
 
-                    <p>
-                        <strong>Daily Target:</strong>
-                        ${calories} Calories
-                    </p>
+                goalText = "లక్ష్యం";
 
-                    <p>
-                        <strong>Plan Duration:</strong>
-                        ${days} Days
-                    </p>
+                foodText = "ఆహారం రకం";
 
-                </div>
+                calorieText = "రోజువారీ లక్ష్యం";
 
-            `;
+                durationText = "ప్లాన్ వ్యవధి";
 
+                morningText = "ఉదయం / అల్పాహారం";
+
+                afternoonText = "మధ్యాహ్నం / భోజనం";
+
+                snacksText = "స్నాక్స్";
+
+                nightText = "రాత్రి / విందు";
+
+                successTitle =
+                    "✅ డైట్ ప్లాన్ విజయవంతంగా రూపొందించబడింది";
+
+                successText =
+                    "మీరు ఎంచుకున్న డైట్ ప్లాన్‌ను క్రమం తప్పకుండా పాటించండి మరియు తగినంత నీరు తాగండి.";
+
+                nextText =
+                    "మీరు సిద్ధంగా ఉన్నప్పుడు, అన్ని విటమిన్లను చూడటానికి తర్వాత బటన్‌ను క్లిక్ చేయండి.";
+
+            } else {
+
+                title = "🥗 Your Personalized Diet Plan";
+
+                goalText = "Goal";
+
+                foodText = "Food Type";
+
+                calorieText = "Daily Target";
+
+                durationText = "Plan Duration";
+
+                morningText = "Morning / Breakfast";
+
+                afternoonText = "Afternoon / Lunch";
+
+                snacksText = "Snacks";
+
+                nightText = "Night / Dinner";
+
+                successTitle =
+                    "✅ Diet Plan Created Successfully";
+
+                successText =
+                    "Follow your selected diet plan regularly and stay hydrated.";
+
+                nextText =
+                    "When you are ready, click Next → to view all vitamins.";
+            }
+
+
+            // =========================
+            // Food Lists
+            // =========================
 
             const vegFoods = [
 
-                "Idli",
-                "Dosa",
-                "Vegetable Upma",
-                "Rice & Dal",
-                "Leafy Vegetables",
-                "Vegetables",
-                "Curd",
-                "Nuts",
-                "Banana",
-                "Milk",
-                "Roti"
+                {
+                    en: "Idli",
+                    te: "ఇడ్లీ"
+                },
+
+                {
+                    en: "Dosa",
+                    te: "దోస"
+                },
+
+                {
+                    en: "Vegetable Upma",
+                    te: "కూరగాయల ఉప్మా"
+                },
+
+                {
+                    en: "Rice & Dal",
+                    te: "అన్నం & పప్పు"
+                },
+
+                {
+                    en: "Leafy Vegetables",
+                    te: "ఆకుకూరలు"
+                },
+
+                {
+                    en: "Vegetables",
+                    te: "కూరగాయలు"
+                },
+
+                {
+                    en: "Curd",
+                    te: "పెరుగు"
+                },
+
+                {
+                    en: "Nuts",
+                    te: "డ్రై ఫ్రూట్స్"
+                },
+
+                {
+                    en: "Banana",
+                    te: "అరటిపండు"
+                },
+
+                {
+                    en: "Milk",
+                    te: "పాలు"
+                },
+
+                {
+                    en: "Roti",
+                    te: "రోటీ"
+                }
 
             ];
 
 
             const nonVegFoods = [
 
-                "Idli",
-                "Egg",
-                "Rice & Dal",
-                "Chicken",
-                "Fish",
-                "Vegetables",
-                "Curd",
-                "Nuts",
-                "Banana",
-                "Milk",
-                "Roti"
+                {
+                    en: "Idli",
+                    te: "ఇడ్లీ"
+                },
+
+                {
+                    en: "Egg",
+                    te: "గుడ్డు"
+                },
+
+                {
+                    en: "Rice & Dal",
+                    te: "అన్నం & పప్పు"
+                },
+
+                {
+                    en: "Chicken",
+                    te: "చికెన్"
+                },
+
+                {
+                    en: "Fish",
+                    te: "చేప"
+                },
+
+                {
+                    en: "Vegetables",
+                    te: "కూరగాయలు"
+                },
+
+                {
+                    en: "Curd",
+                    te: "పెరుగు"
+                },
+
+                {
+                    en: "Nuts",
+                    te: "డ్రై ఫ్రూట్స్"
+                },
+
+                {
+                    en: "Banana",
+                    te: "అరటిపండు"
+                },
+
+                {
+                    en: "Milk",
+                    te: "పాలు"
+                },
+
+                {
+                    en: "Roti",
+                    te: "రోటీ"
+                }
 
             ];
 
@@ -526,6 +659,95 @@
                     : nonVegFoods;
 
 
+            // =========================
+            // Goal Translation
+            // =========================
+
+            let displayGoal;
+
+            if (currentLanguage === "te") {
+
+                if (selectedGoal === "Weight Loss") {
+                    displayGoal = "బరువు తగ్గడం";
+                }
+
+                else if (selectedGoal === "Weight Gain") {
+                    displayGoal = "బరువు పెరగడం";
+                }
+
+                else {
+                    displayGoal = "ఆరోగ్యకరమైన ఆహారం";
+                }
+
+            } else {
+
+                displayGoal = selectedGoal;
+            }
+
+
+            // =========================
+            // Food Translation
+            // =========================
+
+            let displayFood;
+
+            if (currentLanguage === "te") {
+
+                if (selectedFoodType === "Veg") {
+                    displayFood = "🥦 వెజ్";
+                } else {
+                    displayFood = "🍗 నాన్-వెజ్";
+                }
+
+            } else {
+
+                displayFood = selectedFoodType;
+            }
+
+
+            // =========================
+            // Starting Result
+            // =========================
+
+            let result = `
+
+                <h2>
+                    ${title}
+                </h2>
+
+                <div class="summary">
+
+                    <p>
+                        <strong>${goalText}:</strong>
+                        ${displayGoal}
+                    </p>
+
+                    <p>
+                        <strong>${foodText}:</strong>
+                        ${displayFood}
+                    </p>
+
+                    <p>
+                        <strong>${calorieText}:</strong>
+                        ${calories}
+                        ${currentLanguage === "te" ? "క్యాలరీలు" : "Calories"}
+                    </p>
+
+                    <p>
+                        <strong>${durationText}:</strong>
+                        ${days}
+                        ${currentLanguage === "te" ? "రోజులు" : "Days"}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            // =========================
+            // Create Daily Plan
+            // =========================
+
             for (
                 let day = 1;
                 day <= days;
@@ -533,24 +755,43 @@
             ) {
 
                 const breakfast =
-                    foods[
-                        (day - 1) % foods.length
-                    ];
+                    foods[(day - 1) % foods.length];
 
                 const lunch =
-                    foods[
-                        (day + 2) % foods.length
-                    ];
+                    foods[(day + 2) % foods.length];
 
                 const snack =
-                    foods[
-                        (day + 5) % foods.length
-                    ];
+                    foods[(day + 5) % foods.length];
 
                 const dinner =
-                    foods[
-                        (day + 7) % foods.length
-                    ];
+                    foods[(day + 7) % foods.length];
+
+
+                const breakfastName =
+                    currentLanguage === "te"
+                        ? breakfast.te
+                        : breakfast.en;
+
+                const lunchName =
+                    currentLanguage === "te"
+                        ? lunch.te
+                        : lunch.en;
+
+                const snackName =
+                    currentLanguage === "te"
+                        ? snack.te
+                        : snack.en;
+
+                const dinnerName =
+                    currentLanguage === "te"
+                        ? dinner.te
+                        : dinner.en;
+
+
+                const dayText =
+                    currentLanguage === "te"
+                        ? "రోజు"
+                        : "Day";
 
 
                 result += `
@@ -558,17 +799,18 @@
                     <div class="day-card">
 
                         <h3>
-                            Day ${day}
+                            ${dayText} ${day}
                         </h3>
+
 
                         <div class="meal">
 
                             🌅
                             <strong>
-                                Morning / Breakfast:
+                                ${morningText}:
                             </strong>
 
-                            ${breakfast}
+                            ${breakfastName}
 
                         </div>
 
@@ -577,10 +819,10 @@
 
                             ☀️
                             <strong>
-                                Afternoon / Lunch:
+                                ${afternoonText}:
                             </strong>
 
-                            ${lunch}
+                            ${lunchName}
 
                         </div>
 
@@ -589,10 +831,10 @@
 
                             🍎
                             <strong>
-                                Snacks:
+                                ${snacksText}:
                             </strong>
 
-                            ${snack}
+                            ${snackName}
 
                         </div>
 
@@ -601,10 +843,10 @@
 
                             🌙
                             <strong>
-                                Night / Dinner:
+                                ${nightText}:
                             </strong>
 
-                            ${dinner}
+                            ${dinnerName}
 
                         </div>
 
@@ -612,8 +854,9 @@
                         <div class="meal calories">
 
                             🔥
-                            Daily Target:
-                            ${calories} Calories
+                            ${calorieText}:
+                            ${calories}
+                            ${currentLanguage === "te" ? "క్యాలరీలు" : "Calories"}
 
                         </div>
 
@@ -623,23 +866,24 @@
             }
 
 
+            // =========================
+            // Final Message
+            // =========================
+
             result += `
 
                 <div class="summary">
 
                     <h3>
-                        ✅ Diet Plan Created Successfully
+                        ${successTitle}
                     </h3>
 
                     <p>
-                        Follow your selected diet plan regularly
-                        and stay hydrated.
+                        ${successText}
                     </p>
 
                     <p>
-                        When you are ready, click
-                        <strong>Next →</strong>
-                        to view all vitamins.
+                        ${nextText}
                     </p>
 
                 </div>
@@ -662,14 +906,17 @@
         }
 
 
+        // =========================
         // Language Change
+        // =========================
+
         function changeLanguage() {
 
-            const lang =
+            currentLanguage =
                 document.getElementById("language").value;
 
 
-            if (lang === "te") {
+            if (currentLanguage === "te") {
 
                 document.getElementById("pageTitle").innerText =
                     "🥗 వ్యక్తిగత డైట్ ప్లాన్";
@@ -699,6 +946,22 @@
                     "ఎన్ని రోజులు";
 
 
+                document.getElementById("day1").innerText =
+                    "1 రోజు";
+
+
+                document.getElementById("day7").innerText =
+                    "7 రోజులు";
+
+
+                document.getElementById("day15").innerText =
+                    "15 రోజులు";
+
+
+                document.getElementById("day30").innerText =
+                    "30 రోజులు";
+
+
                 document.getElementById("foodTypeLabel").innerText =
                     "ఆహారం రకం";
 
@@ -713,6 +976,26 @@
 
                 document.getElementById("calorieLabel").innerText =
                     "రోజువారీ క్యాలరీ లక్ష్యం";
+
+
+                document.getElementById("cal1500").innerText =
+                    "1500 క్యాలరీలు";
+
+
+                document.getElementById("cal1800").innerText =
+                    "1800 క్యాలరీలు";
+
+
+                document.getElementById("cal2000").innerText =
+                    "2000 క్యాలరీలు";
+
+
+                document.getElementById("cal2200").innerText =
+                    "2200 క్యాలరీలు";
+
+
+                document.getElementById("cal2500").innerText =
+                    "2500 క్యాలరీలు";
 
 
                 document.getElementById("generateBtn").innerText =
@@ -759,6 +1042,22 @@
                     "Number of Days";
 
 
+                document.getElementById("day1").innerText =
+                    "1 Day";
+
+
+                document.getElementById("day7").innerText =
+                    "7 Days";
+
+
+                document.getElementById("day15").innerText =
+                    "15 Days";
+
+
+                document.getElementById("day30").innerText =
+                    "30 Days";
+
+
                 document.getElementById("foodTypeLabel").innerText =
                     "Food Type";
 
@@ -775,6 +1074,26 @@
                     "Daily Calorie Target";
 
 
+                document.getElementById("cal1500").innerText =
+                    "1500 Calories";
+
+
+                document.getElementById("cal1800").innerText =
+                    "1800 Calories";
+
+
+                document.getElementById("cal2000").innerText =
+                    "2000 Calories";
+
+
+                document.getElementById("cal2200").innerText =
+                    "2200 Calories";
+
+
+                document.getElementById("cal2500").innerText =
+                    "2500 Calories";
+
+
                 document.getElementById("generateBtn").innerText =
                     "Generate Diet Plan";
 
@@ -788,6 +1107,16 @@
 
             }
 
+
+            // If a plan is already generated,
+            // generate it again in selected language.
+
+            if (selectedGoal !== "" && selectedFoodType !== "") {
+
+                generatePlan();
+
+            }
+
         }
 
     </script>
@@ -795,4 +1124,3 @@
 </body>
 
 </html>
-```
