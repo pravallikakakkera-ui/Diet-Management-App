@@ -23,7 +23,7 @@
         .container {
             width: 92%;
             max-width: 1100px;
-            margin: 30px auto;
+            margin: 25px auto;
         }
 
         .top-bar {
@@ -44,8 +44,8 @@
             padding: 10px 15px;
             border: 2px solid #159b7d;
             border-radius: 10px;
-            font-size: 16px;
             background: white;
+            font-size: 16px;
             cursor: pointer;
         }
 
@@ -53,13 +53,13 @@
             background: white;
             padding: 18px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            margin-bottom: 25px;
             text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
         .intro p {
-            margin: 8px 0;
+            margin: 0;
             line-height: 1.6;
         }
 
@@ -71,14 +71,9 @@
 
         .vitamin-card {
             background: white;
-            border-radius: 18px;
             padding: 18px;
+            border-radius: 18px;
             box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
-            transition: transform 0.2s;
-        }
-
-        .vitamin-card:hover {
-            transform: translateY(-4px);
         }
 
         .vitamin-card img {
@@ -87,7 +82,8 @@
             object-fit: contain;
             border-radius: 12px;
             background: #f4fffb;
-            margin-bottom: 12px;
+            display: block;
+            margin-bottom: 15px;
         }
 
         .vitamin-card h2 {
@@ -130,6 +126,7 @@
         }
 
         @media (max-width: 600px) {
+
             .top-bar {
                 flex-direction: column;
                 align-items: stretch;
@@ -152,26 +149,40 @@
 <div class="container">
 
     <div class="top-bar">
+
         <h1 id="pageTitle">💊 All Vitamins</h1>
 
         <select id="languageSelect" onchange="changeLanguage()">
             <option value="en">English</option>
             <option value="te">తెలుగు</option>
         </select>
+
     </div>
 
+
     <div class="intro">
+
         <p id="introText">
             Vitamins are important nutrients that help our body grow,
             stay healthy and maintain immunity.
         </p>
+
     </div>
+
 
     <div class="vitamin-grid" id="vitaminContainer"></div>
 
+
     <div class="buttons">
-        <button onclick="goBack()" id="backBtn">← Back</button>
-        <button onclick="finishPage()" id="finishBtn">Finish ✓</button>
+
+        <button onclick="goBack()" id="backBtn">
+            ← Back
+        </button>
+
+        <button onclick="finishPage()" id="finishBtn">
+            Finish ✓
+        </button>
+
     </div>
 
 </div>
@@ -192,9 +203,10 @@ const vitamins = [
         foodEn: "Carrots, spinach, sweet potato, pumpkin, eggs and milk.",
         foodTe: "క్యారెట్, పాలకూర, చిలగడదుంప, గుమ్మడికాయ, గుడ్లు మరియు పాలు.",
 
-        avoidEn: "Avoid taking high-dose vitamin A supplements unless advised by a doctor.",
+        avoidEn: "Avoid high-dose vitamin A supplements unless advised by a doctor.",
         avoidTe: "డాక్టర్ సూచన లేకుండా అధిక మోతాదులో విటమిన్ A సప్లిమెంట్లు తీసుకోవద్దు."
     },
+
 
     {
         nameEn: "Vitamin B1",
@@ -211,6 +223,7 @@ const vitamins = [
         avoidTe: "అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
     },
 
+
     {
         nameEn: "Vitamin B2",
         nameTe: "విటమిన్ B2",
@@ -223,8 +236,9 @@ const vitamins = [
         foodTe: "పాలు, గుడ్లు, పెరుగు, బాదం, పుట్టగొడుగులు మరియు ఆకుకూరలు.",
 
         avoidEn: "There is usually no need to avoid normal food sources.",
-        avoidTe: "సాధారణ ఆహారంలో ఉన్న విటమిన్ B2 ను నివారించాల్సిన అవసరం సాధారణంగా ఉండదు."
+        avoidTe: "సాధారణ ఆహారంలో ఉన్న విటమిన్ B2 ను సాధారణంగా నివారించాల్సిన అవసరం లేదు."
     },
+
 
     {
         nameEn: "Vitamin B3",
@@ -241,6 +255,7 @@ const vitamins = [
         avoidTe: "డాక్టర్ సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
     },
 
+
     {
         nameEn: "Vitamin B5",
         nameTe: "విటమిన్ B5",
@@ -256,10 +271,11 @@ const vitamins = [
         avoidTe: "అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
     },
 
+
     {
         nameEn: "Vitamin B6",
         nameTe: "విటమిన్ B6",
-        image: "images/vitamin-b6.jpg",
+        image: "images/vitamin-B6.jpg",
 
         useEn: "Supports brain function, red blood cell production and protein metabolism.",
         useTe: "మెదడు పనితీరు, ఎర్ర రక్త కణాల తయారీ మరియు ప్రోటీన్ మెటబాలిజానికి సహాయపడుతుంది.",
@@ -270,6 +286,7 @@ const vitamins = [
         avoidEn: "Do not take very high doses for a long period without medical advice.",
         avoidTe: "వైద్యుల సలహా లేకుండా ఎక్కువ కాలం అధిక మోతాదులో తీసుకోవద్దు."
     },
+
 
     {
         nameEn: "Vitamin B7 (Biotin)",
@@ -286,6 +303,7 @@ const vitamins = [
         avoidTe: "అవసరం లేకుండా అధిక మోతాదులో బయోటిన్ సప్లిమెంట్లు తీసుకోవద్దు."
     },
 
+
     {
         nameEn: "Vitamin B9 (Folate)",
         nameTe: "విటమిన్ B9 (ఫోలేట్)",
@@ -300,6 +318,7 @@ const vitamins = [
         avoidEn: "Do not take high-dose supplements without medical advice.",
         avoidTe: "వైద్యుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
     },
+
 
     {
         nameEn: "Vitamin B12",
@@ -316,6 +335,7 @@ const vitamins = [
         avoidTe: "వైద్యుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
     },
 
+
     {
         nameEn: "Vitamin C",
         nameTe: "విటమిన్ C",
@@ -330,6 +350,7 @@ const vitamins = [
         avoidEn: "Avoid excessive supplement doses because they may cause stomach problems.",
         avoidTe: "అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవడం వల్ల కడుపు సమస్యలు రావచ్చు."
     },
+
 
     {
         nameEn: "Vitamin D",
@@ -346,6 +367,7 @@ const vitamins = [
         avoidTe: "డాక్టర్ సూచన లేకుండా అధిక మోతాదులో విటమిన్ D సప్లిమెంట్లు తీసుకోవద్దు."
     },
 
+
     {
         nameEn: "Vitamin E",
         nameTe: "విటమిన్ E",
@@ -360,6 +382,7 @@ const vitamins = [
         avoidEn: "Avoid high-dose supplements without medical advice.",
         avoidTe: "వైద్యుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
     },
+
 
     {
         nameEn: "Vitamin K",
@@ -380,108 +403,175 @@ const vitamins = [
 
 
 function getLanguage() {
+
     return document.getElementById("languageSelect").value;
+
 }
 
 
 function renderVitamins() {
 
-    const lang = getLanguage();
+    const language = getLanguage();
 
     const container = document.getElementById("vitaminContainer");
 
     container.innerHTML = "";
 
-    vitamins.forEach(vitamin => {
+
+    vitamins.forEach(function(vitamin) {
 
         const card = document.createElement("div");
 
         card.className = "vitamin-card";
 
+
+        const name =
+            language === "te"
+                ? vitamin.nameTe
+                : vitamin.nameEn;
+
+
+        const use =
+            language === "te"
+                ? vitamin.useTe
+                : vitamin.useEn;
+
+
+        const food =
+            language === "te"
+                ? vitamin.foodTe
+                : vitamin.foodEn;
+
+
+        const avoid =
+            language === "te"
+                ? vitamin.avoidTe
+                : vitamin.avoidEn;
+
+
+        const usesTitle =
+            language === "te"
+                ? "ఉపయోగాలు / ప్రయోజనాలు"
+                : "Uses / Benefits";
+
+
+        const foodTitle =
+            language === "te"
+                ? "ఆహార వనరులు"
+                : "Food Sources";
+
+
+        const avoidTitle =
+            language === "te"
+                ? "నివారించాలి / పరిమితం చేయాలి"
+                : "Avoid / Limit";
+
+
         card.innerHTML = `
 
-            <img src="${vitamin.image}"
-                 alt="${lang === "en" ? vitamin.nameEn : vitamin.nameTe}"
-                 onerror="this.style.display='none';">
+            <img
+                src="${vitamin.image}"
+                alt="${name}"
+            >
 
-            <h2>
-                ${lang === "en" ? vitamin.nameEn : vitamin.nameTe}
-            </h2>
+            <h2>${name}</h2>
 
             <div class="section-title">
-                ${lang === "en" ? "Uses / Benefits" : "ఉపయోగాలు / ప్రయోజనాలు"}
+                ${usesTitle}
             </div>
 
             <p>
-                ${lang === "en" ? vitamin.useEn : vitamin.useTe}
+                ${use}
             </p>
 
+
             <div class="section-title">
-                ${lang === "en" ? "Food Sources" : "ఆహార వనరులు"}
+                ${foodTitle}
             </div>
 
             <p>
-                ${lang === "en" ? vitamin.foodEn : vitamin.foodTe}
+                ${food}
             </p>
 
+
             <div class="section-title">
-                ${lang === "en" ? "Avoid / Limit" : "నివారించాలి / పరిమితం చేయాలి"}
+                ${avoidTitle}
             </div>
 
             <p>
-                ${lang === "en" ? vitamin.avoidEn : vitamin.avoidTe}
+                ${avoid}
             </p>
+
         `;
 
+
         container.appendChild(card);
+
     });
+
 }
 
 
 function changeLanguage() {
 
-    const lang = getLanguage();
+    const language = getLanguage();
 
-    if (lang === "te") {
+
+    if (language === "te") {
 
         document.getElementById("pageTitle").innerText =
             "💊 అన్ని విటమిన్లు";
 
+
         document.getElementById("introText").innerText =
             "మన శరీరం ఆరోగ్యంగా ఉండటానికి, పెరుగుదలకు మరియు రోగనిరోధక శక్తికి విటమిన్లు ముఖ్యమైన పోషకాలు.";
+
 
         document.getElementById("backBtn").innerText =
             "← వెనుకకు";
 
+
         document.getElementById("finishBtn").innerText =
             "ముగించు ✓";
 
-    } else {
+    }
+
+    else {
 
         document.getElementById("pageTitle").innerText =
             "💊 All Vitamins";
 
+
         document.getElementById("introText").innerText =
             "Vitamins are important nutrients that help our body grow, stay healthy and maintain immunity.";
+
 
         document.getElementById("backBtn").innerText =
             "← Back";
 
+
         document.getElementById("finishBtn").innerText =
             "Finish ✓";
+
     }
 
+
     renderVitamins();
+
 }
 
 
 function goBack() {
+
     window.location.href = "daysplan.html";
+
 }
 
 
 function finishPage() {
+
     window.location.href = "index.html";
+
 }
 
 
@@ -490,5 +580,6 @@ renderVitamins();
 </script>
 
 </body>
+
 </html>
 ```
