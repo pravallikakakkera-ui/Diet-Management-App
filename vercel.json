@@ -7,27 +7,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "page2.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "daysplan.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "vitamins-page.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "diet.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "images/**/*",
+      "src": "**/*",
       "use": "@vercel/static"
     }
   ],
