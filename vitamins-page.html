@@ -1,6 +1,7 @@
 ```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
 <title>All Vitamins - Diet Management App</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
@@ -117,302 +119,426 @@ button{
 button:hover{
     opacity:0.9;
 }
+
 </style>
 </head>
+
 
 <body>
 
 <header>
-    <h1 id="pageTitle">💊 All Vitamins</h1>
+
+<h1 id="pageTitle">💊 All Vitamins</h1>
+
 </header>
+
 
 <div class="container">
 
-    <div class="top-section">
 
-        <p id="introText">
-            Learn about important vitamins, their benefits, food sources,
-            and things to avoid or limit.
-        </p>
+<div class="top-section">
 
-        <select id="languageSelect" onchange="changeLanguage()">
-            <option value="en">English</option>
-            <option value="te">తెలుగు</option>
-        </select>
+<p id="introText">
+Learn about important vitamins, their benefits, food sources,
+and things to avoid or limit.
+</p>
 
-    </div>
+<select id="languageSelect" onchange="changeLanguage()">
 
-    <div class="vitamins-container" id="vitaminsContainer"></div>
+<option value="en">English</option>
 
-    <div class="buttons">
-        <button onclick="goBack()" id="backButton">← Back</button>
-        <button onclick="finishPage()" id="finishButton">Finish ✓</button>
-    </div>
+<option value="te">తెలుగు</option>
+
+</select>
 
 </div>
 
+
+<div class="vitamins-container" id="vitaminsContainer"></div>
+
+
+<div class="buttons">
+
+<button onclick="goBack()" id="backButton">
+← Back
+</button>
+
+<button onclick="finishPage()" id="finishButton">
+Finish ✓
+</button>
+
+</div>
+
+</div>
+
+
 <script>
+
 
 const vitamins = [
 
-{
-    name:{
-        en:"Vitamin A",
-        te:"విటమిన్ A"
-    },
-    image:"images/vitamin-a.webp",
-    benefits:{
-        en:"Supports good vision, healthy skin and normal immune function.",
-        te:"మంచి చూపు, ఆరోగ్యకరమైన చర్మం మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Carrots, sweet potato, spinach, pumpkin and eggs.",
-        te:"క్యారెట్, చిలగడదుంప, పాలకూర, గుమ్మడికాయ మరియు గుడ్లు."
-    },
-    avoid:{
-        en:"Avoid taking very high-dose vitamin A supplements without medical advice.",
-        te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో విటమిన్ A సప్లిమెంట్లు తీసుకోకండి."
-    }
-},
+
+/* VITAMIN A */
 
 {
-    name:{
-        en:"Vitamin B1",
-        te:"విటమిన్ B1"
-    },
-    image:"images/vitamin-b1.png",
-    benefits:{
-        en:"Helps convert food into energy and supports the nervous system.",
-        te:"ఆహారాన్ని శక్తిగా మార్చడంలో మరియు నాడీ వ్యవస్థకు సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Whole grains, beans, nuts, seeds and pork.",
-        te:"పూర్తి ధాన్యాలు, బీన్స్, గింజలు, విత్తనాలు మరియు పంది మాంసం."
-    },
-    avoid:{
-        en:"Do not take unnecessary high-dose supplements.",
-        te:"అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
-    }
+name:{
+en:"Vitamin A",
+te:"విటమిన్ A"
 },
 
-{
-    name:{
-        en:"Vitamin B2",
-        te:"విటమిన్ B2"
-    },
-    image:"images/vitamin-b2.webp",
-    benefits:{
-        en:"Supports energy production and healthy skin, eyes and cells.",
-        te:"శక్తి ఉత్పత్తి మరియు ఆరోగ్యకరమైన చర్మం, కళ్ళు మరియు కణాలకు సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Milk, eggs, yogurt, almonds and mushrooms.",
-        te:"పాలు, గుడ్లు, పెరుగు, బాదం మరియు పుట్టగొడుగులు."
-    },
-    avoid:{
-        en:"Avoid unnecessary high-dose supplements.",
-        te:"అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
-    }
+image:"images/vitamin-a.webp",
+
+benefits:{
+en:"Supports good vision, healthy skin and normal immune function.",
+te:"మంచి చూపు, ఆరోగ్యకరమైన చర్మం మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది."
 },
 
-{
-    name:{
-        en:"Vitamin B3",
-        te:"విటమిన్ B3"
-    },
-    image:"images/vitamin-b3.jpg",
-    benefits:{
-        en:"Helps with energy metabolism and supports healthy skin and nerves.",
-        te:"శక్తి మార్పిడికి మరియు ఆరోగ్యకరమైన చర్మం, నరాలకు సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Chicken, fish, peanuts, mushrooms and whole grains.",
-        te:"చికెన్, చేపలు, వేరుశెనగ, పుట్టగొడుగులు మరియు పూర్తి ధాన్యాలు."
-    },
-    avoid:{
-        en:"Avoid high-dose niacin supplements unless recommended by a doctor.",
-        te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో నియాసిన్ సప్లిమెంట్లు తీసుకోకండి."
-    }
+foods:{
+en:"Carrots, sweet potato, spinach, pumpkin and eggs.",
+te:"క్యారెట్, చిలగడదుంప, పాలకూర, గుమ్మడికాయ మరియు గుడ్లు."
 },
 
-{
-    name:{
-        en:"Vitamin B5",
-        te:"విటమిన్ B5"
-    },
-    image:"images/vitamin-b5.webp",
-    benefits:{
-        en:"Helps the body produce energy and supports hormone production.",
-        te:"శరీరంలో శక్తి ఉత్పత్తికి మరియు హార్మోన్ తయారీకి సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Chicken, eggs, mushrooms, avocado and whole grains.",
-        te:"చికెన్, గుడ్లు, పుట్టగొడుగులు, అవకాడో మరియు పూర్తి ధాన్యాలు."
-    },
-    avoid:{
-        en:"Avoid unnecessary large doses of supplements.",
-        te:"అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
-    }
+avoid:{
+en:"Avoid taking very high-dose vitamin A supplements without medical advice.",
+te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో విటమిన్ A సప్లిమెంట్లు తీసుకోకండి."
+}
+
 },
 
-{
-    name:{
-        en:"Vitamin B6",
-        te:"విటమిన్ B6"
-    },
-    image:"images/vitamin-b6.jpg",
-    benefits:{
-        en:"Supports brain function, red blood cell production and immune function.",
-        te:"మెదడు పనితీరు, ఎర్ర రక్త కణాల తయారీ మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Bananas, potatoes, chicken, fish and chickpeas.",
-        te:"అరటిపండ్లు, బంగాళాదుంపలు, చికెన్, చేపలు మరియు శెనగలు."
-    },
-    avoid:{
-        en:"Avoid very high doses for long periods unless advised by a doctor.",
-        te:"వైద్యుల సలహా లేకుండా ఎక్కువ కాలం అధిక మోతాదులో తీసుకోకండి."
-    }
-},
+
+/* VITAMIN B1 */
 
 {
-    name:{
-        en:"Vitamin B7 (Biotin)",
-        te:"విటమిన్ B7 (బయోటిన్)"
-    },
-    image:"images/Vitamin-b7.jpg",
-    benefits:{
-        en:"Supports healthy hair, skin, nails and energy metabolism.",
-        te:"ఆరోగ్యకరమైన జుట్టు, చర్మం, గోర్లు మరియు శక్తి మార్పిడికి సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Eggs, nuts, seeds, sweet potatoes and legumes.",
-        te:"గుడ్లు, గింజలు, విత్తనాలు, చిలగడదుంప మరియు పప్పుధాన్యాలు."
-    },
-    avoid:{
-        en:"Very high-dose biotin can interfere with some laboratory tests.",
-        te:"అధిక మోతాదులో బయోటిన్ కొన్ని ల్యాబ్ పరీక్షల ఫలితాలను ప్రభావితం చేయవచ్చు."
-    }
+name:{
+en:"Vitamin B1",
+te:"విటమిన్ B1"
 },
 
-{
-    name:{
-        en:"Vitamin B9 (Folate)",
-        te:"విటమిన్ B9 (ఫోలేట్)"
-    },
-    image:"images/vitamin-b9.jpg",
-    benefits:{
-        en:"Important for cell growth and red blood cell formation.",
-        te:"కణాల పెరుగుదల మరియు ఎర్ర రక్త కణాల తయారీకి ముఖ్యమైనది."
-    },
-    foods:{
-        en:"Leafy green vegetables, beans, peas, oranges and fortified grains.",
-        te:"ఆకుకూరలు, బీన్స్, బఠానీలు, నారింజ మరియు ఫోర్టిఫైడ్ ధాన్యాలు."
-    },
-    avoid:{
-        en:"Do not take high-dose folic acid without medical advice.",
-        te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో ఫోలిక్ యాసిడ్ తీసుకోకండి."
-    }
+image:"images/vitamin-b1.png",
+
+benefits:{
+en:"Helps convert food into energy and supports the nervous system.",
+te:"ఆహారాన్ని శక్తిగా మార్చడంలో మరియు నాడీ వ్యవస్థకు సహాయపడుతుంది."
 },
 
-{
-    name:{
-        en:"Vitamin B12",
-        te:"విటమిన్ B12"
-    },
-    image:"images/vitamin-b12.jpg",
-    benefits:{
-        en:"Supports nerves, red blood cells and DNA production.",
-        te:"నరాలు, ఎర్ర రక్త కణాలు మరియు DNA తయారీకి సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Milk, eggs, fish, chicken and meat.",
-        te:"పాలు, గుడ్లు, చేపలు, చికెన్ మరియు మాంసం."
-    },
-    avoid:{
-        en:"Avoid unnecessary supplements unless needed or recommended.",
-        te:"అవసరం లేకుండా లేదా వైద్యుల సలహా లేకుండా సప్లిమెంట్లు తీసుకోకండి."
-    }
+foods:{
+en:"Whole grains, beans, nuts, seeds and pork.",
+te:"పూర్తి ధాన్యాలు, బీన్స్, గింజలు, విత్తనాలు మరియు పంది మాంసం."
 },
 
-{
-    name:{
-        en:"Vitamin C",
-        te:"విటమిన్ C"
-    },
-    image:"images/Vitamin-C.jpg",
-    benefits:{
-        en:"Supports immunity, collagen production and helps absorb iron.",
-        te:"రోగనిరోధక శక్తి, కొల్లాజెన్ తయారీ మరియు ఐరన్ శోషణకు సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Oranges, lemons, guava, amla, tomatoes and capsicum.",
-        te:"నారింజ, నిమ్మ, జామ, ఉసిరి, టమాటా మరియు క్యాప్సికమ్."
-    },
-    avoid:{
-        en:"Avoid excessive supplementation because it may cause stomach discomfort.",
-        te:"అధికంగా సప్లిమెంట్లు తీసుకోవడం వల్ల కడుపులో అసౌకర్యం కలగవచ్చు."
-    }
+avoid:{
+en:"Do not take unnecessary high-dose supplements.",
+te:"అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
+}
+
 },
 
-{
-    name:{
-        en:"Vitamin D",
-        te:"విటమిన్ D"
-    },
-    image:"images/vitamin-d.jpeg",
-    benefits:{
-        en:"Helps maintain strong bones and supports calcium absorption.",
-        te:"బలమైన ఎముకలకు మరియు కాల్షియం శోషణకు సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Sunlight, eggs, fatty fish and fortified milk.",
-        te:"సూర్యరశ్మి, గుడ్లు, కొవ్వు చేపలు మరియు ఫోర్టిఫైడ్ పాలు."
-    },
-    avoid:{
-        en:"Avoid excessive vitamin D supplements without medical advice.",
-        te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో విటమిన్ D సప్లిమెంట్లు తీసుకోకండి."
-    }
-},
+
+/* VITAMIN B2 */
 
 {
-    name:{
-        en:"Vitamin E",
-        te:"విటమిన్ E"
-    },
-    image:"images/vitamin-E.webp",
-    benefits:{
-        en:"Acts as an antioxidant and supports healthy skin and cells.",
-        te:"యాంటీఆక్సిడెంట్‌గా పనిచేసి ఆరోగ్యకరమైన చర్మం మరియు కణాలకు సహాయపడుతుంది."
-    },
-    foods:{
-        en:"Almonds, sunflower seeds, peanuts, spinach and vegetable oils.",
-        te:"బాదం, పొద్దుతిరుగుడు విత్తనాలు, వేరుశెనగ, పాలకూర మరియు వెజిటబుల్ ఆయిల్స్."
-    },
-    avoid:{
-        en:"Avoid high-dose supplements unless advised by a healthcare professional.",
-        te:"ఆరోగ్య నిపుణుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
-    }
+name:{
+en:"Vitamin B2",
+te:"విటమిన్ B2"
 },
 
+image:"images/vitamin-b2.webp",
+
+benefits:{
+en:"Supports energy production and healthy skin, eyes and cells.",
+te:"శక్తి ఉత్పత్తి మరియు ఆరోగ్యకరమైన చర్మం, కళ్ళు మరియు కణాలకు సహాయపడుతుంది."
+},
+
+foods:{
+en:"Milk, eggs, yogurt, almonds and mushrooms.",
+te:"పాలు, గుడ్లు, పెరుగు, బాదం మరియు పుట్టగొడుగులు."
+},
+
+avoid:{
+en:"Avoid unnecessary high-dose supplements.",
+te:"అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN B3 */
+
 {
-    name:{
-        en:"Vitamin K",
-        te:"విటమిన్ K"
-    },
-    image:"images/vitamin-K.webp",
-    benefits:{
-        en:"Important for normal blood clotting and healthy bones.",
-        te:"సాధారణ రక్తం గడ్డకట్టడం మరియు ఆరోగ్యకరమైన ఎముకలకు ముఖ్యమైనది."
-    },
-    foods:{
-        en:"Leafy green vegetables, broccoli, cabbage and spinach.",
-        te:"ఆకుకూరలు, బ్రోకలీ, క్యాబేజీ మరియు పాలకూర."
-    },
-    avoid:{
-        en:"If taking blood-thinning medicine, discuss vitamin K intake with your doctor.",
-        te:"బ్లడ్ థిన్నింగ్ మందులు వాడుతున్నట్లయితే విటమిన్ K తీసుకోవడం గురించి వైద్యుడిని సంప్రదించండి."
-    }
+name:{
+en:"Vitamin B3",
+te:"విటమిన్ B3"
+},
+
+image:"images/vitamin-b3.jpg",
+
+benefits:{
+en:"Helps with energy metabolism and supports healthy skin and nerves.",
+te:"శక్తి మార్పిడికి మరియు ఆరోగ్యకరమైన చర్మం, నరాలకు సహాయపడుతుంది."
+},
+
+foods:{
+en:"Chicken, fish, peanuts, mushrooms and whole grains.",
+te:"చికెన్, చేపలు, వేరుశెనగ, పుట్టగొడుగులు మరియు పూర్తి ధాన్యాలు."
+},
+
+avoid:{
+en:"Avoid high-dose niacin supplements unless recommended by a doctor.",
+te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో నియాసిన్ సప్లిమెంట్లు తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN B5 */
+
+{
+name:{
+en:"Vitamin B5",
+te:"విటమిన్ B5"
+},
+
+image:"images/vitamin-b5.webp",
+
+benefits:{
+en:"Helps the body produce energy and supports hormone production.",
+te:"శరీరంలో శక్తి ఉత్పత్తికి మరియు హార్మోన్ తయారీకి సహాయపడుతుంది."
+},
+
+foods:{
+en:"Chicken, eggs, mushrooms, avocado and whole grains.",
+te:"చికెన్, గుడ్లు, పుట్టగొడుగులు, అవకాడో మరియు పూర్తి ధాన్యాలు."
+},
+
+avoid:{
+en:"Avoid unnecessary large doses of supplements.",
+te:"అవసరం లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN B6 */
+
+{
+name:{
+en:"Vitamin B6",
+te:"విటమిన్ B6"
+},
+
+image:"images/vitamin-b6.jpg",
+
+benefits:{
+en:"Supports brain function, red blood cell production and immune function.",
+te:"మెదడు పనితీరు, ఎర్ర రక్త కణాల తయారీ మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది."
+},
+
+foods:{
+en:"Bananas, potatoes, chicken, fish and chickpeas.",
+te:"అరటిపండ్లు, బంగాళాదుంపలు, చికెన్, చేపలు మరియు శెనగలు."
+},
+
+avoid:{
+en:"Avoid very high doses for long periods unless advised by a doctor.",
+te:"వైద్యుల సలహా లేకుండా ఎక్కువ కాలం అధిక మోతాదులో తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN B7 */
+
+{
+name:{
+en:"Vitamin B7 (Biotin)",
+te:"విటమిన్ B7 (బయోటిన్)"
+},
+
+image:"images/Vitamin-b7.jpg",
+
+benefits:{
+en:"Supports healthy hair, skin, nails and energy metabolism.",
+te:"ఆరోగ్యకరమైన జుట్టు, చర్మం, గోర్లు మరియు శక్తి మార్పిడికి సహాయపడుతుంది."
+},
+
+foods:{
+en:"Eggs, nuts, seeds, sweet potatoes and legumes.",
+te:"గుడ్లు, గింజలు, విత్తనాలు, చిలగడదుంప మరియు పప్పుధాన్యాలు."
+},
+
+avoid:{
+en:"Very high-dose biotin can interfere with some laboratory tests.",
+te:"అధిక మోతాదులో బయోటిన్ కొన్ని ల్యాబ్ పరీక్షల ఫలితాలను ప్రభావితం చేయవచ్చు."
+}
+
+},
+
+
+/* VITAMIN B9 */
+
+{
+name:{
+en:"Vitamin B9 (Folate)",
+te:"విటమిన్ B9 (ఫోలేట్)"
+},
+
+image:"images/vitamin-b9.jpg",
+
+benefits:{
+en:"Important for cell growth and red blood cell formation.",
+te:"కణాల పెరుగుదల మరియు ఎర్ర రక్త కణాల తయారీకి ముఖ్యమైనది."
+},
+
+foods:{
+en:"Leafy green vegetables, beans, peas, oranges and fortified grains.",
+te:"ఆకుకూరలు, బీన్స్, బఠానీలు, నారింజ మరియు ఫోర్టిఫైడ్ ధాన్యాలు."
+},
+
+avoid:{
+en:"Do not take high-dose folic acid without medical advice.",
+te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో ఫోలిక్ యాసిడ్ తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN B12 */
+
+{
+name:{
+en:"Vitamin B12",
+te:"విటమిన్ B12"
+},
+
+image:"images/vitamin-b12.jpg",
+
+benefits:{
+en:"Supports nerves, red blood cells and DNA production.",
+te:"నరాలు, ఎర్ర రక్త కణాలు మరియు DNA తయారీకి సహాయపడుతుంది."
+},
+
+foods:{
+en:"Milk, eggs, fish, chicken and meat.",
+te:"పాలు, గుడ్లు, చేపలు, చికెన్ మరియు మాంసం."
+},
+
+avoid:{
+en:"Avoid unnecessary supplements unless needed or recommended.",
+te:"అవసరం లేకుండా లేదా వైద్యుల సలహా లేకుండా సప్లిమెంట్లు తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN C */
+
+{
+name:{
+en:"Vitamin C",
+te:"విటమిన్ C"
+},
+
+image:"images/Vitamin-C.jpg",
+
+benefits:{
+en:"Supports immunity, collagen production and helps absorb iron.",
+te:"రోగనిరోధక శక్తి, కొల్లాజెన్ తయారీ మరియు ఐరన్ శోషణకు సహాయపడుతుంది."
+},
+
+foods:{
+en:"Oranges, lemons, guava, amla, tomatoes and capsicum.",
+te:"నారింజ, నిమ్మ, జామ, ఉసిరి, టమాటా మరియు క్యాప్సికమ్."
+},
+
+avoid:{
+en:"Avoid excessive supplementation because it may cause stomach discomfort.",
+te:"అధికంగా సప్లిమెంట్లు తీసుకోవడం వల్ల కడుపులో అసౌకర్యం కలగవచ్చు."
+}
+
+},
+
+
+/* VITAMIN D */
+
+{
+name:{
+en:"Vitamin D",
+te:"విటమిన్ D"
+},
+
+image:"images/vitamin-d.jpeg",
+
+benefits:{
+en:"Helps maintain strong bones and supports calcium absorption.",
+te:"బలమైన ఎముకలకు మరియు కాల్షియం శోషణకు సహాయపడుతుంది."
+},
+
+foods:{
+en:"Sunlight, eggs, fatty fish and fortified milk.",
+te:"సూర్యరశ్మి, గుడ్లు, కొవ్వు చేపలు మరియు ఫోర్టిఫైడ్ పాలు."
+},
+
+avoid:{
+en:"Avoid excessive vitamin D supplements without medical advice.",
+te:"వైద్యుల సలహా లేకుండా అధిక మోతాదులో విటమిన్ D సప్లిమెంట్లు తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN E */
+
+{
+name:{
+en:"Vitamin E",
+te:"విటమిన్ E"
+},
+
+image:"images/vitamin-E.webp",
+
+benefits:{
+en:"Acts as an antioxidant and supports healthy skin and cells.",
+te:"యాంటీఆక్సిడెంట్‌గా పనిచేసి ఆరోగ్యకరమైన చర్మం మరియు కణాలకు సహాయపడుతుంది."
+},
+
+foods:{
+en:"Almonds, sunflower seeds, peanuts, spinach and vegetable oils.",
+te:"బాదం, పొద్దుతిరుగుడు విత్తనాలు, వేరుశెనగ, పాలకూర మరియు వెజిటబుల్ ఆయిల్స్."
+},
+
+avoid:{
+en:"Avoid high-dose supplements unless advised by a healthcare professional.",
+te:"ఆరోగ్య నిపుణుల సలహా లేకుండా అధిక మోతాదులో సప్లిమెంట్లు తీసుకోకండి."
+}
+
+},
+
+
+/* VITAMIN K */
+
+{
+name:{
+en:"Vitamin K",
+te:"విటమిన్ K"
+},
+
+image:"images/vitamin-K.webp",
+
+benefits:{
+en:"Important for normal blood clotting and healthy bones.",
+te:"సాధారణ రక్తం గడ్డకట్టడం మరియు ఆరోగ్యకరమైన ఎముకలకు ముఖ్యమైనది."
+},
+
+foods:{
+en:"Leafy green vegetables, broccoli, cabbage and spinach.",
+te:"ఆకుకూరలు, బ్రోకలీ, క్యాబేజీ మరియు పాలకూర."
+},
+
+avoid:{
+en:"If taking blood-thinning medicine, discuss vitamin K intake with your doctor.",
+te:"బ్లడ్ థిన్నింగ్ మందులు వాడుతున్నట్లయితే విటమిన్ K తీసుకోవడం గురించి వైద్యుడిని సంప్రదించండి."
+}
+
 }
 
 ];
@@ -420,94 +546,117 @@ const vitamins = [
 
 function renderVitamins(){
 
-    const language =
-        document.getElementById("languageSelect").value;
+const language =
+document.getElementById("languageSelect").value;
 
-    const container =
-        document.getElementById("vitaminsContainer");
+const container =
+document.getElementById("vitaminsContainer");
 
-    container.innerHTML = "";
+container.innerHTML="";
 
-    vitamins.forEach(vitamin => {
 
-        const card = document.createElement("div");
+vitamins.forEach(vitamin=>{
 
-        card.className = "vitamin-card";
+const card=document.createElement("div");
 
-        card.innerHTML = `
-            <img src="${vitamin.image}" alt="${vitamin.name[language]}">
+card.className="vitamin-card";
 
-            <h2>${vitamin.name[language]}</h2>
+card.innerHTML=`
 
-            <h3>
-                ${language === "en" ? "Uses / Benefits" : "ఉపయోగాలు / ప్రయోజనాలు"}
-            </h3>
+<img src="${vitamin.image}" alt="${vitamin.name[language]}">
 
-            <p>${vitamin.benefits[language]}</p>
+<h2>${vitamin.name[language]}</h2>
 
-            <h3>
-                ${language === "en" ? "Food Sources" : "ఆహార వనరులు"}
-            </h3>
+<h3>
+${language==="en"
+? "Uses / Benefits"
+: "ఉపయోగాలు / ప్రయోజనాలు"}
+</h3>
 
-            <p>${vitamin.foods[language]}</p>
+<p>${vitamin.benefits[language]}</p>
 
-            <h3>
-                ${language === "en" ? "Avoid / Limit" : "తప్పించుకోవాలి / పరిమితం చేయాలి"}
-            </h3>
 
-            <p>${vitamin.avoid[language]}</p>
-        `;
+<h3>
+${language==="en"
+? "Food Sources"
+: "ఆహార వనరులు"}
+</h3>
 
-        container.appendChild(card);
-    });
+<p>${vitamin.foods[language]}</p>
+
+
+<h3>
+${language==="en"
+? "Avoid / Limit"
+: "తప్పించుకోవాలి / పరిమితం చేయాలి"}
+</h3>
+
+<p>${vitamin.avoid[language]}</p>
+
+`;
+
+container.appendChild(card);
+
+});
+
 }
 
 
 function changeLanguage(){
 
-    const language =
-        document.getElementById("languageSelect").value;
+const language =
+document.getElementById("languageSelect").value;
 
-    if(language === "te"){
 
-        document.getElementById("pageTitle").innerText =
-            "💊 అన్ని విటమిన్లు";
+if(language==="te"){
 
-        document.getElementById("introText").innerText =
-            "ముఖ్యమైన విటమిన్లు, వాటి ప్రయోజనాలు, ఆహార వనరులు మరియు తీసుకోవాల్సిన జాగ్రత్తల గురించి తెలుసుకోండి.";
+document.getElementById("pageTitle").innerText=
+"💊 అన్ని విటమిన్లు";
 
-        document.getElementById("backButton").innerText =
-            "← వెనుకకు";
+document.getElementById("introText").innerText=
+"ముఖ్యమైన విటమిన్లు, వాటి ప్రయోజనాలు, ఆహార వనరులు మరియు తీసుకోవాల్సిన జాగ్రత్తల గురించి తెలుసుకోండి.";
 
-        document.getElementById("finishButton").innerText =
-            "ముగించు ✓";
+document.getElementById("backButton").innerText=
+"← వెనుకకు";
 
-    }else{
+document.getElementById("finishButton").innerText=
+"ముగించు ✓";
 
-        document.getElementById("pageTitle").innerText =
-            "💊 All Vitamins";
+}
 
-        document.getElementById("introText").innerText =
-            "Learn about important vitamins, their benefits, food sources, and things to avoid or limit.";
+else{
 
-        document.getElementById("backButton").innerText =
-            "← Back";
+document.getElementById("pageTitle").innerText=
+"💊 All Vitamins";
 
-        document.getElementById("finishButton").innerText =
-            "Finish ✓";
-    }
+document.getElementById("introText").innerText=
+"Learn about important vitamins, their benefits, food sources, and things to avoid or limit.";
 
-    renderVitamins();
+document.getElementById("backButton").innerText=
+"← Back";
+
+document.getElementById("finishButton").innerText=
+"Finish ✓";
+
+}
+
+
+renderVitamins();
+
 }
 
 
 function goBack(){
-    window.location.href = "daysplan.html";
+
+window.location.href="daysplan.html";
+
 }
 
 
 function finishPage(){
-    window.location.href = "index.html";
+
+window.location.href="index.html";
+
 }
 
 
