@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -51,7 +51,7 @@ h1{
 
 h2{
     color:#159b7d;
-    margin-top:25px;
+    margin-top:10px;
 }
 
 .section{
@@ -172,6 +172,7 @@ h2{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -192,11 +193,9 @@ h2{
 
 </div>
 
-
 <h1 id="title">
 📅 Days Diet Plan
 </h1>
-
 
 <!-- GOAL -->
 
@@ -216,7 +215,6 @@ id="lossBtn">
 
 </button>
 
-
 <button class="option-btn"
 onclick="selectGoal('gain',this)"
 id="gainBtn">
@@ -224,7 +222,6 @@ id="gainBtn">
 💪 Weight Gain
 
 </button>
-
 
 <button class="option-btn"
 onclick="selectGoal('healthy',this)"
@@ -238,7 +235,6 @@ id="healthyBtn">
 
 </div>
 
-
 <!-- DAYS -->
 
 <div class="section">
@@ -249,32 +245,33 @@ id="healthyBtn">
 
 <div class="option-buttons">
 
-<button class="option-btn"
-onclick="selectDays(1,this)">
+<button class="option-btn dayBtn"
+onclick="selectDays(1,this)"
+id="day1Btn">
 
 1 Day
 
 </button>
 
-
-<button class="option-btn"
-onclick="selectDays(7,this)">
+<button class="option-btn dayBtn"
+onclick="selectDays(7,this)"
+id="day7Btn">
 
 7 Days
 
 </button>
 
-
-<button class="option-btn"
-onclick="selectDays(15,this)">
+<button class="option-btn dayBtn"
+onclick="selectDays(15,this)"
+id="day15Btn">
 
 15 Days
 
 </button>
 
-
-<button class="option-btn"
-onclick="selectDays(30,this)">
+<button class="option-btn dayBtn"
+onclick="selectDays(30,this)"
+id="day30Btn">
 
 30 Days
 
@@ -283,7 +280,6 @@ onclick="selectDays(30,this)">
 </div>
 
 </div>
-
 
 <!-- FOOD TYPE -->
 
@@ -303,7 +299,6 @@ id="vegBtn">
 
 </button>
 
-
 <button class="option-btn"
 onclick="selectFood('nonveg',this)"
 id="nonVegBtn">
@@ -315,7 +310,6 @@ id="nonVegBtn">
 </div>
 
 </div>
-
 
 <!-- CALORIES -->
 
@@ -334,14 +328,12 @@ onclick="selectCalories(1500,this)">
 
 </button>
 
-
 <button class="option-btn"
 onclick="selectCalories(1800,this)">
 
 1800 kcal
 
 </button>
-
 
 <button class="option-btn"
 onclick="selectCalories(2000,this)">
@@ -350,14 +342,12 @@ onclick="selectCalories(2000,this)">
 
 </button>
 
-
 <button class="option-btn"
 onclick="selectCalories(2200,this)">
 
 2200 kcal
 
 </button>
-
 
 <button class="option-btn"
 onclick="selectCalories(2500,this)">
@@ -370,7 +360,6 @@ onclick="selectCalories(2500,this)">
 
 </div>
 
-
 <button class="generate-btn"
 onclick="generatePlan()"
 id="generateButton">
@@ -379,9 +368,7 @@ id="generateButton">
 
 </button>
 
-
 <div id="planResult"></div>
-
 
 <!-- NAVIGATION -->
 
@@ -395,19 +382,17 @@ id="backButton">
 
 </button>
 
-
 <button class="next-btn"
 onclick="goNext()"
 id="nextButton">
 
-Next → 
+Next →
 
 </button>
 
 </div>
 
 </div>
-
 
 <script>
 
@@ -417,18 +402,27 @@ let selectedFood="";
 let selectedCalories=0;
 
 
+/* GET LANGUAGE */
+
+function getLanguage(){
+
+    return document.getElementById("language").value;
+
+}
+
+
 /* GOAL */
 
 function selectGoal(goal,button){
 
-selectedGoal=goal;
+    selectedGoal=goal;
 
-document.querySelectorAll(".section:nth-of-type(1) .option-btn")
-.forEach(btn=>{
-btn.classList.remove("selected");
-});
+    document.querySelectorAll("#lossBtn,#gainBtn,#healthyBtn")
+    .forEach(btn=>{
+        btn.classList.remove("selected");
+    });
 
-button.classList.add("selected");
+    button.classList.add("selected");
 
 }
 
@@ -437,15 +431,14 @@ button.classList.add("selected");
 
 function selectDays(days,button){
 
-selectedDays=days;
+    selectedDays=days;
 
-const buttons=button.parentElement.querySelectorAll(".option-btn");
+    document.querySelectorAll(".dayBtn")
+    .forEach(btn=>{
+        btn.classList.remove("selected");
+    });
 
-buttons.forEach(btn=>{
-btn.classList.remove("selected");
-});
-
-button.classList.add("selected");
+    button.classList.add("selected");
 
 }
 
@@ -454,14 +447,14 @@ button.classList.add("selected");
 
 function selectFood(food,button){
 
-selectedFood=food;
+    selectedFood=food;
 
-document.querySelectorAll("#vegBtn,#nonVegBtn")
-.forEach(btn=>{
-btn.classList.remove("selected");
-});
+    document.querySelectorAll("#vegBtn,#nonVegBtn")
+    .forEach(btn=>{
+        btn.classList.remove("selected");
+    });
 
-button.classList.add("selected");
+    button.classList.add("selected");
 
 }
 
@@ -470,15 +463,15 @@ button.classList.add("selected");
 
 function selectCalories(calories,button){
 
-selectedCalories=calories;
+    selectedCalories=calories;
 
-const buttons=button.parentElement.querySelectorAll(".option-btn");
+    button.parentElement
+    .querySelectorAll(".option-btn")
+    .forEach(btn=>{
+        btn.classList.remove("selected");
+    });
 
-buttons.forEach(btn=>{
-btn.classList.remove("selected");
-});
-
-button.classList.add("selected");
+    button.classList.add("selected");
 
 }
 
@@ -487,258 +480,522 @@ button.classList.add("selected");
 
 function generatePlan(){
 
-if(!selectedGoal){
+    const lang=getLanguage();
 
-alert("Please select your goal.");
 
-return;
+    if(!selectedGoal){
 
-}
+        alert(
+            lang==="te"
+            ? "దయచేసి మీ లక్ష్యాన్ని ఎంచుకోండి."
+            : "Please select your goal."
+        );
 
-if(!selectedDays){
+        return;
+    }
 
-alert("Please select number of days.");
 
-return;
+    if(!selectedDays){
 
-}
+        alert(
+            lang==="te"
+            ? "దయచేసి ఎన్ని రోజులు కావాలో ఎంచుకోండి."
+            : "Please select number of days."
+        );
 
-if(!selectedFood){
+        return;
+    }
 
-alert("Please select Veg or Non-Veg.");
 
-return;
+    if(!selectedFood){
 
-}
+        alert(
+            lang==="te"
+            ? "దయచేసి వెజ్ లేదా నాన్-వెజ్ ఎంచుకోండి."
+            : "Please select Veg or Non-Veg."
+        );
 
-if(!selectedCalories){
+        return;
+    }
 
-alert("Please select daily calories.");
 
-return;
+    if(!selectedCalories){
 
-}
+        alert(
+            lang==="te"
+            ? "దయచేసి రోజువారీ క్యాలరీలను ఎంచుకోండి."
+            : "Please select daily calories."
+        );
 
+        return;
+    }
 
-const result=document.getElementById("planResult");
 
-result.innerHTML="";
+    const result=document.getElementById("planResult");
 
+    result.innerHTML="";
 
-let goalText="";
 
-if(selectedGoal==="loss"){
+    /* GOAL TEXT */
 
-goalText="Weight Loss";
+    let goalText="";
 
-}
+    if(lang==="te"){
 
-else if(selectedGoal==="gain"){
+        if(selectedGoal==="loss"){
+            goalText="బరువు తగ్గడం";
+        }
 
-goalText="Weight Gain";
+        else if(selectedGoal==="gain"){
+            goalText="బరువు పెరగడం";
+        }
 
-}
+        else{
+            goalText="ఆరోగ్యకరమైన ఆహారం";
+        }
 
-else{
+    }
 
-goalText="Healthy Diet";
+    else{
 
-}
+        if(selectedGoal==="loss"){
+            goalText="Weight Loss";
+        }
 
+        else if(selectedGoal==="gain"){
+            goalText="Weight Gain";
+        }
 
-let foodText=
-selectedFood==="veg" ? "Vegetarian" : "Non-Vegetarian";
+        else{
+            goalText="Healthy Diet";
+        }
 
+    }
 
-const summary=document.createElement("div");
 
-summary.className="section";
+    /* FOOD TEXT */
 
-summary.innerHTML=`
+    let foodText="";
 
-<h2>✅ Your Selected Plan</h2>
+    if(lang==="te"){
 
-<p><strong>Goal:</strong> ${goalText}</p>
+        foodText=
+        selectedFood==="veg"
+        ? "వెజ్"
+        : "నాన్-వెజ్";
 
-<p><strong>Food Type:</strong> ${foodText}</p>
+    }
 
-<p><strong>Duration:</strong> ${selectedDays} Day(s)</p>
+    else{
 
-<p><strong>Daily Calories:</strong> ${selectedCalories} kcal</p>
+        foodText=
+        selectedFood==="veg"
+        ? "Vegetarian"
+        : "Non-Vegetarian";
 
-`;
+    }
 
-result.appendChild(summary);
 
+    /* SUMMARY */
 
-/* FOOD LIST */
+    const summary=document.createElement("div");
 
-let breakfastVeg=[
-"Idli with Sambar",
-"Vegetable Upma",
-"Poha with Vegetables",
-"Dosa with Chutney"
-];
+    summary.className="section";
 
-let lunchVeg=[
-"Rice with Dal and Vegetables",
-"Roti with Dal",
-"Rice with Leafy Vegetables",
-"Vegetable Curry with Roti"
-];
 
-let snackVeg=[
-"Fruit",
-"Nuts",
-"Milk",
-"Curd with Fruit"
-];
+    if(lang==="te"){
 
-let dinnerVeg=[
-"Roti with Vegetables",
-"Vegetable Soup",
-"Rice with Dal",
-"Curd Rice with Vegetables"
-];
+        summary.innerHTML=`
 
+        <h2>✅ మీరు ఎంచుకున్న ప్లాన్</h2>
 
-let breakfastNonVeg=[
-"Boiled Eggs with Idli",
-"Egg Omelette with Dosa",
-"Vegetable Upma with Egg",
-"Eggs with Toast"
-];
+        <p>
+        <strong>లక్ష్యం:</strong>
+        ${goalText}
+        </p>
 
-let lunchNonVeg=[
-"Rice with Chicken",
-"Rice with Fish and Vegetables",
-"Roti with Chicken",
-"Rice with Egg Curry"
-];
+        <p>
+        <strong>ఆహార రకం:</strong>
+        ${foodText}
+        </p>
 
-let snackNonVeg=[
-"Fruit",
-"Nuts",
-"Milk",
-"Boiled Egg"
-];
+        <p>
+        <strong>వ్యవధి:</strong>
+        ${selectedDays} రోజులు
+        </p>
 
-let dinnerNonVeg=[
-"Roti with Chicken",
-"Rice with Fish",
-"Egg Curry with Roti",
-"Chicken Soup"
-];
+        <p>
+        <strong>రోజువారీ క్యాలరీలు:</strong>
+        ${selectedCalories} kcal
+        </p>
 
+        `;
 
-for(let day=1;day<=selectedDays;day++){
+    }
 
-let breakfast;
-let lunch;
-let snack;
-let dinner;
+    else{
 
+        summary.innerHTML=`
 
-if(selectedFood==="veg"){
+        <h2>✅ Your Selected Plan</h2>
 
-breakfast=
-breakfastVeg[(day-1)%breakfastVeg.length];
+        <p>
+        <strong>Goal:</strong>
+        ${goalText}
+        </p>
 
-lunch=
-lunchVeg[(day-1)%lunchVeg.length];
+        <p>
+        <strong>Food Type:</strong>
+        ${foodText}
+        </p>
 
-snack=
-snackVeg[(day-1)%snackVeg.length];
+        <p>
+        <strong>Duration:</strong>
+        ${selectedDays} Day(s)
+        </p>
 
-dinner=
-dinnerVeg[(day-1)%dinnerVeg.length];
+        <p>
+        <strong>Daily Calories:</strong>
+        ${selectedCalories} kcal
+        </p>
 
-}
+        `;
 
-else{
+    }
 
-breakfast=
-breakfastNonVeg[(day-1)%breakfastNonVeg.length];
 
-lunch=
-lunchNonVeg[(day-1)%lunchNonVeg.length];
+    result.appendChild(summary);
 
-snack=
-snackNonVeg[(day-1)%snackNonVeg.length];
 
-dinner=
-dinnerNonVeg[(day-1)%dinnerNonVeg.length];
+    /* FOOD LIST - ENGLISH */
 
-}
+    const breakfastVegEn=[
+        "Idli with Sambar",
+        "Vegetable Upma",
+        "Poha with Vegetables",
+        "Dosa with Chutney"
+    ];
 
+    const lunchVegEn=[
+        "Rice with Dal and Vegetables",
+        "Roti with Dal",
+        "Rice with Leafy Vegetables",
+        "Vegetable Curry with Roti"
+    ];
 
-const dayCard=document.createElement("div");
+    const snackVegEn=[
+        "Fruit",
+        "Nuts",
+        "Milk",
+        "Curd with Fruit"
+    ];
 
-dayCard.className="day-card";
+    const dinnerVegEn=[
+        "Roti with Vegetables",
+        "Vegetable Soup",
+        "Rice with Dal",
+        "Curd Rice with Vegetables"
+    ];
 
 
-dayCard.innerHTML=`
+    const breakfastNonVegEn=[
+        "Boiled Eggs with Idli",
+        "Egg Omelette with Dosa",
+        "Vegetable Upma with Egg",
+        "Eggs with Toast"
+    ];
 
-<div class="day-title">
-📅 Day ${day}
-</div>
+    const lunchNonVegEn=[
+        "Rice with Chicken",
+        "Rice with Fish and Vegetables",
+        "Roti with Chicken",
+        "Rice with Egg Curry"
+    ];
 
+    const snackNonVegEn=[
+        "Fruit",
+        "Nuts",
+        "Milk",
+        "Boiled Egg"
+    ];
 
-<div class="meal-card">
+    const dinnerNonVegEn=[
+        "Roti with Chicken",
+        "Rice with Fish",
+        "Egg Curry with Roti",
+        "Chicken Soup"
+    ];
 
-<div class="meal-name">
-🌅 Breakfast
-</div>
 
-<p>${breakfast}</p>
+    /* FOOD LIST - TELUGU */
 
-</div>
+    const breakfastVegTe=[
+        "సాంబార్‌తో ఇడ్లీ",
+        "కూరగాయల ఉప్మా",
+        "కూరగాయలతో అటుకుల ఉప్మా",
+        "చట్నీతో దోస"
+    ];
 
+    const lunchVegTe=[
+        "పప్పు మరియు కూరగాయలతో అన్నం",
+        "పప్పుతో రోటీ",
+        "ఆకుకూరలతో అన్నం",
+        "కూరగాయల కూరతో రోటీ"
+    ];
 
-<div class="meal-card">
+    const snackVegTe=[
+        "పండు",
+        "నట్స్",
+        "పాలు",
+        "పండుతో పెరుగు"
+    ];
 
-<div class="meal-name">
-☀️ Lunch
-</div>
+    const dinnerVegTe=[
+        "కూరగాయలతో రోటీ",
+        "కూరగాయల సూప్",
+        "పప్పుతో అన్నం",
+        "కూరగాయలతో పెరుగు అన్నం"
+    ];
 
-<p>${lunch}</p>
 
-</div>
+    const breakfastNonVegTe=[
+        "ఇడ్లీతో ఉడికించిన గుడ్లు",
+        "దోసతో ఎగ్ ఆమ్లెట్",
+        "గుడ్డుతో కూరగాయల ఉప్మా",
+        "టోస్ట్‌తో గుడ్లు"
+    ];
 
+    const lunchNonVegTe=[
+        "చికెన్‌తో అన్నం",
+        "చేపలు మరియు కూరగాయలతో అన్నం",
+        "చికెన్‌తో రోటీ",
+        "ఎగ్ కర్రీతో అన్నం"
+    ];
 
-<div class="meal-card">
+    const snackNonVegTe=[
+        "పండు",
+        "నట్స్",
+        "పాలు",
+        "ఉడికించిన గుడ్డు"
+    ];
 
-<div class="meal-name">
-🍎 Evening Snack
-</div>
+    const dinnerNonVegTe=[
+        "చికెన్‌తో రోటీ",
+        "చేపలతో అన్నం",
+        "ఎగ్ కర్రీతో రోటీ",
+        "చికెన్ సూప్"
+    ];
 
-<p>${snack}</p>
 
-</div>
+    /* SELECT LIST */
 
+    let breakfastVeg;
+    let lunchVeg;
+    let snackVeg;
+    let dinnerVeg;
 
-<div class="meal-card">
+    let breakfastNonVeg;
+    let lunchNonVeg;
+    let snackNonVeg;
+    let dinnerNonVeg;
 
-<div class="meal-name">
-🌙 Dinner
-</div>
 
-<p>${dinner}</p>
+    if(lang==="te"){
 
-</div>
+        breakfastVeg=breakfastVegTe;
+        lunchVeg=lunchVegTe;
+        snackVeg=snackVegTe;
+        dinnerVeg=dinnerVegTe;
 
-`;
+        breakfastNonVeg=breakfastNonVegTe;
+        lunchNonVeg=lunchNonVegTe;
+        snackNonVeg=snackNonVegTe;
+        dinnerNonVeg=dinnerNonVegTe;
 
-result.appendChild(dayCard);
+    }
 
-}
+    else{
 
+        breakfastVeg=breakfastVegEn;
+        lunchVeg=lunchVegEn;
+        snackVeg=snackVegEn;
+        dinnerVeg=dinnerVegEn;
 
-/* SCROLL */
+        breakfastNonVeg=breakfastNonVegEn;
+        lunchNonVeg=lunchNonVegEn;
+        snackNonVeg=snackNonVegEn;
+        dinnerNonVeg=dinnerNonVegEn;
 
-result.scrollIntoView({
-behavior:"smooth"
-});
+    }
+
+
+    /* CREATE DAYS */
+
+    for(let day=1;day<=selectedDays;day++){
+
+        let breakfast;
+        let lunch;
+        let snack;
+        let dinner;
+
+
+        if(selectedFood==="veg"){
+
+            breakfast=
+            breakfastVeg[(day-1)%breakfastVeg.length];
+
+            lunch=
+            lunchVeg[(day-1)%lunchVeg.length];
+
+            snack=
+            snackVeg[(day-1)%snackVeg.length];
+
+            dinner=
+            dinnerVeg[(day-1)%dinnerVeg.length];
+
+        }
+
+        else{
+
+            breakfast=
+            breakfastNonVeg[(day-1)%breakfastNonVeg.length];
+
+            lunch=
+            lunchNonVeg[(day-1)%lunchNonVeg.length];
+
+            snack=
+            snackNonVeg[(day-1)%snackNonVeg.length];
+
+            dinner=
+            dinnerNonVeg[(day-1)%dinnerNonVeg.length];
+
+        }
+
+
+        const dayCard=document.createElement("div");
+
+        dayCard.className="day-card";
+
+
+        if(lang==="te"){
+
+            dayCard.innerHTML=`
+
+            <div class="day-title">
+            📅 ${day}వ రోజు
+            </div>
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            🌅 ఉదయం అల్పాహారం
+            </div>
+
+            <p>${breakfast}</p>
+
+            </div>
+
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            ☀️ మధ్యాహ్న భోజనం
+            </div>
+
+            <p>${lunch}</p>
+
+            </div>
+
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            🍎 సాయంత్రం స్నాక్
+            </div>
+
+            <p>${snack}</p>
+
+            </div>
+
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            🌙 రాత్రి భోజనం
+            </div>
+
+            <p>${dinner}</p>
+
+            </div>
+
+            `;
+
+        }
+
+        else{
+
+            dayCard.innerHTML=`
+
+            <div class="day-title">
+            📅 Day ${day}
+            </div>
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            🌅 Breakfast
+            </div>
+
+            <p>${breakfast}</p>
+
+            </div>
+
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            ☀️ Lunch
+            </div>
+
+            <p>${lunch}</p>
+
+            </div>
+
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            🍎 Evening Snack
+            </div>
+
+            <p>${snack}</p>
+
+            </div>
+
+
+            <div class="meal-card">
+
+            <div class="meal-name">
+            🌙 Dinner
+            </div>
+
+            <p>${dinner}</p>
+
+            </div>
+
+            `;
+
+        }
+
+
+        result.appendChild(dayCard);
+
+    }
+
+
+    result.scrollIntoView({
+        behavior:"smooth"
+    });
 
 }
 
@@ -747,95 +1004,135 @@ behavior:"smooth"
 
 function changeLanguage(){
 
-const lang=
-document.getElementById("language").value;
+    const lang=getLanguage();
 
 
-if(lang==="te"){
+    if(lang==="te"){
 
-document.getElementById("title").innerText=
-"📅 రోజుల ఆహార ప్రణాళిక";
+        document.getElementById("title").innerText=
+        "📅 రోజుల ఆహార ప్రణాళిక";
 
-document.getElementById("goalTitle").innerText=
-"🎯 మీ లక్ష్యాన్ని ఎంచుకోండి";
+        document.getElementById("goalTitle").innerText=
+        "🎯 మీ లక్ష్యాన్ని ఎంచుకోండి";
 
-document.getElementById("lossBtn").innerText=
-"⚖️ బరువు తగ్గడం";
+        document.getElementById("lossBtn").innerText=
+        "⚖️ బరువు తగ్గడం";
 
-document.getElementById("gainBtn").innerText=
-"💪 బరువు పెరగడం";
+        document.getElementById("gainBtn").innerText=
+        "💪 బరువు పెరగడం";
 
-document.getElementById("healthyBtn").innerText=
-"🥗 ఆరోగ్యకరమైన ఆహారం";
+        document.getElementById("healthyBtn").innerText=
+        "🥗 ఆరోగ్యకరమైన ఆహారం";
 
-document.getElementById("daysTitle").innerText=
-"📆 ఎన్ని రోజులు కావాలో ఎంచుకోండి";
+        document.getElementById("daysTitle").innerText=
+        "📆 ఎన్ని రోజులు కావాలో ఎంచుకోండి";
 
-document.getElementById("foodTitle").innerText=
-"🍽️ ఆహార రకాన్ని ఎంచుకోండి";
+        document.getElementById("day1Btn").innerText=
+        "1 రోజు";
 
-document.getElementById("vegBtn").innerText=
-"🥦 వెజ్";
+        document.getElementById("day7Btn").innerText=
+        "7 రోజులు";
 
-document.getElementById("nonVegBtn").innerText=
-"🍗 నాన్-వెజ్";
+        document.getElementById("day15Btn").innerText=
+        "15 రోజులు";
 
-document.getElementById("calorieTitle").innerText=
-"🔥 రోజువారీ క్యాలరీలను ఎంచుకోండి";
+        document.getElementById("day30Btn").innerText=
+        "30 రోజులు";
 
-document.getElementById("generateButton").innerText=
-"🍽️ డైట్ ప్లాన్ తయారు చేయండి";
+        document.getElementById("foodTitle").innerText=
+        "🍽️ ఆహార రకాన్ని ఎంచుకోండి";
 
-document.getElementById("backButton").innerText=
-"← వెనక్కి";
+        document.getElementById("vegBtn").innerText=
+        "🥦 వెజ్";
 
-document.getElementById("nextButton").innerText=
-"తర్వాత →";
+        document.getElementById("nonVegBtn").innerText=
+        "🍗 నాన్-వెజ్";
 
-}
+        document.getElementById("calorieTitle").innerText=
+        "🔥 రోజువారీ క్యాలరీలను ఎంచుకోండి";
 
-else{
+        document.getElementById("generateButton").innerText=
+        "🍽️ డైట్ ప్లాన్ తయారు చేయండి";
 
-document.getElementById("title").innerText=
-"📅 Days Diet Plan";
+        document.getElementById("backButton").innerText=
+        "← వెనక్కి";
 
-document.getElementById("goalTitle").innerText=
-"🎯 Select Your Goal";
+        document.getElementById("nextButton").innerText=
+        "తర్వాత →";
 
-document.getElementById("lossBtn").innerText=
-"⚖️ Weight Loss";
+    }
 
-document.getElementById("gainBtn").innerText=
-"💪 Weight Gain";
+    else{
 
-document.getElementById("healthyBtn").innerText=
-"🥗 Healthy Diet";
+        document.getElementById("title").innerText=
+        "📅 Days Diet Plan";
 
-document.getElementById("daysTitle").innerText=
-"📆 Select Number of Days";
+        document.getElementById("goalTitle").innerText=
+        "🎯 Select Your Goal";
 
-document.getElementById("foodTitle").innerText=
-"🍽️ Select Food Type";
+        document.getElementById("lossBtn").innerText=
+        "⚖️ Weight Loss";
 
-document.getElementById("vegBtn").innerText=
-"🥦 Veg";
+        document.getElementById("gainBtn").innerText=
+        "💪 Weight Gain";
 
-document.getElementById("nonVegBtn").innerText=
-"🍗 Non-Veg";
+        document.getElementById("healthyBtn").innerText=
+        "🥗 Healthy Diet";
 
-document.getElementById("calorieTitle").innerText=
-"🔥 Select Daily Calories";
+        document.getElementById("daysTitle").innerText=
+        "📆 Select Number of Days";
 
-document.getElementById("generateButton").innerText=
-"🍽️ Generate Diet Plan";
+        document.getElementById("day1Btn").innerText=
+        "1 Day";
 
-document.getElementById("backButton").innerText=
-"← Back";
+        document.getElementById("day7Btn").innerText=
+        "7 Days";
 
-document.getElementById("nextButton").innerText=
-"Next →";
+        document.getElementById("day15Btn").innerText=
+        "15 Days";
 
-}
+        document.getElementById("day30Btn").innerText=
+        "30 Days";
+
+        document.getElementById("foodTitle").innerText=
+        "🍽️ Select Food Type";
+
+        document.getElementById("vegBtn").innerText=
+        "🥦 Veg";
+
+        document.getElementById("nonVegBtn").innerText=
+        "🍗 Non-Veg";
+
+        document.getElementById("calorieTitle").innerText=
+        "🔥 Select Daily Calories";
+
+        document.getElementById("generateButton").innerText=
+        "🍽️ Generate Diet Plan";
+
+        document.getElementById("backButton").innerText=
+        "← Back";
+
+        document.getElementById("nextButton").innerText=
+        "Next →";
+
+    }
+
+
+    /*
+       If a plan was already generated,
+       regenerate it in the selected language.
+    */
+
+    if(
+        selectedGoal &&
+        selectedDays &&
+        selectedFood &&
+        selectedCalories
+    ){
+
+        generatePlan();
+
+    }
 
 }
 
@@ -844,7 +1141,7 @@ document.getElementById("nextButton").innerText=
 
 function goBack(){
 
-window.location.href="diet.html";
+    window.location.href="diet.html";
 
 }
 
@@ -853,12 +1150,12 @@ window.location.href="diet.html";
 
 function goNext(){
 
-window.location.href="vitamins-page.html";
+    window.location.href="vitamins-page.html";
 
 }
 
 </script>
 
 </body>
+
 </html>
-```
