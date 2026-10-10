@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diet Management App - Days Plan</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:20px;font-family:Arial,sans-serif;background:linear-gradient(135deg,#dffaf1,#fff);color:#23433b}
+.container{max-width:950px;margin:auto}
+h1,h2{text-align:center;color:#11765f}
+.card{background:white;padding:20px;margin:18px 0;border-radius:18px;box-shadow:0 4px 14px #00000010}
+label{display:block;margin:12px 0 6px;font-weight:bold}
+select{width:100%;padding:12px;border:1px solid #b8d9ce;border-radius:9px;font-size:16px;background:white}
+button{border:0;background:#159b7d;color:white;padding:12px 17px;border-radius:10px;cursor:pointer;font-size:15px;margin:5px}
+button:hover{background:#0d765e}
+button.selected{background:#075b49;outline:3px solid #a7e6d5}
+.button-row{display:flex;justify-content:center;flex-wrap:wrap;gap:8px}
+.result{background:#effbf6;padding:15px;border-radius:12px;margin-top:12px;line-height:1.8}
+.navigation{display:flex;justify-content:space-between;gap:10px;margin:25px 0}
+.hidden{display:none}
+@media(max-width:500px){body{padding:10px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1 id="title">📅 Your Days Diet Plan</h1>
+
+<div class="card">
+<label id="languageLabel" for="language">🌐 Select Language</label>
+<select id="language" onchange="changeLanguage()">
+<option value="en">English</option>
+<option value="te">తెలుగు</option>
+</select>
+</div>
+
+<div class="card">
+<h2 id="goalTitle">🎯 Select Goal</h2>
+<div class="button-row">
+<button id="loss" onclick="choose('goal','loss',this)">Weight Loss</button>
+<button id="gain" onclick="choose('goal','gain',this)">Weight Gain</button>
+<button id="healthy" onclick="choose('goal','healthy',this)">Healthy Diet</button>
+</div>
+</div>
+
+<div class="card">
+<h2 id="daysTitle">📆 Select Days</h2>
+<div class="button-row">
+<button id="d7" onclick="choose('days','7',this)">7 Days</button>
+<button id="d15" onclick="choose('days','15',this)">15 Days</button>
+<button id="d30" onclick="choose('days','30',this)">30 Days</button>
+</div>
+</div>
+
+<div class="card">
+<h2 id="foodTitle">🍽️ Select Food</h2>
+<div class="button-row">
+<button id="veg" onclick="choose('food','veg',this)">🥦 Vegetarian</button>
+<button id="nonveg" onclick="choose('food','nonveg',this)">🍗 Non-Vegetarian</button>
+</div>
+</div>
+
+<div class="card">
+<h2 id="calorieTitle">🔥 Select Daily Calories</h2>
+<label id="calorieLabel" for="calories">Daily calorie target</label>
+<select id="calories">
+<option value="1500">1500 calories</option>
+<option value="1800">1800 calories</option>
+<option value="2000">2000 calories</option>
+<option value="2200">2200 calories</option>
+<option value="2500">2500 calories</option>
+</select>
+<p id="calorieNote">Calorie needs vary by age, body size, activity and health.</p>
+</div>
+
+<div class="card">
+<div class="button-row">
+<button id="generate" onclick="generatePlan()">🍽️ Generate Days Plan</button>
+</div>
+<div id="plan" class="hidden"></div>
+</div>
+
+<div class="navigation">
+<button id="back" onclick="location.href='diet.html'">← Back</button>
+<button id="next" onclick="location.href='vitamins-page.html'">Next →</button>
+</div>
+
+</div>
+
+<script>
+let lang="en";
+let goal="";
+let days="";
+let food="";
+
+const text={
+en:{
+title:"📅 Your Days Diet Plan",
+languageLabel:"🌐 Select Language",
+goalTitle:"🎯 Select Goal",
+loss:"⚖️ Weight Loss",gain:"💪 Weight Gain",healthy:"🥗 Healthy Diet",
+daysTitle:"📆 Select Days",
+d7:"7 Days",d15:"15 Days",d30:"30 Days",
+foodTitle:"🍽️ Select Food",
+veg:"🥦 Vegetarian",nonveg:"🍗 Non-Vegetarian",
+calorieTitle:"🔥 Select Daily Calories",
+calorieLabel:"Daily calorie target",
+calorieNote:"Calorie needs vary by age, body size, activity and health.",
+generate:"🍽️ Generate Days Plan",
+back:"← Back",next:"Next →",
+chooseGoal:"Please select your goal.",
+chooseDays:"Please select the number of days.",
+chooseFood:"Please select your food type.",
+breakfast:"🌅 Breakfast",lunch:"☀️ Lunch",
+snacks:"🍎 Evening Snacks",dinner:"🌙 Dinner",
+day:"Day",calories:"Daily target",
+note:"This is a general sample meal plan, not a medical prescription. Calorie needs differ between people. Consult a qualified dietitian for a personalised plan."
+},
+te:{
+title:"📅 మీ రోజుల డైట్ ప్లాన్",
+languageLabel:"🌐 భాషను ఎంచుకోండి",
+goalTitle:"🎯 మీ లక్ష్యాన్ని ఎంచుకోండి",
+loss:"⚖️ బరువు తగ్గడం",gain:"💪 బరువు పెరగడం",healthy:"🥗 ఆరోగ్యకరమైన ఆహారం",
+daysTitle:"📆 రోజులను ఎంచుకోండి",
+d7:"7 రోజులు",d15:"15 రోజులు",d30:"30 రోజులు",
+foodTitle:"🍽️ ఆహారాన్ని ఎంచుకోండి",
+veg:"🥦 శాకాహారం",nonveg:"🍗 మాంసాహారం",
+calorieTitle:"🔥 రోజువారీ క్యాలరీలను ఎంచుకోండి",
+calorieLabel:"రోజువారీ క్యాలరీ లక్ష్యం",
+calorieNote:"క్యాలరీ అవసరాలు వయస్సు, శరీర పరిమాణం, శారీరక శ్రమ మరియు ఆరోగ్యంపై ఆధారపడతాయి.",
+generate:"🍽️ రోజుల డైట్ ప్లాన్ తయారు చేయండి",
+back:"← వెనక్కి",next:"తర్వాత →",
+chooseGoal:"దయచేసి మీ లక్ష్యాన్ని ఎంచుకోండి.",
+chooseDays:"దయచేసి రోజులను ఎంచుకోండి.",
+chooseFood:"దయచేసి ఆహార రకాన్ని ఎంచుకోండి.",
+breakfast:"🌅 ఉదయం టిఫిన్",lunch:"☀️ మధ్యాహ్న భోజనం",
+snacks:"🍎 సాయంత్రం స్నాక్స్",dinner:"🌙 రాత్రి భోజనం",
+day:"రోజు",calories:"రోజువారీ లక్ష్యం",
+note:"ఇది సాధారణ నమూనా ఆహార ప్రణాళిక మాత్రమే; వైద్యపరమైన సూచన కాదు. ప్రతి ఒక్కరి క్యాలరీ అవసరాలు వేర్వేరుగా ఉంటాయి. వ్యక్తిగత ప్రణాళిక కోసం అర్హత కలిగిన డైటీషియన్‌ను సంప్రదించండి."
+}
+};
+
+const meals={
+veg:[
+["Oats with milk and banana","Rice, dal and vegetables","Fruit and a few nuts","Roti, dal and cooked vegetables"],
+["Idli with sambar","Rice, beans and curd","Fruit and roasted chana","Vegetable khichdi"],
+["Vegetable upma and milk","Rice, spinach dal and vegetables","Curd and fruit","Roti with paneer and vegetables"],
+["Dosa with sambar","Rice, chickpea curry and vegetables","Banana and nuts","Vegetable pulao with curd"],
+["Poha with peanuts","Rice, dal and carrot","Fruit and yogurt","Roti with mixed vegetables"],
+["Oats with fruit","Rice, rajma and vegetables","Roasted chana","Roti with dal and spinach"],
+["Idli with sambar","Rice, paneer and vegetables","Fruit and nuts","Vegetable khichdi with curd"]
+],
+nonveg:[
+["Boiled eggs, toast and fruit","Rice, chicken and vegetables","Fruit and yogurt","Roti, dal and vegetables"],
+["Idli with eggs","Rice, fish and vegetables","Fruit and roasted chana","Roti with chicken and vegetables"],
+["Oats with milk and banana","Rice, egg curry and vegetables","Curd and fruit","Rice with dal and vegetables"],
+["Dosa with eggs","Rice, chicken and vegetables","Fruit and nuts","Roti, fish and cooked vegetables"],
+["Poha and boiled eggs","Rice, fish and vegetables","Banana and yogurt","Roti with dal and vegetables"],
+["Oats with fruit","Rice, chicken and vegetables","Roasted chana","Roti with egg curry and vegetables"],
+["Idli with sambar and eggs","Rice, fish and vegetables","Fruit and yogurt","Roti with chicken and vegetables"]
+],
+teVeg:[
+["పాలు, ఓట్స్ మరియు అరటిపండు","అన్నం, పప్పు మరియు కూరగాయలు","పండు మరియు కొద్దిగా బాదం","చపాతీ, పప్పు మరియు కూరగాయలు"],
+["ఇడ్లీ మరియు సాంబార్","అన్నం, బీన్స్ మరియు పెరుగు","పండు మరియు వేయించిన శనగలు","కూరగాయల ఖిచ్డీ"],
+["కూరగాయల ఉప్మా మరియు పాలు","అన్నం, పాలకూర పప్పు మరియు కూరగాయలు","పెరుగు మరియు పండు","చపాతీ, పనీర్ మరియు కూరగాయలు"],
+["దోశ మరియు సాంబార్","అన్నం, శనగల కూర మరియు కూరగాయలు","అరటిపండు మరియు బాదం","కూరగాయల పులావ్ మరియు పెరుగు"],
+["పోహా మరియు వేరుశెనగలు","అన్నం, పప్పు మరియు క్యారెట్","పండు మరియు పెరుగు","చపాతీ మరియు మిశ్రమ కూరగాయలు"],
+["పండ్లతో ఓట్స్","అన్నం, రాజ్మా మరియు కూరగాయలు","వేయించిన శనగలు","చపాతీ, పప్పు మరియు పాలకూర"],
+["ఇడ్లీ మరియు సాంబార్","అన్నం, పనీర్ మరియు కూరగాయలు","పండు మరియు బాదం","కూరగాయల ఖిచ్డీ మరియు పెరుగు"]
+],
+teNonveg:[
+["ఉడికించిన గుడ్లు, బ్రెడ్ మరియు పండు","అన్నం, చికెన్ మరియు కూరగాయలు","పండు మరియు పెరుగు","చపాతీ, పప్పు మరియు కూరగాయలు"],
+["ఇడ్లీ మరియు గుడ్లు","అన్నం, చేపలు మరియు కూరగాయలు","పండు మరియు వేయించిన శనగలు","చపాతీ, చికెన్ మరియు కూరగాయలు"],
+["పాలు, ఓట్స్ మరియు అరటిపండు","అన్నం, గుడ్ల కూర మరియు కూరగాయలు","పెరుగు మరియు పండు","అన్నం, పప్పు మరియు కూరగాయలు"],
+["దోశ మరియు గుడ్లు","అన్నం, చికెన్ మరియు కూరగాయలు","పండు మరియు బాదం","చపాతీ, చేపలు మరియు కూరగాయలు"],
+["పోహా మరియు ఉడికించిన గుడ్లు","అన్నం, చేపలు మరియు కూరగాయలు","అరటిపండు మరియు పెరుగు","చపాతీ మరియు పప్పు"],
+["పండ్లతో ఓట్స్","అన్నం, చికెన్ మరియు కూరగాయలు","వేయించిన శనగలు","చపాతీ మరియు గుడ్ల కూర"],
+["ఇడ్లీ, సాంబార్ మరియు గుడ్లు","అన్నం, చేపలు మరియు కూరగాయలు","పండు మరియు పెరుగు","చపాతీ, చికెన్ మరియు కూరగాయలు"]
+]
+};
+
+function tr(key){return text[lang][key]||key}
+
+function changeLanguage(){
+lang=document.getElementById("language").value;
+document.documentElement.lang=lang==="te"?"te":"en";
+Object.keys(text[lang]).forEach(key=>{
+const el=document.getElementById(key);
+if(el) el.textContent=text[lang][key];
+});
+if(!document.getElementById("plan").classList.contains("hidden")) generatePlan();
+}
+
+function choose(type,value,button){
+if(type==="goal")goal=value;
+if(type==="days")days=value;
+if(type==="food")food=value;
+const group={goal:["loss","gain","healthy"],days:["d7","d15","d30"],food:["veg","nonveg"]}[type];
+group.forEach(id=>document.getElementById(id).classList.remove("selected"));
+button.classList.add("selected");
+}
+
+function generatePlan(){
+if(!goal){alert(tr("chooseGoal"));return}
+if(!days){alert(tr("chooseDays"));return}
+if(!food){alert(tr("chooseFood"));return}
+
+const calorie=document.getElementById("calories").value;
+const plan=document.getElementById("plan");
+plan.innerHTML="";
+
+const menu=lang==="te"
+?(food==="veg"?meals.teVeg:meals.teNonveg)
+:(food==="veg"?meals.veg:meals.nonveg);
+
+const goalName={
+en:{loss:"Weight Loss",gain:"Weight Gain",healthy:"Healthy Diet"},
+te:{loss:"బరువు తగ్గడం",gain:"బరువు పెరగడం",healthy:"ఆరోగ్యకరమైన ఆహారం"}
+};
+const goalLine=document.createElement("div");
+goalLine.className="result";
+goalLine.textContent=goalName[lang][goal]+" • "+calorie+" "+(lang==="te"?"క్యాలరీలు":"calories");
+plan.appendChild(goalLine);
+
+for(let i=0;i<Number(days);i++){
+const card=document.createElement("div");
+card.className="result";
+const heading=document.createElement("h2");
+heading.textContent=tr("day")+" "+(i+1);
+card.appendChild(heading);
+
+[0,1,2,3].forEach((mealIndex)=>{
+const p=document.createElement("p");
+const strong=document.createElement("strong");
+strong.textContent=tr(["breakfast","lunch","snacks","dinner"][mealIndex])+": ";
+p.appendChild(strong);
+p.appendChild(document.createTextNode(menu[i%7][mealIndex]));
+card.appendChild(p);
+});
+plan.appendChild(card);
+}
+const note=document.createElement("p");
+note.textContent=tr("note");
+plan.appendChild(note);
+plan.classList.remove("hidden");
+plan.scrollIntoView({behavior:"smooth",block:"start"});
+}
+</script>
+</body>
+</html>
