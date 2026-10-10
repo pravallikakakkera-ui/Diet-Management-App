@@ -1,708 +1,622 @@
+
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-```
-<title>Health Issues - Diet Management</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Issues - Diet Management App</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dffaf1, #ffffff);
+    color: #222;
+}
+
+.health-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    text-align: center;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.language-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.language-box label {
+    font-weight: bold;
+}
+
+.language-box select {
+    padding: 9px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+h1, #healthResult h2, .vitamin-card h3 {
+    color: #159b7d;
+}
+
+.description {
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.health-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.health-buttons button {
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #159b7d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.health-buttons button:hover {
+    opacity: 0.85;
+}
+
+#healthResult {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #eefaf6;
+    line-height: 1.6;
+}
+
+.vitamin-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.vitamin-card {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+}
+
+.vitamin-card img {
+    width: 140px;
+    height: 120px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 10px;
+    cursor: zoom-in;
+    transition: transform 0.2s;
+}
+
+.vitamin-card img:hover {
+    transform: scale(1.05);
+}
+
+.vitamin-card h3 {
+    margin: 5px 0 10px;
+}
+
+.note {
+    margin-top: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+}
+
+.navigation {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.navigation button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.back-btn {
+    background: #777;
+    color: white;
+}
+
+.done-btn {
+    background: #159b7d;
+    color: white;
+}
+
+/* Large photo popup */
+.photo-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    inset: 0;
+    padding: 20px;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.photo-modal.show {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 92%;
+    max-height: 90%;
+    padding: 50px 15px 15px;
+    background: white;
+    border-radius: 15px;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 75vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #159b7d;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
     body {
-        margin: 0;
-        padding: 20px;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #dffaf1, #ffffff);
+        padding: 10px;
     }
 
     .health-container {
-        max-width: 900px;
-        margin: 30px auto;
-        padding: 30px;
-        text-align: center;
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+        padding: 20px;
+        margin: 10px auto;
+    }
+
+    .health-buttons,
+    .vitamin-list {
+        grid-template-columns: 1fr;
     }
 
     .top-bar {
-        display: flex;
-        justify-content: flex-end;
-        margin-bottom: 10px;
-    }
-
-    .language-box {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .language-box label {
-        font-weight: bold;
-    }
-
-    .language-box select {
-        padding: 9px 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 15px;
-        cursor: pointer;
-    }
-
-    h1 {
-        color: #159b7d;
-        margin-bottom: 15px;
-    }
-
-    .description {
-        font-size: 16px;
-        margin-bottom: 25px;
-    }
-
-    .health-buttons {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin-top: 20px;
-    }
-
-    .health-buttons button {
-        padding: 15px;
-        border: none;
-        border-radius: 12px;
-        background: #159b7d;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    .health-buttons button:hover {
-        opacity: 0.85;
-    }
-
-    #healthResult {
-        margin-top: 25px;
-        padding: 20px;
-        border-radius: 15px;
-        background: #eefaf6;
-        color: #333;
-        line-height: 1.6;
-    }
-
-    #healthResult h2 {
-        color: #159b7d;
-        margin-top: 0;
-    }
-
-    .vitamin-list {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin-top: 20px;
-    }
-
-    .vitamin-card {
-        background: white;
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.10);
-    }
-
-    .vitamin-card img {
-        width: 140px;
-        height: 120px;
-        object-fit: contain;
-        display: block;
-        margin: 0 auto 10px;
-    }
-
-    .vitamin-card h3 {
-        color: #159b7d;
-        margin: 5px 0 10px;
-    }
-
-    .vitamin-card p {
-        margin: 5px 0;
-    }
-
-    .note {
-        margin-top: 20px;
-        padding: 15px;
-        background: #ffffff;
-        border-radius: 12px;
+        justify-content: center;
     }
 
     .navigation {
-        margin-top: 25px;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
+        flex-direction: column;
     }
 
     .navigation button {
-        padding: 12px 25px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        font-size: 15px;
+        width: 100%;
     }
 
-    .back-btn {
-        background: #777;
-        color: white;
+    .modal-content {
+        max-width: 96%;
     }
 
-    .done-btn {
-        background: #159b7d;
-        color: white;
+    .modal-content img {
+        max-height: 70vh;
     }
-
-    @media (max-width: 600px) {
-
-        body {
-            padding: 10px;
-        }
-
-        .health-container {
-            padding: 20px;
-            margin: 10px auto;
-        }
-
-        .health-buttons,
-        .vitamin-list {
-            grid-template-columns: 1fr;
-        }
-
-        .top-bar {
-            justify-content: center;
-        }
-
-        .navigation {
-            flex-direction: column;
-        }
-
-        .navigation button {
-            width: 100%;
-        }
-    }
+}
 </style>
-```
-
 </head>
 
 <body>
 
-```
 <div class="health-container">
 
     <div class="top-bar">
-
         <div class="language-box">
-
-            <label id="languageLabel">
-                🌐 Language
-            </label>
-
+            <label id="languageLabel">🌐 Language</label>
             <select id="language" onchange="changeLanguage()">
                 <option value="en">English</option>
                 <option value="te">తెలుగు</option>
             </select>
-
         </div>
-
     </div>
 
-
-    <h1 id="pageTitle">
-        🩺 Health Issues
-    </h1>
-
+    <h1 id="pageTitle">🩺 Health Issues</h1>
 
     <p class="description" id="description">
         Select your health problem to see the recommended vitamins.
     </p>
 
-
     <div class="health-buttons">
-
-        <button id="weaknessBtn" onclick="showHealth('Weakness')">
-            💪 Weakness
-        </button>
-
-        <button id="hairBtn" onclick="showHealth('Hair Fall')">
-            💇 Hair Fall
-        </button>
-
-        <button id="skinBtn" onclick="showHealth('Skin Problems')">
-            🌸 Skin Problems
-        </button>
-
-        <button id="immunityBtn" onclick="showHealth('Poor Immunity')">
-            🛡️ Poor Immunity
-        </button>
-
-        <button id="eyeBtn" onclick="showHealth('Eye Health')">
-            👁️ Eye Health
-        </button>
-
-        <button id="boneBtn" onclick="showHealth('Bone Health')">
-            🦴 Bone Health
-        </button>
-
+        <button id="weaknessBtn" onclick="showHealth('Weakness')">💪 Weakness</button>
+        <button id="hairBtn" onclick="showHealth('Hair Fall')">💇 Hair Fall</button>
+        <button id="skinBtn" onclick="showHealth('Skin Problems')">🌸 Skin Problems</button>
+        <button id="immunityBtn" onclick="showHealth('Poor Immunity')">🛡️ Poor Immunity</button>
+        <button id="eyeBtn" onclick="showHealth('Eye Health')">👁️ Eye Health</button>
+        <button id="boneBtn" onclick="showHealth('Bone Health')">🦴 Bone Health</button>
     </div>
-
 
     <div id="healthResult">
         Select a health issue above.
     </div>
 
-
     <div class="navigation">
-
-        <button class="back-btn" id="backBtn" onclick="goBack()">
-            ← Back
-        </button>
-
-        <button class="done-btn" id="doneBtn" onclick="doneHealth()">
-            Done ✓
-        </button>
-
+        <button class="back-btn" id="backBtn" onclick="goBack()">← Back</button>
+        <button class="done-btn" id="doneBtn" onclick="doneHealth()">Done ✓</button>
     </div>
 
 </div>
 
+<!-- Vitamin photo popup -->
+<div id="photoModal" class="photo-modal" onclick="closePhoto(event)">
+    <div class="modal-content">
+        <button class="close-modal" onclick="hidePhoto()" aria-label="Close">×</button>
+        <img id="largeVitaminPhoto" src="" alt="Large vitamin photo">
+    </div>
+</div>
 
 <script>
-
-    let currentProblem = "";
-
-    const healthData = {
-
-        "Weakness": {
-
-            titleEn: "💪 Weakness",
-            titleTe: "💪 బలహీనత",
-
-            vitamins: [
-
-                {
-                    nameEn: "Vitamin B1",
-                    nameTe: "విటమిన్ B1",
-                    image: "images/vitamin-b1.png",
-                    textEn: "Supports energy metabolism and normal body functions.",
-                    textTe: "శక్తి ఉత్పత్తి మరియు శరీర సాధారణ పనితీరుకు సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin B6",
-                    nameTe: "విటమిన్ B6",
-                    image: "images/vitamin-b6.jpg",
-                    textEn: "Helps the body use nutrients and supports normal metabolism.",
-                    textTe: "శరీరం పోషకాలను ఉపయోగించుకోవడానికి మరియు సాధారణ మెటబాలిజానికి సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin B12",
-                    nameTe: "విటమిన్ B12",
-                    image: "images/vitamin-b12.jpg",
-                    textEn: "Supports red blood cell formation and normal nervous system function.",
-                    textTe: "ఎర్ర రక్త కణాల ఏర్పాటుకు మరియు నాడీ వ్యవస్థ సాధారణ పనితీరుకు సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin C",
-                    nameTe: "విటమిన్ C",
-                    image: "images/Vitamin-C.jpg",
-                    textEn: "Supports normal immune function and helps protect cells.",
-                    textTe: "రోగనిరోధక వ్యవస్థ సాధారణ పనితీరుకు మరియు కణాల రక్షణకు సహాయపడుతుంది."
-                }
-
-            ]
-        },
-
-
-        "Hair Fall": {
-
-            titleEn: "💇 Hair Fall",
-            titleTe: "💇 జుట్టు రాలడం",
-
-            vitamins: [
-
-                {
-                    nameEn: "Biotin (Vitamin B7)",
-                    nameTe: "బయోటిన్ (విటమిన్ B7)",
-                    image: "images/vitamin-b7.jpg",
-                    textEn: "Biotin supports normal hair and skin health when dietary intake is adequate.",
-                    textTe: "ఆహారం ద్వారా తగినంత లభించినప్పుడు బయోటిన్ జుట్టు మరియు చర్మం సాధారణ ఆరోగ్యానికి సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin B12",
-                    nameTe: "విటమిన్ B12",
-                    image: "images/vitamin-b12.jpg",
-                    textEn: "Supports normal blood formation and nervous system function.",
-                    textTe: "సాధారణ రక్త కణాల ఏర్పాటుకు మరియు నాడీ వ్యవస్థ పనితీరుకు సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin D",
-                    nameTe: "విటమిన్ D",
-                    image: "images/vitamin-d.jpeg",
-                    textEn: "Supports normal bone and immune system health.",
-                    textTe: "ఎముకలు మరియు రోగనిరోధక వ్యవస్థ సాధారణ ఆరోగ్యానికి సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin E",
-                    nameTe: "విటమిన్ E",
-                    image: "images/vitamin-E.webp",
-                    textEn: "Helps protect cells from oxidative stress.",
-                    textTe: "ఆక్సిడేటివ్ స్ట్రెస్ నుండి కణాలను రక్షించడానికి సహాయపడుతుంది."
-                }
-
-            ]
-        },
-
-
-        "Skin Problems": {
-
-            titleEn: "🌸 Skin Problems",
-            titleTe: "🌸 చర్మ సమస్యలు",
-
-            vitamins: [
-
-                {
-                    nameEn: "Vitamin A",
-                    nameTe: "విటమిన్ A",
-                    image: "images/vitamin-a.webp",
-                    textEn: "Supports normal skin and vision health.",
-                    textTe: "చర్మం మరియు చూపు సాధారణ ఆరోగ్యానికి సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin C",
-                    nameTe: "విటమిన్ C",
-                    image: "images/Vitamin-C.jpg",
-                    textEn: "Supports collagen formation and helps protect cells.",
-                    textTe: "కొల్లాజెన్ ఏర్పాటుకు మరియు కణాల రక్షణకు సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin E",
-                    nameTe: "విటమిన్ E",
-                    image: "images/vitamin-E.webp",
-                    textEn: "Helps protect cells from oxidative stress.",
-                    textTe: "ఆక్సిడేటివ్ స్ట్రెస్ నుండి కణాలను రక్షించడానికి సహాయపడుతుంది."
-                }
-
-            ]
-        },
-
-
-        "Poor Immunity": {
-
-            titleEn: "🛡️ Poor Immunity",
-            titleTe: "🛡️ రోగనిరోధక శక్తి తగ్గడం",
-
-            vitamins: [
-
-                {
-                    nameEn: "Vitamin C",
-                    nameTe: "విటమిన్ C",
-                    image: "images/Vitamin-C.jpg",
-                    textEn: "Supports normal immune system function.",
-                    textTe: "రోగనిరోధక వ్యవస్థ సాధారణ పనితీరుకు సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin D",
-                    nameTe: "విటమిన్ D",
-                    image: "images/vitamin-d.jpeg",
-                    textEn: "Supports normal immune system function.",
-                    textTe: "రోగనిరోధక వ్యవస్థ సాధారణ పనితీరుకు సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin A",
-                    nameTe: "విటమిన్ A",
-                    image: "images/vitamin-a.webp",
-                    textEn: "Supports normal immune and vision functions.",
-                    textTe: "రోగనిరోధక వ్యవస్థ మరియు చూపు సాధారణ పనితీరుకు సహాయపడుతుంది."
-                }
-
-            ]
-        },
-
-
-        "Eye Health": {
-
-            titleEn: "👁️ Eye Health",
-            titleTe: "👁️ కంటి ఆరోగ్యం",
-
-            vitamins: [
-
-                {
-                    nameEn: "Vitamin A",
-                    nameTe: "విటమిన్ A",
-                    image: "images/vitamin-a.webp",
-                    textEn: "Vitamin A is important for normal vision.",
-                    textTe: "సాధారణ చూపు కోసం విటమిన్ A ముఖ్యమైనది."
-                },
-
-                {
-                    nameEn: "Vitamin C",
-                    nameTe: "విటమిన్ C",
-                    image: "images/Vitamin-C.jpg",
-                    textEn: "Helps protect cells from oxidative stress.",
-                    textTe: "ఆక్సిడేటివ్ స్ట్రెస్ నుండి కణాలను రక్షించడానికి సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin E",
-                    nameTe: "విటమిన్ E",
-                    image: "images/vitamin-E.webp",
-                    textEn: "Helps protect cells from oxidative stress.",
-                    textTe: "ఆక్సిడేటివ్ స్ట్రెస్ నుండి కణాలను రక్షించడానికి సహాయపడుతుంది."
-                }
-
-            ]
-        },
-
-
-        "Bone Health": {
-
-            titleEn: "🦴 Bone Health",
-            titleTe: "🦴 ఎముకల ఆరోగ్యం",
-
-            vitamins: [
-
-                {
-                    nameEn: "Vitamin D",
-                    nameTe: "విటమిన్ D",
-                    image: "images/vitamin-d.jpeg",
-                    textEn: "Helps the body absorb calcium and supports bone health.",
-                    textTe: "శరీరం కాల్షియంను గ్రహించడానికి మరియు ఎముకల ఆరోగ్యానికి సహాయపడుతుంది."
-                },
-
-                {
-                    nameEn: "Vitamin K",
-                    nameTe: "విటమిన్ K",
-                    image: "images/vitamin-K.webp",
-                    textEn: "Supports normal blood clotting and bone health.",
-                    textTe: "సాధారణ రక్తం గడ్డకట్టే ప్రక్రియకు మరియు ఎముకల ఆరోగ్యానికి సహాయపడుతుంది."
-                }
-
-            ]
-        }
-
-    };
-
-
-    function showHealth(problem) {
-
-        currentProblem = problem;
-
-        const lang = document.getElementById("language").value;
-        const data = healthData[problem];
-
-        const title =
-            lang === "te"
-                ? data.titleTe
-                : data.titleEn;
-
-        const recommendedTitle =
-            lang === "te"
-                ? "సిఫార్సు చేయబడిన విటమిన్లు"
-                : "Recommended Vitamins";
-
-        const note =
-            lang === "te"
-                ? "సమతుల్య ఆహారం ద్వారా అవసరమైన పోషకాలను పొందడం మంచిది. విటమిన్ సప్లిమెంట్లను అవసరమైతే వైద్యుల సలహాతో మాత్రమే ఉపయోగించండి."
-                : "A balanced diet is the best way to get nutrients. Use vitamin supplements only when needed and preferably with professional advice.";
-
-        let html = `
-            <h2>${title}</h2>
-
-            <h3>${recommendedTitle}</h3>
-
-            <div class="vitamin-list">
-        `;
-
-
-        data.vitamins.forEach(function (vitamin) {
-
-            const vitaminName =
-                lang === "te"
-                    ? vitamin.nameTe
-                    : vitamin.nameEn;
-
-            const vitaminText =
-                lang === "te"
-                    ? vitamin.textTe
-                    : vitamin.textEn;
-
-            html += `
-                <div class="vitamin-card">
-
-                    <img
-                        src="${vitamin.image}"
-                        alt="${vitaminName}"
-                    >
-
-                    <h3>${vitaminName}</h3>
-
-                    <p>${vitaminText}</p>
-
-                </div>
-            `;
-
-        });
-
+let currentProblem = "";
+
+const healthData = {
+    "Weakness": {
+        titleEn: "💪 Weakness",
+        titleTe: "💪 బలహీనత",
+        vitamins: [
+            {
+                nameEn: "Vitamin B1",
+                nameTe: "విటమిన్ B1",
+                image: "images/vitamin-b1.png",
+                textEn: "Supports energy metabolism and normal body functions.",
+                textTe: "శక్తి ఉత్పత్తి మరియు శరీర సాధారణ పనితీరుకు సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin B6",
+                nameTe: "విటమిన్ B6",
+                image: "images/vitamin-b6.jpg",
+                textEn: "Helps the body use nutrients and supports normal metabolism.",
+                textTe: "శరీరం పోషకాలను ఉపయోగించుకోవడానికి సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin B12",
+                nameTe: "విటమిన్ B12",
+                image: "images/vitamin-b12.jpg",
+                textEn: "Supports red blood cell formation and nervous system function.",
+                textTe: "ఎర్ర రక్త కణాల ఏర్పాటుకు సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin C",
+                nameTe: "విటమిన్ C",
+                image: "images/Vitamin-C.jpg",
+                textEn: "Supports normal immune function.",
+                textTe: "రోగనిరోధక వ్యవస్థ సాధారణ పనితీరుకు సహాయపడుతుంది."
+            }
+        ]
+    },
+
+    "Hair Fall": {
+        titleEn: "💇 Hair Fall",
+        titleTe: "💇 జుట్టు రాలడం",
+        vitamins: [
+            {
+                nameEn: "Biotin (Vitamin B7)",
+                nameTe: "బయోటిన్ (విటమిన్ B7)",
+                image: "images/vitamin-b7.jpg",
+                textEn: "Biotin supports normal hair and skin health when intake is adequate.",
+                textTe: "బయోటిన్ జుట్టు మరియు చర్మ ఆరోగ్యానికి సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin B12",
+                nameTe: "విటమిన్ B12",
+                image: "images/vitamin-b12.jpg",
+                textEn: "Supports normal blood formation and nervous system function.",
+                textTe: "సాధారణ రక్త కణాల ఏర్పాటుకు సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin D",
+                nameTe: "విటమిన్ D",
+                image: "images/vitamin-d.jpeg",
+                textEn: "Supports normal bone and immune system health.",
+                textTe: "ఎముకలు మరియు రోగనిరోధక వ్యవస్థ ఆరోగ్యానికి సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin E",
+                nameTe: "విటమిన్ E",
+                image: "images/vitamin-E.webp",
+                textEn: "Helps protect cells from oxidative stress.",
+                textTe: "కణాలను ఆక్సిడేటివ్ స్ట్రెస్ నుండి రక్షించడానికి సహాయపడుతుంది."
+            }
+        ]
+    },
+
+    "Skin Problems": {
+        titleEn: "🌸 Skin Problems",
+        titleTe: "🌸 చర్మ సమస్యలు",
+        vitamins: [
+            {
+                nameEn: "Vitamin A",
+                nameTe: "విటమిన్ A",
+                image: "images/vitamin-a.webp",
+                textEn: "Supports normal skin and vision health.",
+                textTe: "చర్మం మరియు చూపు సాధారణ ఆరోగ్యానికి సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin C",
+                nameTe: "విటమిన్ C",
+                image: "images/Vitamin-C.jpg",
+                textEn: "Supports collagen formation and helps protect cells.",
+                textTe: "కొల్లాజెన్ ఏర్పాటుకు మరియు కణాల రక్షణకు సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin E",
+                nameTe: "విటమిన్ E",
+                image: "images/vitamin-E.webp",
+                textEn: "Helps protect cells from oxidative stress.",
+                textTe: "కణాలను ఆక్సిడేటివ్ స్ట్రెస్ నుండి రక్షించడానికి సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Biotin (Vitamin B7)",
+                nameTe: "బయోటిన్ (విటమిన్ B7)",
+                image: "images/vitamin-b7.jpg",
+                textEn: "Supports normal skin health.",
+                textTe: "చర్మం సాధారణ ఆరోగ్యానికి సహాయపడుతుంది."
+            }
+        ]
+    },
+
+    "Poor Immunity": {
+        titleEn: "🛡️ Poor Immunity",
+        titleTe: "🛡️ రోగనిరోధక శక్తి తగ్గడం",
+        vitamins: [
+            {
+                nameEn: "Vitamin C",
+                nameTe: "విటమిన్ C",
+                image: "images/Vitamin-C.jpg",
+                textEn: "Supports normal immune system function.",
+                textTe: "రోగనిరోధక వ్యవస్థ సాధారణ పనితీరుకు సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin D",
+                nameTe: "విటమిన్ D",
+                image: "images/vitamin-d.jpeg",
+                textEn: "Supports normal immune system function.",
+                textTe: "రోగనిరోధక వ్యవస్థ సాధారణ పనితీరుకు సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin A",
+                nameTe: "విటమిన్ A",
+                image: "images/vitamin-a.webp",
+                textEn: "Supports normal immune and vision functions.",
+                textTe: "రోగనిరోధక వ్యవస్థ మరియు చూపు పనితీరుకు సహాయపడుతుంది."
+            }
+        ]
+    },
+
+    "Eye Health": {
+        titleEn: "👁️ Eye Health",
+        titleTe: "👁️ కంటి ఆరోగ్యం",
+        vitamins: [
+            {
+                nameEn: "Vitamin A",
+                nameTe: "విటమిన్ A",
+                image: "images/vitamin-a.webp",
+                textEn: "Vitamin A is important for normal vision.",
+                textTe: "సాధారణ చూపు కోసం విటమిన్ A ముఖ్యమైనది."
+            },
+            {
+                nameEn: "Vitamin C",
+                nameTe: "విటమిన్ C",
+                image: "images/Vitamin-C.jpg",
+                textEn: "Helps protect cells from oxidative stress.",
+                textTe: "కణాలను ఆక్సిడేటివ్ స్ట్రెస్ నుండి రక్షిస్తుంది."
+            },
+            {
+                nameEn: "Vitamin E",
+                nameTe: "విటమిన్ E",
+                image: "images/vitamin-E.webp",
+                textEn: "Helps protect cells from oxidative stress.",
+                textTe: "కణాలను ఆక్సిడేటివ్ స్ట్రెస్ నుండి రక్షిస్తుంది."
+            }
+        ]
+    },
+
+    "Bone Health": {
+        titleEn: "🦴 Bone Health",
+        titleTe: "🦴 ఎముకల ఆరోగ్యం",
+        vitamins: [
+            {
+                nameEn: "Vitamin D",
+                nameTe: "విటమిన్ D",
+                image: "images/vitamin-d.jpeg",
+                textEn: "Helps the body absorb calcium and supports bone health.",
+                textTe: "కాల్షియం శోషణకు మరియు ఎముకల ఆరోగ్యానికి సహాయపడుతుంది."
+            },
+            {
+                nameEn: "Vitamin K",
+                nameTe: "విటమిన్ K",
+                image: "images/vitamin-K.webp",
+                textEn: "Supports normal blood clotting and bone health.",
+                textTe: "రక్తం గడ్డకట్టే ప్రక్రియకు మరియు ఎముకల ఆరోగ్యానికి సహాయపడుతుంది."
+            }
+        ]
+    }
+};
+
+function showHealth(problem) {
+    currentProblem = problem;
+
+    const lang = document.getElementById("language").value;
+    const data = healthData[problem];
+
+    const title = lang === "te" ? data.titleTe : data.titleEn;
+    const recommendedTitle = lang === "te"
+        ? "సిఫార్సు చేయబడిన విటమిన్లు"
+        : "Recommended Vitamins";
+
+    const note = lang === "te"
+        ? "సమతుల్య ఆహారం ద్వారా పోషకాలను పొందండి. విటమిన్ సప్లిమెంట్లను వైద్యుల సలహాతో మాత్రమే ఉపయోగించండి."
+        : "A balanced diet is the best way to get nutrients. Use vitamin supplements with professional advice.";
+
+    let html = `
+        <h2>${title}</h2>
+        <h3>${recommendedTitle}</h3>
+        <div class="vitamin-list">
+    `;
+
+    data.vitamins.forEach(function(vitamin) {
+        const name = lang === "te" ? vitamin.nameTe : vitamin.nameEn;
+        const description = lang === "te" ? vitamin.textTe : vitamin.textEn;
 
         html += `
-            </div>
-
-            <div class="note">
-
-                <strong>
-                    ${lang === "te" ? "గమనిక:" : "Note:"}
-                </strong>
-
-                <p>${note}</p>
-
+            <div class="vitamin-card">
+                <img src="${vitamin.image}" alt="${name}">
+                <h3>${name}</h3>
+                <p>${description}</p>
             </div>
         `;
+    });
 
+    html += `
+        </div>
+        <div class="note">
+            <strong>${lang === "te" ? "గమనిక:" : "Note:"}</strong>
+            <p>${note}</p>
+        </div>
+    `;
 
-        document.getElementById("healthResult").innerHTML = html;
+    document.getElementById("healthResult").innerHTML = html;
+}
 
-    }
+function changeLanguage() {
+    const lang = document.getElementById("language").value;
 
-
-    function changeLanguage() {
-
-        const lang = document.getElementById("language").value;
-
-
-        if (lang === "te") {
-
-            document.getElementById("languageLabel").innerText =
-                "🌐 భాష";
-
-            document.getElementById("pageTitle").innerText =
-                "🩺 ఆరోగ్య సమస్యలు";
-
-            document.getElementById("description").innerText =
-                "మీ ఆరోగ్య సమస్యను ఎంచుకోండి. సంబంధిత విటమిన్లను చూడండి.";
-
-            document.getElementById("weaknessBtn").innerText =
-                "💪 బలహీనత";
-
-            document.getElementById("hairBtn").innerText =
-                "💇 జుట్టు రాలడం";
-
-            document.getElementById("skinBtn").innerText =
-                "🌸 చర్మ సమస్యలు";
-
-            document.getElementById("immunityBtn").innerText =
-                "🛡️ రోగనిరోధక శక్తి తగ్గడం";
-
-            document.getElementById("eyeBtn").innerText =
-                "👁️ కంటి ఆరోగ్యం";
-
-            document.getElementById("boneBtn").innerText =
-                "🦴 ఎముకల ఆరోగ్యం";
-
-            document.getElementById("backBtn").innerText =
-                "← వెనుకకు";
-
-            document.getElementById("doneBtn").innerText =
-                "పూర్తయింది ✓";
-
-            if (currentProblem === "") {
-
-                document.getElementById("healthResult").innerText =
-                    "పైన ఉన్న ఆరోగ్య సమస్యను ఎంచుకోండి.";
-
-            } else {
-
-                showHealth(currentProblem);
-
-            }
-
-        } else {
-
-            document.getElementById("languageLabel").innerText =
-                "🌐 Language";
-
-            document.getElementById("pageTitle").innerText =
-                "🩺 Health Issues";
-
-            document.getElementById("description").innerText =
-                "Select your health problem to see the recommended vitamins.";
-
-            document.getElementById("weaknessBtn").innerText =
-                "💪 Weakness";
-
-            document.getElementById("hairBtn").innerText =
-                "💇 Hair Fall";
-
-            document.getElementById("skinBtn").innerText =
-                "🌸 Skin Problems";
-
-            document.getElementById("immunityBtn").innerText =
-                "🛡️ Poor Immunity";
-
-            document.getElementById("eyeBtn").innerText =
-                "👁️ Eye Health";
-
-            document.getElementById("boneBtn").innerText =
-                "🦴 Bone Health";
-
-            document.getElementById("backBtn").innerText =
-                "← Back";
-
-            document.getElementById("doneBtn").innerText =
-                "Done ✓";
-
-            if (currentProblem === "") {
-
-                document.getElementById("healthResult").innerText =
-                    "Select a health issue above.";
-
-            } else {
-
-                showHealth(currentProblem);
-
-            }
-
+    const translations = {
+        en: {
+            language: "🌐 Language",
+            title: "🩺 Health Issues",
+            description: "Select your health problem to see the recommended vitamins.",
+            weakness: "💪 Weakness",
+            hair: "💇 Hair Fall",
+            skin: "🌸 Skin Problems",
+            immunity: "🛡️ Poor Immunity",
+            eye: "👁️ Eye Health",
+            bone: "🦴 Bone Health",
+            back: "← Back",
+            done: "Done ✓",
+            initial: "Select a health issue above."
+        },
+        te: {
+            language: "🌐 భాష",
+            title: "🩺 ఆరోగ్య సమస్యలు",
+            description: "మీ ఆరోగ్య సమస్యను ఎంచుకోండి. సంబంధిత విటమిన్లను చూడండి.",
+            weakness: "💪 బలహీనత",
+            hair: "💇 జుట్టు రాలడం",
+            skin: "🌸 చర్మ సమస్యలు",
+            immunity: "🛡️ రోగనిరోధక శక్తి తగ్గడం",
+            eye: "👁️ కంటి ఆరోగ్యం",
+            bone: "🦴 ఎముకల ఆరోగ్యం",
+            back: "← వెనుకకు",
+            done: "పూర్తయింది ✓",
+            initial: "పైన ఉన్న ఆరోగ్య సమస్యను ఎంచుకోండి."
         }
+    };
 
+    const t = translations[lang];
+
+    document.getElementById("languageLabel").innerText = t.language;
+    document.getElementById("pageTitle").innerText = t.title;
+    document.getElementById("description").innerText = t.description;
+    document.getElementById("weaknessBtn").innerText = t.weakness;
+    document.getElementById("hairBtn").innerText = t.hair;
+    document.getElementById("skinBtn").innerText = t.skin;
+    document.getElementById("immunityBtn").innerText = t.immunity;
+    document.getElementById("eyeBtn").innerText = t.eye;
+    document.getElementById("boneBtn").innerText = t.bone;
+    document.getElementById("backBtn").innerText = t.back;
+    document.getElementById("doneBtn").innerText = t.done;
+
+    if (currentProblem === "") {
+        document.getElementById("healthResult").innerText = t.initial;
+    } else {
+        showHealth(currentProblem);
     }
+}
 
+/* Click vitamin photo to open large */
+document.getElementById("healthResult").addEventListener("click", function(event) {
+    if (event.target.tagName === "IMG") {
+        const modal = document.getElementById("photoModal");
+        const largeImage = document.getElementById("largeVitaminPhoto");
 
-    function goBack() {
-
-        window.location.href = "index.html";
-
+        largeImage.src = event.target.src;
+        largeImage.alt = event.target.alt;
+        modal.classList.add("show");
+        document.body.style.overflow = "hidden";
     }
+});
 
+function hidePhoto() {
+    document.getElementById("photoModal").classList.remove("show");
+    document.getElementById("largeVitaminPhoto").src = "";
+    document.body.style.overflow = "";
+}
 
-    function doneHealth() {
-
-        window.location.href = "diet.html";
-
+function closePhoto(event) {
+    if (event.target.id === "photoModal") {
+        hidePhoto();
     }
+}
 
+document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+        hidePhoto();
+    }
+});
+
+function goBack() {
+    window.location.href = "index.html";
+}
+
+function doneHealth() {
+    window.location.href = "diet.html";
+}
 </script>
-```
 
 </body>
-
 </html>
