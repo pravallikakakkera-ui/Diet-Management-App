@@ -1,11 +1,9 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>All Vitamins - Diet Management App</title>
 
     <style>
@@ -24,7 +22,7 @@
             background: #159b7d;
             color: white;
             text-align: center;
-            padding: 22px 15px;
+            padding: 22px 12px;
         }
 
         header h1 {
@@ -48,7 +46,7 @@
             width: 92%;
             max-width: 1100px;
             margin: auto;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         .vitamin-card {
@@ -56,7 +54,7 @@
             border-radius: 18px;
             padding: 20px;
             margin: 20px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
         }
 
         .vitamin-card h2 {
@@ -65,22 +63,27 @@
         }
 
         .vitamin-card img {
-            width: 180px;
-            height: 150px;
+            width: 190px;
+            height: 160px;
             object-fit: contain;
             display: block;
-            margin: 10px auto 20px;
+            margin: 12px auto 20px;
             border-radius: 12px;
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+
+        .vitamin-card img:hover {
+            transform: scale(1.05);
         }
 
         .vitamin-card p {
-            line-height: 1.6;
-            margin: 8px 0;
+            line-height: 1.7;
+            margin: 10px 0;
         }
 
         .buttons {
             display: flex;
-            justify-content: space-between;
             gap: 15px;
             margin: 25px 0;
         }
@@ -99,316 +102,413 @@
         button:hover {
             background: #117d66;
         }
+
+        /* Photo popup */
+        .photo-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.88);
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .photo-modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            padding: 50px 15px 15px;
+            border-radius: 15px;
+            max-width: 95%;
+            max-height: 95%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 78vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            background: #159b7d;
+            border-radius: 50%;
+            font-size: 28px;
+            line-height: 40px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 23px;
+            }
+
+            .vitamin-card img {
+                width: 160px;
+                height: 140px;
+            }
+
+            .buttons {
+                gap: 10px;
+            }
+
+            button {
+                padding: 12px 8px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <header>
-        <h1 id="pageTitle">💊 All Vitamins</h1>
-    </header>
+<header>
+    <h1 id="pageTitle">💊 All Vitamins</h1>
+</header>
 
-    <div class="language-box">
-        <select id="language" onchange="changeLanguage()">
-            <option value="en">English</option>
-            <option value="te">తెలుగు</option>
-        </select>
+<div class="language-box">
+    <select id="language" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="te">తెలుగు</option>
+    </select>
+</div>
+
+<div class="container" id="vitaminContainer"></div>
+
+<div class="container">
+    <div class="buttons">
+        <button id="backBtn" onclick="goBack()">← Back</button>
+        <button id="finishBtn" onclick="finishPage()">Finish ✓</button>
     </div>
+</div>
 
-    <div class="container" id="vitaminContainer"></div>
+<!-- Enlarged photo popup -->
+<div id="photoModal" class="photo-modal" onclick="closePhoto(event)">
+    <div class="modal-content">
+        <button
+            type="button"
+            class="close-modal"
+            onclick="hidePhoto()"
+            aria-label="Close photo"
+        >×</button>
 
-    <div class="container">
-        <div class="buttons">
-            <button id="backBtn" onclick="goBack()">← Back</button>
-            <button id="finishBtn" onclick="finishPage()">Finish ✓</button>
-        </div>
+        <img id="largeVitaminPhoto" src="" alt="Large vitamin photo">
     </div>
+</div>
 
-    <script>
+<script>
+    /*
+      IMPORTANT:
+      Photos must be inside the images folder.
+      Example: images/vitamin-a.webp
+    */
 
-        const vitamins = [
-
-            {
-                name: "Vitamin A",
-                image: "vitamin-a.webp",
-                use: "Supports good eyesight, healthy skin and immunity.",
-                food: "Carrot, sweet potato, spinach, milk and eggs.",
-                avoid: "Avoid taking very high amounts of Vitamin A supplements."
-            },
-
-            {
-                name: "Vitamin B1",
-                image: "vitamin-b1.png",
-                use: "Helps convert food into energy and supports the nervous system.",
-                food: "Whole grains, nuts, seeds, beans and pork.",
-                avoid: "Do not take high-dose supplements without medical advice."
-            },
-
-            {
-                name: "Vitamin B2",
-                image: "vitamin-b2.webp",
-                use: "Helps energy production and supports healthy skin and eyes.",
-                food: "Milk, eggs, almonds, mushrooms and green vegetables.",
-                avoid: "Avoid unnecessary high-dose supplements."
-            },
-
-            {
-                name: "Vitamin B3",
-                image: "vitamin-b3.jpg",
-                use: "Supports energy production, skin health and digestion.",
-                food: "Chicken, fish, peanuts, whole grains and mushrooms.",
-                avoid: "High doses may cause unwanted side effects."
-            },
-
-            {
-                name: "Vitamin B5",
-                image: "vitamin-b5.webp",
-                use: "Helps the body produce energy and hormones.",
-                food: "Eggs, chicken, mushrooms, avocado and whole grains.",
-                avoid: "Avoid excessive supplement use."
-            },
-
-            {
-                name: "Vitamin B6",
-                image: "vitamin-b6.jpg",
-                use: "Supports brain function, red blood cells and immunity.",
-                food: "Banana, chicken, fish, potatoes and chickpeas.",
-                avoid: "Very high doses for a long time may cause nerve problems."
-            },
-
-            {
-                name: "Vitamin B7",
-                image: "Vitamin-b7.jpg",
-                use: "Supports healthy hair, skin and nails.",
-                food: "Eggs, nuts, seeds, sweet potatoes and bananas.",
-                avoid: "Do not take high-dose biotin unnecessarily."
-            },
-
-            {
-                name: "Vitamin B9",
-                image: "vitamin-b9.jpg",
-                use: "Important for cell growth and red blood cell formation.",
-                food: "Leafy green vegetables, beans, peas and citrus fruits.",
-                avoid: "Avoid excessive supplements unless recommended."
-            },
-
-            {
-                name: "Vitamin B12",
-                image: "vitamin-b12.jpg",
-                use: "Supports nerves and helps make healthy red blood cells.",
-                food: "Milk, eggs, fish, meat and fortified foods.",
-                avoid: "Supplements should be taken according to individual needs."
-            },
-
-            {
-                name: "Vitamin C",
-                image: "Vitamin-C.jpg",
-                use: "Supports immunity, skin health and wound healing.",
-                food: "Orange, lemon, guava, amla, tomato and capsicum.",
-                avoid: "Very high amounts may cause stomach discomfort."
-            },
-
-            {
-                name: "Vitamin D",
-                image: "vitamin-d.jpeg",
-                use: "Helps maintain strong bones and supports immunity.",
-                food: "Sunlight, eggs, fish, fortified milk and dairy products.",
-                avoid: "Avoid excessive Vitamin D supplements."
-            },
-
-            {
-                name: "Vitamin E",
-                image: "vitamin-E.webp",
-                use: "Acts as an antioxidant and supports healthy skin.",
-                food: "Almonds, sunflower seeds, peanuts, spinach and avocado.",
-                avoid: "Avoid very high-dose supplements."
-            },
-
-            {
-                name: "Vitamin K",
-                image: "vitamin-K.webp",
-                use: "Helps blood clotting and supports healthy bones.",
-                food: "Spinach, broccoli, cabbage and other green vegetables.",
-                avoid: "People taking blood-thinning medicines should ask a doctor before changing Vitamin K intake."
-            }
-
-        ];
-
-
-        const teluguNames = [
-            "విటమిన్ A",
-            "విటమిన్ B1",
-            "విటమిన్ B2",
-            "విటమిన్ B3",
-            "విటమిన్ B5",
-            "విటమిన్ B6",
-            "విటమిన్ B7",
-            "విటమిన్ B9",
-            "విటమిన్ B12",
-            "విటమిన్ C",
-            "విటమిన్ D",
-            "విటమిన్ E",
-            "విటమిన్ K"
-        ];
-
-
-        const teluguUse = [
-            "మంచి చూపు, ఆరోగ్యకరమైన చర్మం మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.",
-            "ఆహారాన్ని శక్తిగా మార్చడంలో మరియు నాడీ వ్యవస్థకు సహాయపడుతుంది.",
-            "శక్తి ఉత్పత్తి మరియు ఆరోగ్యకరమైన చర్మం, కళ్లకు సహాయపడుతుంది.",
-            "శక్తి ఉత్పత్తి, చర్మ ఆరోగ్యం మరియు జీర్ణక్రియకు సహాయపడుతుంది.",
-            "శక్తి మరియు హార్మోన్ల ఉత్పత్తికి సహాయపడుతుంది.",
-            "మెదడు పనితీరు, ఎర్ర రక్త కణాలు మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.",
-            "జుట్టు, చర్మం మరియు గోళ్ల ఆరోగ్యానికి సహాయపడుతుంది.",
-            "కణాల పెరుగుదల మరియు ఎర్ర రక్త కణాల తయారీలో ముఖ్యమైనది.",
-            "నరాలు మరియు ఆరోగ్యకరమైన ఎర్ర రక్త కణాల తయారీకి సహాయపడుతుంది.",
-            "రోగనిరోధక శక్తి, చర్మ ఆరోగ్యం మరియు గాయాలు మానడానికి సహాయపడుతుంది.",
-            "బలమైన ఎముకలు మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.",
-            "యాంటీఆక్సిడెంట్‌గా పనిచేసి ఆరోగ్యకరమైన చర్మానికి సహాయపడుతుంది.",
-            "రక్తం గడ్డకట్టడంలో మరియు ఆరోగ్యకరమైన ఎముకలకు సహాయపడుతుంది."
-        ];
-
-
-        const teluguFood = [
-            "క్యారెట్, చిలగడదుంప, పాలకూర, పాలు మరియు గుడ్లు.",
-            "తృణధాన్యాలు, గింజలు, విత్తనాలు, బీన్స్ మరియు పంది మాంసం.",
-            "పాలు, గుడ్లు, బాదం, పుట్టగొడుగులు మరియు ఆకుకూరలు.",
-            "చికెన్, చేపలు, వేరుశెనగ, తృణధాన్యాలు మరియు పుట్టగొడుగులు.",
-            "గుడ్లు, చికెన్, పుట్టగొడుగులు, అవకాడో మరియు తృణధాన్యాలు.",
-            "అరటి, చికెన్, చేపలు, బంగాళాదుంపలు మరియు శనగలు.",
-            "గుడ్లు, గింజలు, విత్తనాలు, చిలగడదుంపలు మరియు అరటిపండ్లు.",
-            "ఆకుకూరలు, బీన్స్, బఠానీలు మరియు సిట్రస్ పండ్లు.",
-            "పాలు, గుడ్లు, చేపలు, మాంసం మరియు ఫోర్టిఫైడ్ ఆహారాలు.",
-            "నారింజ, నిమ్మ, జామ, ఉసిరి, టమోటా మరియు క్యాప్సికమ్.",
-            "సూర్యరశ్మి, గుడ్లు, చేపలు, ఫోర్టిఫైడ్ పాలు మరియు పాల ఉత్పత్తులు.",
-            "బాదం, సన్‌ఫ్లవర్ విత్తనాలు, వేరుశెనగ, పాలకూర మరియు అవకాడో.",
-            "పాలకూర, బ్రోకలీ, క్యాబేజీ మరియు ఇతర ఆకుపచ్చ కూరగాయలు."
-        ];
-
-
-        const teluguAvoid = [
-            "విటమిన్ A సప్లిమెంట్లను చాలా ఎక్కువ మోతాదులో తీసుకోవద్దు.",
-            "డాక్టర్ సలహా లేకుండా ఎక్కువ మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.",
-            "అవసరం లేకుండా ఎక్కువ మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.",
-            "ఎక్కువ మోతాదులో తీసుకోవడం వల్ల కొన్ని దుష్ప్రభావాలు రావచ్చు.",
-            "అవసరానికి మించి సప్లిమెంట్లు తీసుకోవద్దు.",
-            "ఎక్కువ కాలం ఎక్కువ మోతాదులో తీసుకుంటే నరాల సమస్యలు రావచ్చు.",
-            "అవసరం లేకుండా ఎక్కువ మోతాదులో బయోటిన్ సప్లిమెంట్లు తీసుకోవద్దు.",
-            "డాక్టర్ సలహా లేకుండా ఎక్కువ మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.",
-            "మీ అవసరానికి అనుగుణంగా మాత్రమే సప్లిమెంట్లు తీసుకోవాలి.",
-            "చాలా ఎక్కువ మోతాదులో తీసుకుంటే కడుపులో అసౌకర్యం కలగవచ్చు.",
-            "విటమిన్ D సప్లిమెంట్లను ఎక్కువగా తీసుకోవద్దు.",
-            "చాలా ఎక్కువ మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు.",
-            "రక్తం పలుచన చేసే మందులు వాడేవారు విటమిన్ K తీసుకునే ముందు డాక్టర్‌ను సంప్రదించాలి."
-        ];
-
-
-        function displayVitamins(language) {
-
-            const container = document.getElementById("vitaminContainer");
-
-            container.innerHTML = "";
-
-            vitamins.forEach((vitamin, index) => {
-
-                let name = vitamin.name;
-                let use = vitamin.use;
-                let food = vitamin.food;
-                let avoid = vitamin.avoid;
-
-                if (language === "te") {
-                    name = teluguNames[index];
-                    use = teluguUse[index];
-                    food = teluguFood[index];
-                    avoid = teluguAvoid[index];
-                }
-
-                container.innerHTML += `
-                    <div class="vitamin-card">
-
-                        <h2>${name}</h2>
-
-                        <img src="${vitamin.image}" alt="${name}">
-
-                        <p>
-                            <strong>
-                                ${language === "te"
-                                    ? "ఉపయోగాలు / ప్రయోజనాలు:"
-                                    : "Uses / Benefits:"}
-                            </strong>
-                            ${use}
-                        </p>
-
-                        <p>
-                            <strong>
-                                ${language === "te"
-                                    ? "ఆహార వనరులు:"
-                                    : "Food Sources:"}
-                            </strong>
-                            ${food}
-                        </p>
-
-                        <p>
-                            <strong>
-                                ${language === "te"
-                                    ? "జాగ్రత్త:"
-                                    : "Avoid / Limit:"}
-                            </strong>
-                            ${avoid}
-                        </p>
-
-                    </div>
-                `;
-            });
+    const vitamins = [
+        {
+            name: "Vitamin A",
+            image: "images/vitamin-a.webp",
+            use: "Supports eyesight, healthy skin and immunity.",
+            food: "Carrot, sweet potato, spinach, milk and eggs.",
+            avoid: "Avoid high-dose supplements unless advised by a healthcare professional."
+        },
+        {
+            name: "Vitamin B1",
+            image: "images/vitamin-b1.png",
+            use: "Helps convert food into energy and supports the nervous system.",
+            food: "Whole grains, nuts, seeds and beans.",
+            avoid: "Avoid high-dose supplements without medical advice."
+        },
+        {
+            name: "Vitamin B2",
+            image: "images/vitamin-b2.webp",
+            use: "Supports energy production, skin and eye health.",
+            food: "Milk, eggs, almonds, mushrooms and green vegetables.",
+            avoid: "Avoid unnecessary high-dose supplements."
+        },
+        {
+            name: "Vitamin B3",
+            image: "images/vitamin-b3.jpg",
+            use: "Supports energy production, skin health and digestion.",
+            food: "Chicken, fish, peanuts, whole grains and mushrooms.",
+            avoid: "High doses may cause side effects."
+        },
+        {
+            name: "Vitamin B5",
+            image: "images/vitamin-b5.webp",
+            use: "Helps the body produce energy and hormones.",
+            food: "Eggs, chicken, mushrooms, avocado and whole grains.",
+            avoid: "Avoid excessive supplement use."
+        },
+        {
+            name: "Vitamin B6",
+            image: "images/vitamin-b6.jpg",
+            use: "Supports brain function, red blood cells and immunity.",
+            food: "Banana, chicken, fish, potatoes and chickpeas.",
+            avoid: "High doses over time may cause nerve problems."
+        },
+        {
+            name: "Vitamin B7",
+            image: "images/vitamin-b7.jpg",
+            use: "Supports healthy hair, skin and nails.",
+            food: "Eggs, nuts, seeds, sweet potatoes and bananas.",
+            avoid: "High-dose biotin can interfere with some lab tests."
+        },
+        {
+            name: "Vitamin B9",
+            image: "images/vitamin-b9.jpg",
+            use: "Supports cell growth and red blood cell formation.",
+            food: "Leafy green vegetables, beans, peas and citrus fruits.",
+            avoid: "Avoid excessive supplements unless recommended."
+        },
+        {
+            name: "Vitamin B12",
+            image: "images/vitamin-b12.jpg",
+            use: "Supports nerves and healthy red blood cell production.",
+            food: "Milk, eggs, fish, meat and fortified foods.",
+            avoid: "Ask a healthcare professional if you think you need supplements."
+        },
+        {
+            name: "Vitamin C",
+            image: "images/Vitamin-C.jpg",
+            use: "Supports immunity, skin health and wound healing.",
+            food: "Orange, lemon, guava, amla, tomato and capsicum.",
+            avoid: "Very high amounts may cause stomach discomfort."
+        },
+        {
+            name: "Vitamin D",
+            image: "images/vitamin-d.jpeg",
+            use: "Helps maintain strong bones and supports immunity.",
+            food: "Sunlight, eggs, fish and fortified milk.",
+            avoid: "Avoid excessive supplements."
+        },
+        {
+            name: "Vitamin E",
+            image: "images/vitamin-E.webp",
+            use: "Acts as an antioxidant and supports healthy cells.",
+            food: "Almonds, sunflower seeds, peanuts, spinach and avocado.",
+            avoid: "Avoid high-dose supplements unless advised."
+        },
+        {
+            name: "Vitamin K",
+            image: "images/vitamin-K.webp",
+            use: "Helps blood clotting and supports healthy bones.",
+            food: "Spinach, broccoli, cabbage and other green vegetables.",
+            avoid: "If taking blood-thinning medicine, ask your doctor before changing Vitamin K intake."
         }
+    ];
 
-
-        function changeLanguage() {
-
-            const language = document.getElementById("language").value;
-
-            if (language === "te") {
-
-                document.getElementById("pageTitle").innerText =
-                    "💊 అన్ని విటమిన్లు";
-
-                document.getElementById("backBtn").innerText =
-                    "← వెనక్కి";
-
-                document.getElementById("finishBtn").innerText =
-                    "ముగించు ✓";
-
-            } else {
-
-                document.getElementById("pageTitle").innerText =
-                    "💊 All Vitamins";
-
-                document.getElementById("backBtn").innerText =
-                    "← Back";
-
-                document.getElementById("finishBtn").innerText =
-                    "Finish ✓";
-            }
-
-            displayVitamins(language);
+    const te = [
+        {
+            name: "విటమిన్ A",
+            use: "కంటి చూపు, చర్మ ఆరోగ్యం మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.",
+            food: "క్యారెట్, చిలగడదుంప, పాలకూర, పాలు మరియు గుడ్లు.",
+            avoid: "డాక్టర్ సలహా లేకుండా ఎక్కువ మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ B1",
+            use: "ఆహారాన్ని శక్తిగా మార్చడంలో మరియు నాడీ వ్యవస్థకు సహాయపడుతుంది.",
+            food: "తృణధాన్యాలు, గింజలు, విత్తనాలు మరియు బీన్స్.",
+            avoid: "డాక్టర్ సలహా లేకుండా ఎక్కువ మోతాదులో తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ B2",
+            use: "శక్తి ఉత్పత్తి, చర్మం మరియు కంటి ఆరోగ్యానికి సహాయపడుతుంది.",
+            food: "పాలు, గుడ్లు, బాదం, పుట్టగొడుగులు మరియు ఆకుకూరలు.",
+            avoid: "అవసరం లేకుండా ఎక్కువ మోతాదులో సప్లిమెంట్లు తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ B3",
+            use: "శక్తి ఉత్పత్తి, చర్మ ఆరోగ్యం మరియు జీర్ణక్రియకు సహాయపడుతుంది.",
+            food: "చికెన్, చేపలు, వేరుశెనగ మరియు తృణధాన్యాలు.",
+            avoid: "ఎక్కువ మోతాదులో తీసుకుంటే దుష్ప్రభావాలు రావచ్చు."
+        },
+        {
+            name: "విటమిన్ B5",
+            use: "శక్తి మరియు హార్మోన్ల ఉత్పత్తికి సహాయపడుతుంది.",
+            food: "గుడ్లు, చికెన్, పుట్టగొడుగులు మరియు అవకాడో.",
+            avoid: "అవసరానికి మించి సప్లిమెంట్లు తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ B6",
+            use: "మెదడు పనితీరు, ఎర్ర రక్త కణాలు మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.",
+            food: "అరటి, చికెన్, చేపలు, బంగాళాదుంపలు మరియు శనగలు.",
+            avoid: "ఎక్కువ కాలం ఎక్కువ మోతాదులో తీసుకుంటే నరాల సమస్యలు రావచ్చు."
+        },
+        {
+            name: "విటమిన్ B7",
+            use: "జుట్టు, చర్మం మరియు గోళ్ల ఆరోగ్యానికి సహాయపడుతుంది.",
+            food: "గుడ్లు, గింజలు, విత్తనాలు, చిలగడదుంపలు మరియు అరటిపండ్లు.",
+            avoid: "బయోటిన్ సప్లిమెంట్లు కొన్ని రక్త పరీక్షల ఫలితాలను ప్రభావితం చేయవచ్చు."
+        },
+        {
+            name: "విటమిన్ B9",
+            use: "కణాల పెరుగుదల మరియు ఎర్ర రక్త కణాల తయారీకి సహాయపడుతుంది.",
+            food: "ఆకుకూరలు, బీన్స్, బఠానీలు మరియు సిట్రస్ పండ్లు.",
+            avoid: "డాక్టర్ సలహా లేకుండా ఎక్కువ మోతాదులో తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ B12",
+            use: "నరాలు మరియు ఆరోగ్యకరమైన ఎర్ర రక్త కణాల తయారీకి సహాయపడుతుంది.",
+            food: "పాలు, గుడ్లు, చేపలు, మాంసం మరియు ఫోర్టిఫైడ్ ఆహారాలు.",
+            avoid: "సప్లిమెంట్లు అవసరమైతే ఆరోగ్య నిపుణుల సలహా తీసుకోండి."
+        },
+        {
+            name: "విటమిన్ C",
+            use: "రోగనిరోధక శక్తి, చర్మ ఆరోగ్యం మరియు గాయాలు మానడానికి సహాయపడుతుంది.",
+            food: "నారింజ, నిమ్మ, జామ, ఉసిరి, టమోటా మరియు క్యాప్సికమ్.",
+            avoid: "చాలా ఎక్కువ మోతాదులో తీసుకుంటే కడుపులో అసౌకర్యం కలగవచ్చు."
+        },
+        {
+            name: "విటమిన్ D",
+            use: "బలమైన ఎముకలు మరియు రోగనిరోధక శక్తికి సహాయపడుతుంది.",
+            food: "సూర్యరశ్మి, గుడ్లు, చేపలు మరియు ఫోర్టిఫైడ్ పాలు.",
+            avoid: "విటమిన్ D సప్లిమెంట్లను ఎక్కువగా తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ E",
+            use: "యాంటీఆక్సిడెంట్‌గా పనిచేసి కణాల ఆరోగ్యానికి సహాయపడుతుంది.",
+            food: "బాదం, సన్‌ఫ్లవర్ విత్తనాలు, వేరుశెనగ, పాలకూర మరియు అవకాడో.",
+            avoid: "డాక్టర్ సలహా లేకుండా ఎక్కువ మోతాదులో తీసుకోవద్దు."
+        },
+        {
+            name: "విటమిన్ K",
+            use: "రక్తం గడ్డకట్టడంలో మరియు ఆరోగ్యకరమైన ఎముకలకు సహాయపడుతుంది.",
+            food: "పాలకూర, బ్రోకలీ, క్యాబేజీ మరియు ఇతర ఆకుపచ్చ కూరగాయలు.",
+            avoid: "రక్తం పలుచన చేసే మందులు వాడేవారు డాక్టర్‌ను సంప్రదించాలి."
         }
+    ];
 
+    function displayVitamins(language) {
+        const container = document.getElementById("vitaminContainer");
+        container.innerHTML = "";
 
-        function goBack() {
-            window.location.href = "daysplan.html";
+        vitamins.forEach((vitamin, index) => {
+            const details = language === "te" ? te[index] : vitamin;
+
+            const card = document.createElement("div");
+            card.className = "vitamin-card";
+
+            const heading = document.createElement("h2");
+            heading.textContent = details.name;
+
+            const img = document.createElement("img");
+            img.src = vitamin.image;
+            img.alt = vitamin.name;
+            img.title = language === "te"
+                ? "పెద్దగా చూడటానికి ఫోటోపై క్లిక్ చేయండి"
+                : "Click photo to enlarge";
+
+            // Show a clear message if the filename/path is incorrect.
+            img.onerror = function () {
+                this.alt = "Photo not found: " + vitamin.image;
+                this.style.display = "none";
+
+                const message = document.createElement("p");
+                message.style.color = "red";
+                message.textContent = "Photo not found: " + vitamin.image;
+                card.insertBefore(message, this.nextSibling);
+            };
+
+            const use = document.createElement("p");
+            const useLabel = document.createElement("strong");
+            useLabel.textContent = language === "te"
+                ? "ఉపయోగాలు / ప్రయోజనాలు: "
+                : "Uses / Benefits: ";
+            use.append(useLabel, document.createTextNode(details.use));
+
+            const food = document.createElement("p");
+            const foodLabel = document.createElement("strong");
+            foodLabel.textContent = language === "te"
+                ? "ఆహార వనరులు: "
+                : "Food Sources: ";
+            food.append(foodLabel, document.createTextNode(details.food));
+
+            const avoid = document.createElement("p");
+            const avoidLabel = document.createElement("strong");
+            avoidLabel.textContent = language === "te"
+                ? "జాగ్రత్త: "
+                : "Avoid / Limit: ";
+            avoid.append(avoidLabel, document.createTextNode(details.avoid));
+
+            card.append(heading, img, use, food, avoid);
+            container.appendChild(card);
+        });
+    }
+
+    function changeLanguage() {
+        const language = document.getElementById("language").value;
+
+        document.getElementById("pageTitle").textContent =
+            language === "te" ? "💊 అన్ని విటమిన్లు" : "💊 All Vitamins";
+
+        document.getElementById("backBtn").textContent =
+            language === "te" ? "← వెనక్కి" : "← Back";
+
+        document.getElementById("finishBtn").textContent =
+            language === "te" ? "ముగించు ✓" : "Finish ✓";
+
+        displayVitamins(language);
+    }
+
+    // Open the clicked vitamin photo in a large popup.
+    document.getElementById("vitaminContainer").addEventListener("click", function(event) {
+        if (event.target.tagName === "IMG" && event.target.src) {
+            const modal = document.getElementById("photoModal");
+            const largeImage = document.getElementById("largeVitaminPhoto");
+
+            largeImage.src = event.target.src;
+            largeImage.alt = event.target.alt;
+
+            modal.classList.add("show");
+            document.body.style.overflow = "hidden";
         }
+    });
 
+    function hidePhoto() {
+        document.getElementById("photoModal").classList.remove("show");
+        document.getElementById("largeVitaminPhoto").src = "";
+        document.body.style.overflow = "";
+    }
 
-        function finishPage() {
-            window.location.href = "index.html";
+    function closePhoto(event) {
+        if (event.target.id === "photoModal") {
+            hidePhoto();
         }
+    }
 
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            hidePhoto();
+        }
+    });
 
-        displayVitamins("en");
+    function goBack() {
+        window.location.href = "daysplan.html";
+    }
 
-    </script>
+    function finishPage() {
+        window.location.href = "index.html";
+    }
+
+    displayVitamins("en");
+</script>
 
 </body>
-
 </html>
 ```
